@@ -48,4 +48,5 @@ public class PetServiceController {
     public List<LocalDateTime> getAvailableSlots(@PathVariable("id") Long id) {
         return petService.getAvailableSlots(id);
     }
+
 }

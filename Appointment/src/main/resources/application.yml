@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: appointments
+  config:
+    import: optional:configserver:http://localhost:8888

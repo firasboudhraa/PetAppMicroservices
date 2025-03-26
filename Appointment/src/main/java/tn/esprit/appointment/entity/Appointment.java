@@ -1,4 +1,4 @@
-package tn.esprit.petservice.entity;
+package tn.esprit.appointment.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,26 +10,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PetService {
+public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idAppointment;
+
     private Long idService;
+    private Long idCustomer;
+    private Long idPet;
+    private Long idVet;
 
-    private String name;
-    private String description;
-    private Float price;
-    private int durationInMinutes;
-    private String address;
-
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
-
-    private Long providerId;
+    private LocalDateTime appointmentDate;
+    private AppointmentStatus status;
 }

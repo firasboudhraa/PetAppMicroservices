@@ -6,11 +6,11 @@ eureka:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
 
 server:
-  port: 8090
+  port: 8070
 
 spring:
   application:
-    name: services
+    name: appointments
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/services?createDatabaseIfNotExist=true
@@ -24,7 +24,7 @@ spring:
 
 application:
   config:
-    appointments-url: http://localhost:8070/api/appointments
+    services-url: http://localhost:8090/api/services
 
 management:
   tracing:

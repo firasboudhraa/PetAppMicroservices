@@ -2,6 +2,8 @@ package tn.esprit.petservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.petservice.client.AppointmentClient;
+import tn.esprit.petservice.entity.Appointment;
 import tn.esprit.petservice.entity.PetService;
 import tn.esprit.petservice.repository.PetServiceRepository;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class PetServiceImpl implements IPetService {
     @Autowired
     private PetServiceRepository petServiceRepository;
+    @Autowired
+    private AppointmentClient appointmentClient;
     @Override
     public List<PetService> getAllServices() {
         return petServiceRepository.findAll();
@@ -60,4 +64,10 @@ public class PetServiceImpl implements IPetService {
         }
         return slots;
     }
+
+    public List<Appointment> getAppointmentsByService(Long serviceId) {
+        return appointmentClient.getAppointmentsByService(serviceId);
+    }
+
+
 }
