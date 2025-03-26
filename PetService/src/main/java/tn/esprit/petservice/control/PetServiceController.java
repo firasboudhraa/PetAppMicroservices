@@ -1,10 +1,12 @@
 package tn.esprit.petservice.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.petservice.entity.PetService;
 import tn.esprit.petservice.service.IPetService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -41,5 +43,9 @@ public class PetServiceController {
     @DeleteMapping("/delete-service/{id}")
     public void deleteService(@PathVariable("id") Long id) {
         this.petService.deleteService(id);
+    }
+    @GetMapping("/{id}/slots")
+    public List<LocalDateTime> getAvailableSlots(@PathVariable("id") Long id) {
+        return petService.getAvailableSlots(id);
     }
 }
