@@ -9,6 +9,7 @@ import tn.esprit.petservice.service.IPetService;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/services")
 public class PetServiceController {
