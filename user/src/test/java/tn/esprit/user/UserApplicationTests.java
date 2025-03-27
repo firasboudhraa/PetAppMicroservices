@@ -1,13 +1,13 @@
-package tn.esprit.petservice;
+package tn.esprit.user;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class PetServiceApplicationTests {
+class UserApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
+	@Test
+	void contextLoads() {
+	}
 
 }

@@ -1,0 +1,13 @@
+package tn.esprit.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import tn.esprit.entity.Role;
+import tn.esprit.entity.RoleEnum;
+import tn.esprit.entity.Role;
+import tn.esprit.entity.RoleEnum;
+
+
+public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findByName(RoleEnum name);
+
+}
