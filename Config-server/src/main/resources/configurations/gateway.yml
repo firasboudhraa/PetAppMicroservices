@@ -11,11 +11,31 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "Accept"
+            allowCredentials: true
       routes:
         - id: services
           uri: http://localhost:8090
           predicates:
             - Path=/api/services/**
+        - id: appointments
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/appointments/**
 
 management:
   tracing:

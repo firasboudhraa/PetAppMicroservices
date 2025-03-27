@@ -1,7 +1,6 @@
 package tn.esprit.petservice.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.petservice.entity.PetService;
 import tn.esprit.petservice.service.IPetService;
@@ -9,7 +8,6 @@ import tn.esprit.petservice.service.IPetService;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/services")
 public class PetServiceController {
@@ -49,5 +47,4 @@ public class PetServiceController {
     public List<LocalDateTime> getAvailableSlots(@PathVariable("id") Long id) {
         return petService.getAvailableSlots(id);
     }
-
 }
