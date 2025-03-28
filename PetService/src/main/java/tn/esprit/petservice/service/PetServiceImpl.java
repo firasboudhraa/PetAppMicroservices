@@ -52,7 +52,7 @@ public class PetServiceImpl implements IPetService {
         return petServiceRepository.findByProviderId(providerId);
     }
 
-    @Override
+   /* @Override
     public List<LocalDateTime> getAvailableSlots(Long serviceId) {
         PetService service = getServiceById(serviceId);
         // Implement logic to get available slots
@@ -64,7 +64,34 @@ public class PetServiceImpl implements IPetService {
             currentSlot = currentSlot.plusMinutes(service.getDurationInMinutes());
         }
         return slots;
+    }*/
+
+    @Override
+    public List<LocalDateTime> getAvailableSlots(Long serviceId) {
+        PetService service = getServiceById(serviceId);
+        List<Appointment> appointments = appointmentClient.getAppointmentsByService(serviceId);
+        List<LocalDateTime> availableSlots = new ArrayList<>();
+
+        LocalDateTime currentSlot = service.getStartDate();
+        while (currentSlot.isBefore(service.getEndDate())) {
+            boolean isSlotTaken = false;
+            for (Appointment appointment : appointments) {
+                LocalDateTime appointmentDate = appointment.getDateAppointment();
+                if (currentSlot.isEqual(appointmentDate)) {
+                    isSlotTaken = true;
+                    break;
+                }
+            }
+            if (!isSlotTaken) {
+                availableSlots.add(currentSlot);
+            }
+            currentSlot = currentSlot.plusMinutes(service.getDurationInMinutes());
+        }
+
+        return availableSlots;
     }
+
+
 
     @Override
     public FullPetServiceResponse getServiceWithAppoitment(Long id) {
