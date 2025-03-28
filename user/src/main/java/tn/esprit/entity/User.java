@@ -47,6 +47,8 @@ public class User {
     @Column(name = "appointment_id")
     private List<Long> idAppointment = new ArrayList<>();
 
+
+
     /*
     // One-to-Many: User can create multiple posts
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
