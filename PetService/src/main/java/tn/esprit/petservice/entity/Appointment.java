@@ -14,6 +14,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class Appointment {
 
-    private LocalDateTime appointmentDate;
+    private LocalDateTime dateAppointment;
     private AppointmentStatus status;
 }
