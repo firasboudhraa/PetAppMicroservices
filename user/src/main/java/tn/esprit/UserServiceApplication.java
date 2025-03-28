@@ -6,8 +6,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 
 @EnableFeignClients
-
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "tn.esprit")
 public class UserServiceApplication {
 
     public static void main(String[] args) {
