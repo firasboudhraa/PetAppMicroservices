@@ -1,4 +1,4 @@
-package tn.esprit.medicalnotebook.entity;
+package tn.esprit.medicalrecord.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,7 +36,7 @@ public class MedicalRecord {
     @JsonProperty
     @ElementCollection
     private List<String> attachments = new ArrayList<>();
-    @JsonProperty
+   /* @JsonProperty
     @ManyToOne
-    private Carnet carnet;
+    private Carnet carnet;*/
 }

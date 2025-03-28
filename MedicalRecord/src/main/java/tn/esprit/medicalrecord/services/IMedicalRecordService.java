@@ -4,7 +4,7 @@ import tn.esprit.medicalrecord.entity.MedicalRecord;
 
 import java.util.List;
 
-public interface IMedicalRecord {
+public interface IMedicalRecordService {
     public List<MedicalRecord> retrieveAllMedicalRecords();
 
 

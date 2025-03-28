@@ -1,1 +1,5 @@
-spring.application.name=MedicalRecord
+spring:
+  application:
+    name: MedicalRecord
+  config:
+    import: optional:configserver:http://localhost:8888

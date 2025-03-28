@@ -21,6 +21,10 @@ spring:
           uri: http://localhost:8070
           predicates:
             - Path=/api/carnets/**
+        - id: records
+          uri: http://localhost:8071
+          predicates:
+            - Path=/api/medicalrecord/**
 
 
 

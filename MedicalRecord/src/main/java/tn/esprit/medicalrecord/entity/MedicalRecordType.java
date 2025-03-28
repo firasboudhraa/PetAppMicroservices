@@ -1,4 +1,4 @@
-package tn.esprit.medicalnotebook.entity;
+package tn.esprit.medicalrecord.entity;
 
 public enum MedicalRecordType {
     VACCINATION,
