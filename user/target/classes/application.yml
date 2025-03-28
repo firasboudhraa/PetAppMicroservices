@@ -1,0 +1,31 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8081
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+
+  application:
+    name: user
+
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/userDB?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: # provide password here if necessary
+
+  jpa:
+    hibernate:
+      ddl-auto: update # Change to 'update' if you want to update schema automatically
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
