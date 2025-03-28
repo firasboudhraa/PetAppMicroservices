@@ -1,4 +1,5 @@
-package tn.esprit.posts.config;
+package tn.esprit.comments.config;
+
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

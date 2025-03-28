@@ -19,6 +19,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="posts" />
+        <module name="comments" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,6 +28,7 @@
       <module name="ApiGateway" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="Eureka-server" options="-parameters" />
+      <module name="comments" options="-parameters" />
       <module name="posts" options="-parameters" />
     </option>
   </component>
