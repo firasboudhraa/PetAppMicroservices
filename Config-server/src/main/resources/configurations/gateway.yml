@@ -1,0 +1,22 @@
+eureka:
+  client:
+    register-with-eureka: false
+server:
+  port: 8222
+spring:
+  application:
+    name: gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: donations
+          uri: http://localhost:8010
+          predicates:
+            - Path=/donation/**
+        - id: events
+          uri: http://localhost:8015
+          predicates:
+            - Path=/event/**
