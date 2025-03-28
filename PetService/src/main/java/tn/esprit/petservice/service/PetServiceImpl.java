@@ -2,7 +2,9 @@ package tn.esprit.petservice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.petservice.Client.AppointmentClient;
 import tn.esprit.petservice.entity.Appointment;
+import tn.esprit.petservice.entity.FullPetServiceResponse;
 import tn.esprit.petservice.entity.PetService;
 import tn.esprit.petservice.repository.PetServiceRepository;
 
@@ -11,10 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
 public class PetServiceImpl implements IPetService {
     @Autowired
     private PetServiceRepository petServiceRepository;
+
+    @Autowired
+    private AppointmentClient appointmentClient;
     @Override
     public List<PetService> getAllServices() {
         return petServiceRepository.findAll();
@@ -62,6 +66,17 @@ public class PetServiceImpl implements IPetService {
         return slots;
     }
 
-
-
+    @Override
+    public FullPetServiceResponse getServiceWithAppoitment(Long id) {
+        var service = petServiceRepository.findById(id).get();
+        var appointments = appointmentClient.getAppointmentsByService(id);
+        return FullPetServiceResponse.builder()
+                .name(service.getName())
+                .description(service.getDescription())
+                .price(service.getPrice())
+                .appointments(appointments)
+                .address(service.getAddress())
+                .durationInMinutes(service.getDurationInMinutes())
+                .build();
+    }
 }

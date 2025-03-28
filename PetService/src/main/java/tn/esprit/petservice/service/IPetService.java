@@ -1,5 +1,6 @@
 package tn.esprit.petservice.service;
 
+import tn.esprit.petservice.entity.FullPetServiceResponse;
 import tn.esprit.petservice.entity.PetService;
 
 import java.time.LocalDateTime;
@@ -14,4 +15,5 @@ public interface IPetService {
     List<PetService> getServicesByProvider(Long providerId);
     List<LocalDateTime> getAvailableSlots(Long serviceId);
 
+     FullPetServiceResponse getServiceWithAppoitment(Long id);
 }

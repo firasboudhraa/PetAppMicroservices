@@ -2,6 +2,7 @@ package tn.esprit.petservice.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.petservice.entity.FullPetServiceResponse;
 import tn.esprit.petservice.entity.PetService;
 import tn.esprit.petservice.service.IPetService;
 
@@ -46,5 +47,10 @@ public class PetServiceController {
     @GetMapping("/{id}/slots")
     public List<LocalDateTime> getAvailableSlots(@PathVariable("id") Long id) {
         return petService.getAvailableSlots(id);
+    }
+
+    @GetMapping("/with-appoitments/{id}")
+    public FullPetServiceResponse getServiceWithAppoitment(@PathVariable("id") Long id) {
+        return petService.getServiceWithAppoitment(id);
     }
 }

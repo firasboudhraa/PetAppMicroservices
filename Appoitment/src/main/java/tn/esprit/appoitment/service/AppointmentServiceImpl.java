@@ -36,4 +36,9 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     public List<Appointment> findAllAppointments() {
         return appointmentRepository.findAll();
     }
+
+    @Override
+    public List<Appointment> getAppointmentsByService(Long idService) {
+        return appointmentRepository.findByIdService(idService);
+    }
 }
