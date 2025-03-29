@@ -3,14 +3,3 @@ spring:
     name: gateway
   config:
     import: optional:configserver:http://localhost:8888
-  cloud:
-    gateway:
-      discovery:
-        locator:
-          enabled: true
-      mvc:
-        routes:
-          - id: PetMs
-            uri: http://localhost:8050
-            predicates:
-              - Path=/api/v1/pet/**
