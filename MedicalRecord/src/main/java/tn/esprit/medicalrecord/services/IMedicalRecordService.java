@@ -15,4 +15,5 @@ public interface IMedicalRecordService {
     public void removeMedicalRecord(Long cId);
 
     public MedicalRecord modifyMedicalRecord(MedicalRecord medicalRecord) ;
+    public List<MedicalRecord> findByCarnetId(Long carnetId);
 }

@@ -34,4 +34,8 @@ public class MedicalRecordServiceImp implements IMedicalRecordService {
     public MedicalRecord modifyMedicalRecord(MedicalRecord medicalRecord) {
         return medicalRecordRepository.save(medicalRecord);
     }
+    @Override
+    public List<MedicalRecord> findByCarnetId(Long carnetId) {
+        return medicalRecordRepository.findByCarnetId(carnetId);
+    }
 }

@@ -41,4 +41,10 @@ public class MedicalRecordController {
         MedicalRecord medicalrecord = medicalRecordService.modifyMedicalRecord(md);
         return medicalrecord;
     }
+
+    @GetMapping("/medical-records/byCarnet/{id}")
+    public List<MedicalRecord> getMedicalRecordsByCarnet(@PathVariable("id") Long id) {
+        return medicalRecordService.findByCarnetId(id);
+    }
+
 }

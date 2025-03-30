@@ -22,8 +22,8 @@ public class MedicalRecord {
     private long UUId;
     @JsonProperty
     private Date DateTime;
-    /*@JsonProperty
-    private MedicalRecordType type;*/
+    @JsonProperty
+    private MedicalRecordType type;
     @JsonProperty
     private String description;
     @JsonProperty
@@ -31,8 +31,7 @@ public class MedicalRecord {
     @JsonProperty
     private Date next_due_date;
     @JsonProperty
-    @Column(nullable = true)
-    private long carnet_id;
+    private long carnetId;
     @JsonProperty
     @ElementCollection
     private List<String> attachments = new ArrayList<>();

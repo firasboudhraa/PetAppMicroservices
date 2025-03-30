@@ -2,7 +2,9 @@ package tn.esprit.medicalnotebook.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tn.esprit.medicalnotebook.Client.MedicalRecordClient;
 import tn.esprit.medicalnotebook.entity.Carnet;
+import tn.esprit.medicalnotebook.entity.FullCarnetResponse;
 import tn.esprit.medicalnotebook.repository.CarnetRepository;
 
 import java.util.List;
@@ -11,6 +13,8 @@ import java.util.List;
 public class CarnetServiceImp implements ICarnetService {
     @Autowired
     public CarnetRepository carnetRepository;
+    @Autowired
+    public MedicalRecordClient medicalRecordclient;
     @Override
     public List<Carnet> retrieveAllCarnets() {
         return carnetRepository.findAll();
@@ -31,5 +35,15 @@ public class CarnetServiceImp implements ICarnetService {
     @Override
     public Carnet modifyCarnet(Carnet carnet) {
         return carnetRepository.save(carnet);
+    }
+    @Override
+
+    public FullCarnetResponse getMedicalRecordsByCarnet(Long carnetId) {
+        var carnets = carnetRepository.findById(carnetId).get();
+        var medicalRecords = medicalRecordclient.getMedicalRecordsByCarnet(carnetId);
+        return FullCarnetResponse.builder()
+                .MedicalHistory(carnets.getMedicalHistory())
+                .medicalRecords(medicalRecords)
+                .build();
     }
 }

@@ -3,8 +3,10 @@ package tn.esprit.medicalnotebook.control;
 
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.medicalnotebook.entity.Carnet;
+import tn.esprit.medicalnotebook.entity.FullCarnetResponse;
 import tn.esprit.medicalnotebook.service.ICarnetService;
 
 import java.util.List;
@@ -42,5 +44,10 @@ public class CarnetController {
     public Carnet modifyCarnet(@RequestBody Carnet c) {
         Carnet carnet = carnetService.modifyCarnet(c);
         return carnet;
+    }
+    // Récupérer les records associés à un carnet spécifique
+    @GetMapping("/{id}/medical-records")
+    public FullCarnetResponse getMedicalRecords(@PathVariable Long id) {
+        return carnetService.getMedicalRecordsByCarnet(id);
     }
 }
