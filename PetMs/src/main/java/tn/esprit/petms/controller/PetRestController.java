@@ -1,5 +1,6 @@
 package tn.esprit.petms.controller;
 
+import jakarta.ws.rs.core.Response;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,11 +16,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-// @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 @RequestMapping("/api/v1/pet")
 public class PetRestController {
     @Autowired
@@ -43,16 +45,16 @@ public class PetRestController {
         return petService.retrievePet(idPet) ;
     }
 
-    @PostMapping("/add-pet")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Pet addPet(@RequestBody Pet pet){
-        System.out.println("Received Pet: " + pet);  // Log the received pet
+//    @PostMapping("/add-pet")
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public Pet addPet(@RequestBody Pet pet){
+//        System.out.println("Received Pet: " + pet);  // Log the received pet
+//
+//        return petService.addPet(pet) ;
+//    }
 
-        return petService.addPet(pet) ;
-    }
-
-    @PostMapping("/addWithImage")
-    public ResponseEntity<String> addPet(@RequestParam("name") String name,
+    @PostMapping("/addPet")
+    public ResponseEntity<Object> addPet(@RequestParam("name") String name,
                                          @RequestParam("species") String species,
                                          @RequestParam("age") int age,
                                          @RequestParam("color") String color,
@@ -60,20 +62,23 @@ public class PetRestController {
                                          @RequestParam("ownerId") Long ownerId,
                                          @RequestParam("image") MultipartFile image) {
         try {
-            // Save the image and get its path
             String imagePath = saveImage(image);
-
-            // Create the Pet object with the image path
             Pet pet = new Pet(name, species, age, color, sex, ownerId, imagePath);
-
-
-            // Save the pet to the database
             petService.addPet(pet);
 
-            return ResponseEntity.ok("Pet added successfully");
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Pet added successfully");
+            response.put("imagePath", imagePath);
+
+            return ResponseEntity.ok(response);
         } catch (IOException e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Failed to upload image");
+
+            Map<String, String> error = new HashMap<>();
+            error.put("message", "Failed to upload image");
+            error.put("error", e.getMessage());
+
+            return ResponseEntity.status(500).body(error);
         }
     }
     private String saveImage(MultipartFile image) throws IOException {
@@ -106,8 +111,46 @@ public class PetRestController {
     }
 
     @PutMapping("/modify-pet")
-    public Pet modifyPet(@RequestBody Pet pet){
-        return petService.modifyPet(pet) ;
+    public ResponseEntity<Object> modifyPet(@RequestParam("id") Long id,
+                                            @RequestParam("name") String name,
+                                            @RequestParam("species") String species,
+                                            @RequestParam("age") int age,
+                                            @RequestParam("color") String color,
+                                            @RequestParam("sex") String sex,
+                                            @RequestParam("ownerId") Long ownerId,
+                                            @RequestParam(value = "image", required = false) MultipartFile image) {
+        try {
+            Pet existingPet = petService.retrievePet(id);
+            if (existingPet == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of("message", "Pet not found"));
+            }
+
+            existingPet.setName(name);
+            existingPet.setSpecies(species);
+            existingPet.setAge(age);
+            existingPet.setColor(color);
+            existingPet.setSex(sex);
+            existingPet.setOwnerId(ownerId);
+
+            if (image != null && !image.isEmpty()) {
+                String imagePath = saveImage(image);
+                existingPet.setImagePath(imagePath);
+            }
+
+            Pet updatedPet = petService.modifyPet(existingPet);
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Pet updated successfully");
+            response.put("updatedPet", updatedPet);
+
+            return ResponseEntity.ok(response);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(Map.of(
+                    "message", "Failed to upload image",
+                    "error", e.getMessage()
+            ));
+        }
     }
 
 

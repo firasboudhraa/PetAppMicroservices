@@ -3,3 +3,17 @@ spring:
     name: gateway
   config:
     import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: PetMs
+            uri: http://localhost:8050
+            predicates:
+              - Path=/api/v1/pet/**
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
