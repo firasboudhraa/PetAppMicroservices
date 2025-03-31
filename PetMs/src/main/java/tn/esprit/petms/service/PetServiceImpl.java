@@ -16,6 +16,9 @@ public class PetServiceImpl implements IPetService{
     public List<Pet> retrieveAllPets(){
         return petRepository.findAll();
     };
+    public List<Pet> getPetsByOwnerId(Long ownerId){
+        return petRepository.findByOwnerId(ownerId);
+    }
     public Pet retrievePet(Long idPet){
         return petRepository.findById(idPet).get() ;
     };

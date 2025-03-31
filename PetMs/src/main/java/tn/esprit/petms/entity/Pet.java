@@ -22,20 +22,26 @@ public class Pet {
     private int age;
     private String color ;
     private String sex ;
+    private boolean forAdoption ;
+    private String description ;
 
 
     private Long ownerId ;
     private String imagePath;
 
 
-    public Pet(String name, String species, int age, String color, String sex, Long ownerId, String imagePath) {
+    public Pet(String name, String species, int age,
+               String color, String sex,String description
+            , Long ownerId, String imagePath , boolean forAdoption) {
         this.name = name ;
         this.species=species;
         this.age=age;
         this.color=color;
+        this.description = description ;
         this.sex =sex;
         this.ownerId=ownerId;
         this.imagePath=imagePath;
+        this.forAdoption=forAdoption ;
 
     }
 //    public Pet() {
