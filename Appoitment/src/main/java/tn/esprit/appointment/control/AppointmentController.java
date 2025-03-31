@@ -1,9 +1,9 @@
-package tn.esprit.appoitment.control;
+package tn.esprit.appointment.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.appoitment.entity.Appointment;
-import tn.esprit.appoitment.service.IAppointmentService;
+import tn.esprit.appointment.entity.Appointment;
+import tn.esprit.appointment.service.IAppointmentService;
 
 import java.util.List;
 

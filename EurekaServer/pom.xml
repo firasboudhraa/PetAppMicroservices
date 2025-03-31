@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>tn.esprit</groupId>
-    <artifactId>Eureka-server</artifactId>
+    <artifactId>EurekaServer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>EurekaServer</name>
     <description>EurekaServer</description>

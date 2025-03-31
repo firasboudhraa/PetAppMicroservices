@@ -19,5 +19,6 @@ public class FullPetServiceResponse {
     private int durationInMinutes;
     private String address;
 
-    List<Appointment> appointments;
+    private List<Appointment> appointments;
+    private List<Pet> pets ;
 }

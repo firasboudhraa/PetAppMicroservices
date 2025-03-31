@@ -1,7 +1,7 @@
-package tn.esprit.appoitment.repository;
+package tn.esprit.appointment.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import tn.esprit.appoitment.entity.Appointment;
+import tn.esprit.appointment.entity.Appointment;
 
 import java.util.List;
 

@@ -10,11 +10,13 @@
         <option value="$PROJECT_DIR$/PetService/pom.xml" />
         <option value="$PROJECT_DIR$/Appointment/pom.xml" />
         <option value="$PROJECT_DIR$/Appoitment/pom.xml" />
+        <option value="$PROJECT_DIR$/Rabbitmq/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/Appointment/pom.xml" />
+        <option value="$PROJECT_DIR$/Rabbitmq/pom.xml" />
       </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />

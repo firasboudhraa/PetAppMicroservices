@@ -1,4 +1,4 @@
-package tn.esprit.appoitment.entity;
+package tn.esprit.appointment.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

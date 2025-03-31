@@ -1,4 +1,4 @@
-package tn.esprit.appoitment.entity;
+package tn.esprit.appointment.entity;
 
 public enum AppointmentStatus {
     PENDING,

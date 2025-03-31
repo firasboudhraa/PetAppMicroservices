@@ -1,9 +1,9 @@
-package tn.esprit.appoitment.service;
+package tn.esprit.appointment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import tn.esprit.appoitment.entity.Appointment;
-import tn.esprit.appoitment.repository.AppointmentRepository;
+import tn.esprit.appointment.entity.Appointment;
+import tn.esprit.appointment.repository.AppointmentRepository;
 
 import java.util.List;
 

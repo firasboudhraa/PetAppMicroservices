@@ -1,6 +1,6 @@
-package tn.esprit.appoitment.service;
+package tn.esprit.appointment.service;
 
-import tn.esprit.appoitment.entity.Appointment;
+import tn.esprit.appointment.entity.Appointment;
 
 import java.util.List;
 

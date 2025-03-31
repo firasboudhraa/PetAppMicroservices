@@ -1,4 +1,4 @@
-package tn.esprit.petservice.Client;
+package tn.esprit.petservice.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

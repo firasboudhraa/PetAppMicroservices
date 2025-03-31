@@ -1,10 +1,10 @@
-package tn.esprit.appoitment;
+package tn.esprit.appointment;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AppoitmentApplicationTests {
+class AppointmentApplicationTests {
 
     @Test
     void contextLoads() {

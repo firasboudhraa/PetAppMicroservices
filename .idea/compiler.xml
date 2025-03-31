@@ -8,32 +8,32 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Config-server" />
+        <module name="EurekaServer" />
         <module name="ApiGateway" />
-        <module name="Eureka-server" />
       </profile>
       <profile name="Annotation profile for PetService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath>
+        <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
+        <module name="Appointment" />
         <module name="PetService" />
-        <module name="Appoitment" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Appointment" target="17" />
+      <module name="Rabbitmq" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
       <module name="Appointment" options="-parameters" />
-      <module name="Appoitment" options="-parameters" />
       <module name="Config-server" options="-parameters" />
-      <module name="Eureka-server" options="-parameters" />
+      <module name="EurekaServer" options="-parameters" />
       <module name="PetService" options="-parameters" />
+      <module name="Rabbitmq" options="-parameters" />
     </option>
   </component>
 </project>
