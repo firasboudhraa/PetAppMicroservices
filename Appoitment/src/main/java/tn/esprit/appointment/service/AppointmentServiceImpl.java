@@ -2,6 +2,7 @@ package tn.esprit.appointment.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.repository.AppointmentRepository;
 
@@ -40,5 +41,11 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     @Override
     public List<Appointment> getAppointmentsByService(Long idService) {
         return appointmentRepository.findByIdService(idService);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAppointmentByService(Long idService) {
+        appointmentRepository.deleteByIdService(idService);
     }
 }

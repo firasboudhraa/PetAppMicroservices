@@ -23,6 +23,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Common-events" target="17" />
       <module name="Rabbitmq" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -30,10 +31,10 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
       <module name="Appointment" options="-parameters" />
+      <module name="Common-events" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="PetService" options="-parameters" />
-      <module name="Rabbitmq" options="-parameters" />
     </option>
   </component>
 </project>

@@ -1,11 +1,14 @@
 package tn.esprit.petservice.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tn.esprit.petservice.client.AppointmentClient;
 import tn.esprit.petservice.entity.Appointment;
 import tn.esprit.petservice.entity.FullPetServiceResponse;
 import tn.esprit.petservice.entity.PetService;
+import tn.esprit.petservice.rabbitmq.RabbitMQMessageProducer;
 import tn.esprit.petservice.repository.PetServiceRepository;
 
 import java.time.LocalDate;
@@ -15,12 +18,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class PetServiceImpl implements IPetService {
     @Autowired
     private PetServiceRepository petServiceRepository;
 
     @Autowired
+    private final RabbitMQMessageProducer rabbitMQMessageProducer;
+
+
+    @Autowired
     private AppointmentClient appointmentClient;
+
     @Override
     public List<PetService> getAllServices() {
         return petServiceRepository.findAll();
@@ -46,7 +55,15 @@ public class PetServiceImpl implements IPetService {
 
     @Override
     public void deleteService(Long id) {
+
         petServiceRepository.deleteById(id);
+        // Send a message to the RabbitMQ queue
+        String message = "{ \"idService\": " + id + " }";
+        rabbitMQMessageProducer.publish(
+                message,
+                "petservice.exchange",
+                "petservice.routingkey"
+        );
     }
 
     @Override

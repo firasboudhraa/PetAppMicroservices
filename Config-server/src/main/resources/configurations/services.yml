@@ -21,6 +21,20 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+
+rabbitmq:
+  exchanges:
+    petservice: petservice.exchange
+  queues:
+    petservice: petservice.queue
+  routing-keys:
+    petservice: petservice.routing-key
 
 application:
   config:

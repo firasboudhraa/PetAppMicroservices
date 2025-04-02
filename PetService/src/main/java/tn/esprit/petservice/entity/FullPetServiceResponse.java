@@ -20,5 +20,4 @@ public class FullPetServiceResponse {
     private String address;
 
     private List<Appointment> appointments;
-    private List<Pet> pets ;
 }

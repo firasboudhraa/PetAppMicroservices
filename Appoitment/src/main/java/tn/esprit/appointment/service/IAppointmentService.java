@@ -12,4 +12,6 @@ public interface IAppointmentService {
     public List<Appointment> findAllAppointments();
 
     List<Appointment> getAppointmentsByService(Long serviceId);
+
+    void deleteAppointmentByService(Long idService);
 }
