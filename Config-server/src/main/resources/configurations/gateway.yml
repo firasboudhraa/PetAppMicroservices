@@ -1,6 +1,6 @@
 eureka:
   client:
-    register-with-eureka: false
+    register-with-eureka: true
 server:
   port: 8222
 spring:
@@ -31,11 +31,11 @@ spring:
         - id: posts
           uri: http://localhost:8082
           predicates:
-            - Path=/api/services/**
-        - id: appointments
-          uri: http://localhost:8082
+            - Path=/posts/**
+        - id: comments
+          uri: http://localhost:8083
           predicates:
-            - Path=/api/appointments/**
+            - Path=/comments/**
 
 management:
   tracing:
