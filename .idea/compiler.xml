@@ -11,7 +11,7 @@
         <module name="ApiGateway" />
         <module name="Eureka-server" />
       </profile>
-      <profile name="Annotation profile for event" enabled="true">
+      <profile name="Annotation profile for donation" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />

@@ -15,4 +15,6 @@ public class Donation {
     private float amount;
     @JsonProperty
     private LocalDateTime date;
+    @JsonProperty
+    private String status;
 }

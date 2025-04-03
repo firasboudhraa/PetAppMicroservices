@@ -9,6 +9,8 @@ import tn.esprit.donation.service.IDonationService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
+
 @RestController
 @AllArgsConstructor
 @RequestMapping("/donation")

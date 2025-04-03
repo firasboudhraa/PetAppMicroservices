@@ -9,7 +9,7 @@ import tn.esprit.event.entity.FullEventResponse;
 import tn.esprit.event.service.IEventService;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
 @RequestMapping("/event")

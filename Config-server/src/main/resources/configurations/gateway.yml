@@ -11,6 +11,22 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "Accept"
+            allowCredentials: true
       routes:
         - id: donations
           uri: http://localhost:8010
