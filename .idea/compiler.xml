@@ -15,7 +15,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
+        <processorPath>
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="Appointment" />
@@ -23,7 +23,6 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Common-events" target="17" />
       <module name="Rabbitmq" target="17" />
     </bytecodeTargetLevel>
   </component>
@@ -31,7 +30,6 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
       <module name="Appointment" options="-parameters" />
-      <module name="Common-events" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="PetService" options="-parameters" />

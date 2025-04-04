@@ -152,4 +152,14 @@ public class PetServiceImpl implements IPetService {
                 .durationInMinutes(service.getDurationInMinutes())
                 .build();
     }
+
+    @Override
+    public void acceptAppointment(Long id) {
+        appointmentClient.acceptAppointment(id);
+    }
+
+    @Override
+    public void rejectAppointment(Long id) {
+        appointmentClient.rejectAppointment(id);
+    }
 }

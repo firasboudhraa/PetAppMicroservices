@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Appointment {
-
+    private Long idAppointment;
     private LocalDateTime dateAppointment;
     private AppointmentStatus status;
 }

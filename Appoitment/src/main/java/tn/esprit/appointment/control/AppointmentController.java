@@ -3,6 +3,7 @@ package tn.esprit.appointment.control;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.appointment.entity.Appointment;
+import tn.esprit.appointment.entity.AppointmentStatus;
 import tn.esprit.appointment.service.IAppointmentService;
 
 import java.util.List;
@@ -41,5 +42,15 @@ public class AppointmentController {
     @GetMapping("/service/{serviceId}")
     public List<Appointment> getAppointmentsByService(@PathVariable("serviceId") Long serviceId) {
         return appointmentService.getAppointmentsByService(serviceId);
+    }
+
+    @PutMapping("/{id}/accept")
+    public Appointment acceptAppointment(@PathVariable("id") Long id) {
+        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CONFIRMED);
+    }
+
+    @PutMapping("/{id}/reject")
+    public Appointment rejectAppointment(@PathVariable("id") Long id) {
+        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CANCELLED);
     }
 }

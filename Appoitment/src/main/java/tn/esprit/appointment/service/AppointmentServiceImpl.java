@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.appointment.entity.Appointment;
+import tn.esprit.appointment.entity.AppointmentStatus;
 import tn.esprit.appointment.repository.AppointmentRepository;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     private AppointmentRepository appointmentRepository;
     @Override
     public Appointment addAppointment(Appointment appointment) {
+        appointment.setStatus(AppointmentStatus.PENDING);
         return appointmentRepository.save(appointment);
     }
 
@@ -47,5 +49,12 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     @Transactional
     public void deleteAppointmentByService(Long idService) {
         appointmentRepository.deleteByIdService(idService);
+    }
+
+    @Override
+    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status) {
+        Appointment appointment = appointmentRepository.findById(id).get();
+        appointment.setStatus(status);
+        return appointmentRepository.save(appointment);
     }
 }

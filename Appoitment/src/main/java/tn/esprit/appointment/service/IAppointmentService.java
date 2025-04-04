@@ -1,6 +1,7 @@
 package tn.esprit.appointment.service;
 
 import tn.esprit.appointment.entity.Appointment;
+import tn.esprit.appointment.entity.AppointmentStatus;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public interface IAppointmentService {
     public Appointment findAppointmentById(Long id);
     public List<Appointment> findAllAppointments();
 
-    List<Appointment> getAppointmentsByService(Long serviceId);
+    public List<Appointment> getAppointmentsByService(Long serviceId);
 
-    void deleteAppointmentByService(Long idService);
+    public void deleteAppointmentByService(Long idService);
+    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status);
+
 }

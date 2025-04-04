@@ -53,4 +53,14 @@ public class PetServiceController {
     public FullPetServiceResponse getServiceWithAppoitment(@PathVariable("id") Long id) {
         return petService.getServiceWithAppoitment(id);
     }
+
+    @PutMapping("/with-appoitments/{id}/accept")
+    public void acceptAppointment(@PathVariable("id") Long id) {
+        petService.acceptAppointment(id);
+    }
+
+    @PutMapping("/with-appoitments/{id}/reject")
+    public void rejectAppointment(@PathVariable("id") Long id) {
+        petService.rejectAppointment(id);
+    }
 }

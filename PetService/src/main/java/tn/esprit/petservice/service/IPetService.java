@@ -16,4 +16,6 @@ public interface IPetService {
     List<LocalDateTime> getAvailableSlots(Long serviceId);
 
      FullPetServiceResponse getServiceWithAppoitment(Long id);
+     void acceptAppointment(Long id);
+     void rejectAppointment(Long id);
 }

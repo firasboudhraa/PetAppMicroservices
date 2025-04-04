@@ -3,6 +3,7 @@ package tn.esprit.petservice.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import tn.esprit.petservice.entity.Appointment;
 
 import java.util.List;
@@ -11,4 +12,10 @@ import java.util.List;
 public interface AppointmentClient {
     @GetMapping("/service/{serviceId}")
     List<Appointment> getAppointmentsByService(@PathVariable("serviceId") Long serviceId);
+
+    @PutMapping("/{id}/accept")
+    Appointment acceptAppointment(@PathVariable("id") Long id);
+
+    @PutMapping("/{id}/reject")
+    Appointment rejectAppointment(@PathVariable("id") Long id);
 }

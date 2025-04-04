@@ -9,7 +9,6 @@
         <option value="$PROJECT_DIR$/Config-server/pom.xml" />
         <option value="$PROJECT_DIR$/PetService/pom.xml" />
         <option value="$PROJECT_DIR$/Appoitment/pom.xml" />
-        <option value="$PROJECT_DIR$/Common-events/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
