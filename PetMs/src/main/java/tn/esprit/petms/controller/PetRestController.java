@@ -64,12 +64,15 @@ public class PetRestController {
                                          @RequestParam("color") String color,
                                          @RequestParam("sex") String sex,
                                          @RequestParam("description") String description,
+                                         @RequestParam("location") String location,
                                          @RequestParam("ownerId") Long ownerId,
                                          @RequestParam("forAdoption") boolean forAdoption,
                                          @RequestParam("image") MultipartFile image) {
         try {
             String imagePath = saveImage(image);
-            Pet pet = new Pet(name, species, age, color, sex, description , ownerId, imagePath , forAdoption);
+            Pet pet = new Pet(name, species, age, color, sex,
+                             description, location , ownerId, imagePath , forAdoption,
+                             null );
             petService.addPet(pet);
 
             Map<String, Object> response = new HashMap<>();
@@ -123,7 +126,8 @@ public class PetRestController {
                                             @RequestParam("age") int age,
                                             @RequestParam("color") String color,
                                             @RequestParam("sex") String sex,
-                                            @RequestParam("sex") String description,
+                                            @RequestParam("description") String description,
+                                            @RequestParam("location") String location,
                                             @RequestParam("ownerId") Long ownerId,
                                             @RequestParam("forAdoption") boolean forAdoption,
                                             @RequestParam(value = "image", required = false) MultipartFile image) {
@@ -138,7 +142,8 @@ public class PetRestController {
             existingPet.setAge(age);
             existingPet.setColor(color);
             existingPet.setSex(sex);
-            existingPet.setSex(description);
+            existingPet.setDescription(description);
+            existingPet.setLocation(location);
             existingPet.setOwnerId(ownerId);
             existingPet.setForAdoption(forAdoption);
 

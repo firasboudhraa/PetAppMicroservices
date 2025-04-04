@@ -47,11 +47,14 @@ spring:
           uri: http://localhost:8091
           predicates:
             - Path=/api/appointments/**
-        - id: PetMs
+        - id: PetMs-pet
           uri: http://localhost:8050
           predicates:
             - Path=/api/v1/pet/**
-
+        - id: PetMs-adoptionRequest
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/adoptionRequest/**
 management:
   tracing:
     sampling:

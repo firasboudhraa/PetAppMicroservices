@@ -7,10 +7,21 @@ spring:
     gateway:
       mvc:
         routes:
-          - id: PetMs
+          - id: PetMs-pets
             uri: http://localhost:8050
             predicates:
               - Path=/api/v1/pet/**
+          - id: PetMs-adoptionRequest
+            uri: http://localhost:8050
+            predicates:
+              - Path=/api/v1/adoptionRequest/**
+
+level:
+   org:
+     springframework:
+       cloud:
+         gateway: DEBUG
+
 eureka:
   client:
     service-url:

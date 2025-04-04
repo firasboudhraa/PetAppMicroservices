@@ -1,11 +1,13 @@
 package tn.esprit.petms.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,15 +26,19 @@ public class Pet {
     private String sex ;
     private boolean forAdoption ;
     private String description ;
+    private String location ;
 
 
     private Long ownerId ;
     private String imagePath;
+    @JsonIgnoreProperties("adoptedPet")
+    @OneToMany(mappedBy = "adoptedPet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<AdoptionRequest> adoptionRequests;
 
 
     public Pet(String name, String species, int age,
-               String color, String sex,String description
-            , Long ownerId, String imagePath , boolean forAdoption) {
+               String color, String sex,String description , String location
+            , Long ownerId, String imagePath , boolean forAdoption, List<AdoptionRequest> adoptionRequests) {
         this.name = name ;
         this.species=species;
         this.age=age;
@@ -42,6 +48,8 @@ public class Pet {
         this.ownerId=ownerId;
         this.imagePath=imagePath;
         this.forAdoption=forAdoption ;
+        this.location = location ;
+        this.adoptionRequests=adoptionRequests ;
 
     }
 //    public Pet() {
