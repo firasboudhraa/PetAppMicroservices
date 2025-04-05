@@ -1,31 +1,79 @@
+spring:
+  config:
+    import: optional:file:.env[.properties]
+
+  main:
+    allow-bean-definition-overriding: true
+
+  profiles:
+    active: dev
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+
+  application:
+    name: user
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/spring_user_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expiration: 86400000
+
+  mailing:
+    frontend:
+      activation-url: "http://localhost:4200/activate-account"
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    admin:
+      email: ${MAIL_ADMIN}
+    properties:
+      mail.smtp:
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: 5000
+        timeout: 5000
+        writetimeout: 5000
+
+
 eureka:
   instance:
     hostname: localhost
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+    enabled: true
 
 server:
   port: 8081
+  servlet:
+    context-path: /api
 
-spring:
-  main:
-    allow-bean-definition-overriding: true
+springdoc:
+  default-produces-type: application/json
+  cloud:
+    discovery:
+      enabled: false
 
-  application:
-    name: user
-
-  config:
-    import: optional:configserver:http://localhost:8888
-
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/userDB?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: # provide password here if necessary
-
-  jpa:
-    hibernate:
-      ddl-auto: update # Change to 'update' if you want to update schema automatically
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.validation: DEBUG

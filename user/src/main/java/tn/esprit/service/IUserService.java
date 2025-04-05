@@ -1,4 +1,4 @@
-package tn.esprit.backend_pi.service;
+package tn.esprit.service;
 
 
 
@@ -15,5 +15,6 @@ public interface IUserService {
     String removeUser(Long id);
 
     User modifyUser(User user);
+
 
 }

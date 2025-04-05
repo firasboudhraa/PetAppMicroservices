@@ -1,116 +1,70 @@
 package tn.esprit.entity;
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-
-@NoArgsConstructor
-@AllArgsConstructor
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import java.util.*;
 
 @Entity
-public class User {
-
+@Table(name = "users")
+@Getter @Setter @Builder
+@NoArgsConstructor @AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    private String firstName;
+    private String lastName;
 
-    @Column(name = "profile_picture_url")
-    private String profilePictureUrl;
-
-
-    @Column(name = "email", unique = true, nullable = false)
+    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(name = "password", nullable = false)
+    @Column(nullable = false)
     private String password;
 
-    @ManyToMany(fetch = FetchType.EAGER) // Fetch roles eagerly
+    private boolean enabled = false;
+    private boolean accountLocked = false;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name = "user_roles", // Join table name
+            name = "user_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private Set<Role> roles = new HashSet<>();
+    private  Set<Role> roles = new HashSet<>();
 
-
-    // One-to-Many relationship with Appointment
-    @ElementCollection
-    @CollectionTable(name = "user_appointment_references",
-            joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "appointment_id")
-    private List<Long> idAppointment = new ArrayList<>();
-
-
-
-    /*
-    // One-to-Many: User can create multiple posts
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<Post> posts;
-
-    // One-to-Many: User can donate multiple times
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Donation> donations;
-
-
-    // One-to-Many: User can request multiple pet sittings
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<PetSittingRequest> petSittingRequests;
-
-    // One-to-Many: User can apply for multiple pet adoptions
-    @OneToMany(mappedBy = "adopter", cascade = CascadeType.ALL)
-    private List<AdoptionRequest> adoptionRequests;
-*/
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-    public String getName() {
-        return this.name;
+    // UserDetails methods
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .toList();
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-
-    public String getEmail() {
+    @Override
+    public String getUsername() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean isAccountNonLocked() {
+        return !accountLocked;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
-    public String getProfilePictureUrl() {
-        return profilePictureUrl;
-    }
-
-    public void setProfilePictureUrl(String profilePictureUrl) {
-        this.profilePictureUrl = profilePictureUrl;
-    }
-
-
 }

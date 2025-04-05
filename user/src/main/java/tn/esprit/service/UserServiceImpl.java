@@ -12,7 +12,6 @@ import tn.esprit.repository.UserRepository;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import tn.esprit.backend_pi.service.IUserService;
 @NoArgsConstructor
 @AllArgsConstructor
 @Service
@@ -39,18 +38,16 @@ public class UserServiceImpl implements IUserService {
         Set<Role> validRoles = new HashSet<>();
 
         for (Role role : user.getRoles()) {
-            Role existingRole = roleRepository.findByName(role.getName());  // Return null if not found
+            Role existingRole = roleRepository.findByName(role.getName())
+                    .orElseThrow(() -> new RuntimeException("Role not found: " + role.getName())); // Handle missing role
 
-            if (existingRole != null) {
-                validRoles.add(existingRole);  // Add valid role to the set
-            } else {
-                System.out.println("Role not found: " + role.getName());  // Logging for when the role is not found
-            }
+            validRoles.add(existingRole);
         }
 
         user.setRoles(validRoles);
         return userRepository.save(user);
     }
+
 
     @Override
     public String removeUser(Long id) {
@@ -65,10 +62,5 @@ public class UserServiceImpl implements IUserService {
     public User modifyUser(User user) {
         return userRepository.save(user);
     }
-
-
-
-
-
 
 }

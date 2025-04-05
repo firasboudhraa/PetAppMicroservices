@@ -17,7 +17,8 @@ public class RoleServiceImpl implements IRoleService {
 
     @Override
     public Role getRoleByName(RoleEnum roleEnum) {
-        return roleRepository.findByName(roleEnum);
+        return roleRepository.findByName(roleEnum)
+                .orElseThrow(() -> new RuntimeException("Role '" + roleEnum + "' not found"));
     }
 
     @Override

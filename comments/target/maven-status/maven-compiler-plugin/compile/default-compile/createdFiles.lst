@@ -1,9 +1,0 @@
-tn\esprit\comments\service\CommentServiceImpl.class
-tn\esprit\comments\CommentsApplication.class
-tn\esprit\comments\config\WebConfig.class
-tn\esprit\comments\control\CommentRestController.class
-tn\esprit\comments\repository\CommentRepository.class
-tn\esprit\comments\service\UserClient.class
-tn\esprit\comments\entity\Comment.class
-tn\esprit\comments\service\ICommentService.class
-tn\esprit\comments\entity\UserDTO.class

@@ -8,7 +8,7 @@ import tn.esprit.entity.Role;
 import tn.esprit.entity.User;
 import tn.esprit.repository.RoleRepository;
 import tn.esprit.repository.UserRepository;
-import tn.esprit.backend_pi.service.IUserService;
+import tn.esprit.service.IUserService;
 import java.util.*;
 
 @RestController
@@ -49,11 +49,10 @@ public class UserController {
                     return ResponseEntity.badRequest().body("Role name cannot be null");
                 }
 
-                Role existingRole = roleRepository.findByName(role.getName());
-                if (existingRole == null) {
-                    return ResponseEntity.badRequest().body("Role '" + role.getName() + "' does not exist");
-                }
+                Role existingRole = roleRepository.findByName(role.getName())
+                        .orElseThrow(() -> new RuntimeException("Role '" + role.getName() + "' does not exist"));
                 validatedRoles.add(existingRole);
+
             }
             user.setRoles(validatedRoles);
 
@@ -118,12 +117,9 @@ public class UserController {
             if (user.getRoles() != null && !user.getRoles().isEmpty()) {
                 Set<Role> validatedRoles = new HashSet<>();
                 for (Role role : user.getRoles()) {
-                    Role existingRole = roleRepository.findByName(role.getName());
-                    if (existingRole == null) {
-                        return ResponseEntity.badRequest().body(
-                                Map.of("error", "Invalid role: " + role.getName())
-                        );
-                    }
+                    Role existingRole = roleRepository.findByName(role.getName())
+                            .orElseThrow(() -> new RuntimeException("Invalid role: " + role.getName())); // Fix the error
+
                     validatedRoles.add(existingRole);
                 }
                 user.setRoles(validatedRoles);
@@ -142,6 +138,5 @@ public class UserController {
             );
         }
     }
-
 
 }
