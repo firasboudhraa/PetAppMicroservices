@@ -21,4 +21,7 @@ public class AdoptionRequestServiceImpl {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) {
         return repository.findAllByRequesterUserId( requesterUserId);
     }
+    public void deleteAdoptionRequest(Long requestId){
+        repository.deleteById(requestId);
+    }
 }

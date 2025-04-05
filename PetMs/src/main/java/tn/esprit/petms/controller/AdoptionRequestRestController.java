@@ -30,6 +30,9 @@ public class AdoptionRequestRestController {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(@PathVariable Long requesterUserId) {
         return adoptionRequestService.getAllAdoptionRequestByThisUser(requesterUserId);
     }
-
+    @DeleteMapping("/{adoptionRequestId}")
+    public void deleteAdoptionRequest(@PathVariable("adoptionRequestId") Long adoptionRequestId){
+        adoptionRequestService.deleteAdoptionRequest(adoptionRequestId);
+    }
 
 }

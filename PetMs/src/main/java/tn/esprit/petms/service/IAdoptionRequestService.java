@@ -8,5 +8,6 @@ public interface IAdoptionRequestService {
     public AdoptionRequest saveAdoptionRequest(AdoptionRequest request) ;
   //  public List<AdoptionRequest> getAllAdoptionRequestForOwner(Long petOwnerId) ;
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) ;
+    public void deleteAdoptionRequest(Long requestId) ;
 
     }

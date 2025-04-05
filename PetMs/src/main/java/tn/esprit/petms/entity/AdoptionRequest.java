@@ -31,6 +31,7 @@ public class AdoptionRequest {
     private String location;
     private String message;
     private Boolean isConfirmed ;
+    private Boolean isRejected ;
     private Boolean isChangedByPetOwner ;
     private Boolean isChangedByRequestOwner ;
 
