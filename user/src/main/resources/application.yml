@@ -17,7 +17,7 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/spring_user_DB?createDatabaseIfNotExist=true&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3306/spring_user_db?createDatabaseIfNotExist=true&serverTimezone=UTC
     username: root
     password:
 
