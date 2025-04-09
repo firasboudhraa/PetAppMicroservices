@@ -13,7 +13,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/carnet")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class CarnetController {
     @Autowired
     ICarnetService carnetService;
@@ -47,7 +47,7 @@ public class CarnetController {
     }
     // Récupérer les records associés à un carnet spécifique
     @GetMapping("/{id}/medical-records")
-    public FullCarnetResponse getMedicalRecords(@PathVariable Long id) {
+    public FullCarnetResponse getMedicalRecordsByCarnet(@PathVariable Long id) {
         return carnetService.getMedicalRecordsByCarnet(id);
     }
 }

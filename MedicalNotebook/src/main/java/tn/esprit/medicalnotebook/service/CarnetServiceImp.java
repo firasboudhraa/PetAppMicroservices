@@ -42,7 +42,7 @@ public class CarnetServiceImp implements ICarnetService {
         var carnets = carnetRepository.findById(carnetId).get();
         var medicalRecords = medicalRecordclient.getMedicalRecordsByCarnet(carnetId);
         return FullCarnetResponse.builder()
-                .MedicalHistory(carnets.getMedicalHistory())
+                .name(carnets.getName())
                 .medicalRecords(medicalRecords)
                 .build();
     }

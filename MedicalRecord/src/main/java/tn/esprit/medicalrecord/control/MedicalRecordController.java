@@ -10,6 +10,8 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/medicalrecord")
+@CrossOrigin(origins = "http://localhost:4200")
+
 public class MedicalRecordController {
     @Autowired
     IMedicalRecordService medicalRecordService;
@@ -27,8 +29,7 @@ public class MedicalRecordController {
     }
     @PostMapping("/add-medicalRecord")
     public MedicalRecord addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
-        MedicalRecord medicalrecord = medicalRecordService.addMedicalRecord(medicalRecord);
-        return medicalrecord;
+       return medicalRecordService.addMedicalRecord(medicalRecord);
     }
 
     @DeleteMapping("/remove-medicalRecord/{medicalRecord-id}")

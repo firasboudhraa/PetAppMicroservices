@@ -19,6 +19,7 @@ spring:
       routes:
         - id: carnets
           uri: http://localhost:8070
+          #uri: lb://MedicalNotebook
           predicates:
             - Path=/api/carnets/**
         - id: records

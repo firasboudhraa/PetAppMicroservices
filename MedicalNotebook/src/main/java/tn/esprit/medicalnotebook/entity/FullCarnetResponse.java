@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 public class FullCarnetResponse {
     @JsonProperty
-    private String MedicalHistory;
-    @JsonProperty
     private List<MedicalRecord> medicalRecords;
+    @JsonProperty
+    private String name;
 }

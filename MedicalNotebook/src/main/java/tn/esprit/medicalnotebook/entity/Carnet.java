@@ -16,18 +16,19 @@ import java.util.Set;
 @Builder
 public class Carnet {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JsonProperty
-    private Long UUId;
-    /* @JsonProperty
-
+    private Long id;
+     @JsonProperty
+     private String name;
+/*
    @Column(nullable = true)
      private Long PetId;*/
-    @JsonProperty
-    private String MedicalHistory;
-    /* @JsonProperty
-    @OneToOne
-     private Pet pet;
+    /*@JsonProperty
+    private String medicalHistory;*/
+    /*@JsonProperty
+
+    private Pet pet_id;
     @JsonProperty
     private List<MedicalRecord> medicalRecords;*/
 }

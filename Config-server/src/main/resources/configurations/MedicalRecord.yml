@@ -14,7 +14,7 @@ spring:
     name: MedicalRecord
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/records?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/MedicalRecord?createDatabaseIfNotExist=true
     username: root
     password: ""
   jpa:

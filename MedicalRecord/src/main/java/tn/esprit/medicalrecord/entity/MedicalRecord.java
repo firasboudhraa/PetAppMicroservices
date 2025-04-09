@@ -5,37 +5,27 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
-
 public class MedicalRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long UUId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     @JsonProperty
-    private Date DateTime;
+    private Date dateTime;
     @JsonProperty
     private MedicalRecordType type;
     @JsonProperty
     private String description;
     @JsonProperty
-    private long veterinarian_id;
+    private long owner_id;
     @JsonProperty
     private Date next_due_date;
     @JsonProperty
     private long carnetId;
-    @JsonProperty
-    @ElementCollection
-    private List<String> attachments = new ArrayList<>();
-   /* @JsonProperty
-    @ManyToOne
-    private Carnet carnet;*/
+
 }
