@@ -12,7 +12,6 @@ spring:
   application:
     name: posts
 
-
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/posts?createDatabaseIfNotExist=true&serverTimezone=UTC
@@ -24,6 +23,15 @@ spring:
       ddl-auto: update
     database: mysql
     database-platform: org.hibernate.dialect.MySQL8Dialect
+
+  servlet:
+    multipart:
+      location: ./posts/uploads/  # The folder where images will be uploaded
+
+  web:
+    resources:
+      static-locations:
+        file: ${user.dir}/posts/uploads/  # Adjusted path for the posts/uploads folder
 
 management:
   tracing:

@@ -3,11 +3,11 @@ spring:
     name: posts
   config:
     import: optional:configserver:http://localhost:8888
-
   main:
-    allow-bean-definition-overriding: true   # <-- Add this line to allow bean overriding
+    allow-bean-definition-overriding: true
 
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8761/eureka
+
