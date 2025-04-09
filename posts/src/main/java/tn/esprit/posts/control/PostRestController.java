@@ -79,6 +79,46 @@ public class PostRestController {
         }
     }
 
+    @PutMapping("/{userId}/{postId}")
+    public ResponseEntity<Post> updatePost(
+            @PathVariable Long userId,
+            @PathVariable Long postId,
+            @RequestParam("title") String title,
+            @RequestParam("content") String content,
+            @RequestParam("type") String type,
+            @RequestParam(value = "image", required = false) MultipartFile image) {
+
+        try {
+            // Fetch the existing post from the database by ID
+            Post post = postService.retrievePost(postId);
+            if (post == null) {
+                return ResponseEntity.notFound().build();  // Return 404 if post doesn't exist
+            }
+
+            // Update the post fields
+            post.setTitle(title);
+            post.setContent(content);
+            post.setType(PostTypeEnum.valueOf(type.toUpperCase())); // Assuming type is enum
+
+            // Handle the image update (if a new image is provided)
+            if (image != null && !image.isEmpty()) {
+                String imageUrl = saveImage(image);
+                post.setImageUrl(imageUrl); // Update the image URL
+            }
+
+            // Add or update the user ID for the post
+            post.setUserId(userId);
+
+            // Save the updated post and return the response
+            Post updatedPost = postService.addPost(post, userId);  // Assuming addPost handles saving the post
+            return ResponseEntity.ok(updatedPost);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(500).body(null);  // Handle errors (e.g., image upload)
+        }
+    }
+
 
     /**
      * Liker un post par un utilisateur
