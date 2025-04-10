@@ -16,6 +16,8 @@ public class FullEventResponse {
 
     @JsonProperty
     private String location;
+    @JsonProperty
+    private float goalAmount;
 
     private List<Donation> donations;
 
@@ -29,6 +31,7 @@ public class FullEventResponse {
         private String description;
         private LocalDateTime dateEvent;
         private String location;
+        private float goalAmount;
         private List<Donation> donations;
 
         public FullEventResponseBuilder nameEvent(String nameEvent) {
@@ -50,6 +53,10 @@ public class FullEventResponse {
             this.location = location;
             return this;
         }
+        public FullEventResponseBuilder goalAmount(float goalAmount) {
+            this.goalAmount = goalAmount;
+            return this;
+        }
 
         public FullEventResponseBuilder donations(List<Donation> donations) {
             this.donations = donations;
@@ -62,6 +69,7 @@ public class FullEventResponse {
             response.setDescription(description);
             response.setDateEvent(dateEvent);
             response.setLocation(location);
+            response.setGoalAmount(goalAmount);
             response.setDonations(donations);
             return response;
         }
@@ -98,6 +106,14 @@ public class FullEventResponse {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getGoalAmount() {
+        return goalAmount;
+    }
+
+    public void setGoalAmount(float goalAmount) {
+        this.goalAmount = goalAmount;
     }
 
     public List<Donation> getDonations() {

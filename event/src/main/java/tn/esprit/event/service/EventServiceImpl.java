@@ -48,6 +48,7 @@ public class EventServiceImpl implements IEventService{
                         .description("NOT_FOUND")
                         .dateEvent(LocalDateTime.now())
                         .location("NOT_FOUND")
+                        .goalAmount(0)
                         .build());
 
         var donations = donationClient.findAllDonationsByEvent(eventId);
@@ -57,6 +58,7 @@ public class EventServiceImpl implements IEventService{
                 .description(event.getDescription())
                 .dateEvent(event.getDateEvent())
                 .location(event.getLocation())
+                .goalAmount(event.getGoalAmount())
                 .donations(donations)
                 .build();
     }

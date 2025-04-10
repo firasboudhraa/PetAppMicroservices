@@ -24,16 +24,20 @@ public class Event {
     @JsonProperty
     private String location;
 
+    @JsonProperty
+    private float goalAmount;
+
     // Constructors
     public Event() {
     }
 
-    public Event(long idEvent, String nameEvent, String description, LocalDateTime dateEvent, String location) {
+    public Event(long idEvent, String nameEvent, String description, LocalDateTime dateEvent, String location, float goalAmount) {
         this.idEvent = idEvent;
         this.nameEvent = nameEvent;
         this.description = description;
         this.dateEvent = dateEvent;
         this.location = location;
+        this.goalAmount = goalAmount;
     }
 
     // Builder implementation
@@ -47,6 +51,7 @@ public class Event {
         private String description;
         private LocalDateTime dateEvent;
         private String location;
+        private float goalAmount;
 
         public EventBuilder idEvent(long idEvent) {
             this.idEvent = idEvent;
@@ -72,9 +77,13 @@ public class Event {
             this.location = location;
             return this;
         }
+        public EventBuilder goalAmount(float goalAmount) {
+            this.goalAmount = goalAmount;
+            return this;
+        }
 
         public Event build() {
-            return new Event(idEvent, nameEvent, description, dateEvent, location);
+            return new Event(idEvent, nameEvent, description, dateEvent, location, goalAmount);
         }
     }
 
@@ -117,5 +126,13 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getGoalAmount() {
+        return goalAmount;
+    }
+
+    public void setGoalAmount(float goalAmount) {
+        this.goalAmount = goalAmount;
     }
 }
