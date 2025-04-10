@@ -1,7 +1,6 @@
 package tn.esprit.entity;
 
 import jakarta.persistence.*;
-import tn.esprit.entity.User;
 
 import java.time.LocalDateTime;
 

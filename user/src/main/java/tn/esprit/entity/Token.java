@@ -27,6 +27,8 @@ public class Token {
     private LocalDateTime expiresAt;
 
     private LocalDateTime validatedAt;
+    @Column(nullable = false)
+    private boolean revoked;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

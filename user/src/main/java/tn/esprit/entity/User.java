@@ -1,10 +1,12 @@
 package tn.esprit.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.*;
 
 @Entity
@@ -15,17 +17,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String firstName;
     private String lastName;
-
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(nullable = false)
     private String password;
 
-    private boolean enabled = false;
+    private boolean enabled = true;
     private boolean accountLocked = false;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -34,16 +34,28 @@ public class User implements UserDetails {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
-    private  Set<Role> roles = new HashSet<>();
+    private Set<Role> roles = new HashSet<>();
 
-    // UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
-                .toList();
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getName().name()));
+
+            role.getPermissions().stream()
+                    .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
+                    .forEach(authorities::add);
+        }
+
+        System.out.println("User authorities: " + authorities); // <--- Add this
+
+        return authorities;
     }
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Token> tokens = new ArrayList<>();
     @Override
     public String getUsername() {
         return email;

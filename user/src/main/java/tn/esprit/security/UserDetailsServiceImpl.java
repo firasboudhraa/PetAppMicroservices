@@ -14,6 +14,7 @@ import tn.esprit.repository.UserRepository;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserRepository userRepository;
+
     @Override
     @Transactional
 
@@ -21,4 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
+
+
 }

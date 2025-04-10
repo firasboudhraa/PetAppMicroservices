@@ -1,18 +1,14 @@
 package tn.esprit.control;
 
 
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.entity.Role;
-
 import tn.esprit.repository.RoleRepository;
 import tn.esprit.service.IRoleService;
 
 import java.util.List;
-
-
 import java.util.Map;
 
 @RestController

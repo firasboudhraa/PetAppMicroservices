@@ -1,7 +1,6 @@
 package tn.esprit.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import tn.esprit.entity.Token;
 
 import java.util.Optional;

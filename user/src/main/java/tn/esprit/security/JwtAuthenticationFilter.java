@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,27 +14,29 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import tn.esprit.entity.Token;
+import tn.esprit.repository.TokenRepository;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
-/*
- * JWT Authentication Filter that processes incoming requests and validates JWT tokens.
- * This filter is applied once per request and handles both public and secured endpoints.
- */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final TokenRepository tokenRepository;
 
-    // List of public endpoints that don't require JWT authentication
-    private static final List<String> WHITELIST = List.of(
-            "/auth/register",       // User registration endpoint
-            "/auth/login",           // User login endpoint
-            "/auth/authenticate",    // Authentication endpoint
-            "/auth/activate-account" // Account activation endpoint
+    private static final List<String> PUBLIC_ENDPOINTS = List.of(
+            "/auth/register",
+            "/auth/login",
+            "/auth/refresh-token",
+            "/v3/api-docs",
+            "/swagger-ui",
+            "/swagger-ui.html"
     );
 
     @Override
@@ -42,59 +45,90 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        System.out.println(">>> Servlet path: " + request.getServletPath());
 
-        String path = request.getServletPath();
+        final String requestURI = request.getRequestURI();
+        log.debug("Processing request for: {} {}", request.getMethod(), requestURI);
 
-        // Skip JWT filter for public (unauthenticated) paths
-        if (WHITELIST.contains(path)) {
-            // If path is in whitelist, continue with next filters without authentication
+        if (isPublicEndpoint(requestURI)) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Get Authorization header from request
         final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
 
-        // Check if Authorization header is missing or doesn't start with "Bearer "
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-            // Continue filter chain without authentication (will likely result in 401)
-            filterChain.doFilter(request, response);
+            sendError(response, "Missing or invalid Authorization header", HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
 
-        // Extract JWT token from Authorization header (remove "Bearer " prefix)
-        jwt = authHeader.substring(7);
-        // Extract username/email from JWT token
-        userEmail = jwtService.extractUsername(jwt);
+        final String jwt = authHeader.substring(7);
 
-        // If username is extracted and there's no existing authentication in the context
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            // Load user details from database
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-
-            // Validate if the token is valid for the loaded user details
-            if (jwtService.isTokenValid(jwt, userDetails)) {
-                // Create authentication token with user details and authorities
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null, // credentials are null as we're using JWT
-                        userDetails.getAuthorities() // user roles/permissions
-                );
-
-                // Add request details to the authentication token
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-
-                // Set the authentication in the security context
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
+        if (jwt.split("\\.").length != 3) {
+            sendError(response, "Invalid token structure", HttpServletResponse.SC_UNAUTHORIZED);
+            return;
         }
 
-        // Continue with the next filters in the chain
-        filterChain.doFilter(request, response);
+        try {
+            // 1. Find token in DB
+            Token storedToken = tokenRepository.findByToken(jwt)
+                    .orElseThrow(() -> new RuntimeException("Token not found in database"));
+
+            if (storedToken.isRevoked()) {
+                sendError(response, "Token has been revoked", HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            if (storedToken.getExpiresAt().isBefore(LocalDateTime.now())) {
+                sendError(response, "Token has expired", HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            // 2. Extract username from JWT
+            final String userEmail = jwtService.extractUsername(jwt);
+            if (userEmail == null) {
+                sendError(response, "Unable to extract user from token", HttpServletResponse.SC_UNAUTHORIZED);
+                return;
+            }
+
+            // 3. If not already authenticated, do it
+            if (SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(userEmail);
+
+                if (jwtService.isTokenValid(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                            userDetails,
+                            null,
+                            userDetails.getAuthorities()
+                    );
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                    log.debug("Authenticated user: {}", userEmail);
+                } else {
+                    sendError(response, "Invalid token", HttpServletResponse.SC_UNAUTHORIZED);
+                    return;
+                }
+            }
+
+            filterChain.doFilter(request, response);
+
+        } catch (Exception e) {
+            log.error("Authentication error: {}", e.getMessage(), e);
+            sendError(response, "Authentication failed: " + e.getMessage(), HttpServletResponse.SC_UNAUTHORIZED);
+        }
+    }
+
+    private boolean isPublicEndpoint(String requestURI) {
+        return PUBLIC_ENDPOINTS.stream().anyMatch(publicPath ->
+                requestURI.equals(publicPath) || requestURI.startsWith(publicPath + "/")
+        );
+    }
+
+    private void sendError(HttpServletResponse response, String message, int status) throws IOException {
+        log.warn("Authentication failed: {}", message);
+        response.setContentType("application/json");
+        response.setStatus(status);
+        response.getWriter().write(
+                String.format("{\"error\": \"%s\", \"status\": %d}", message, status)
+        );
     }
 }

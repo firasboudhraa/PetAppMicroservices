@@ -33,5 +33,4 @@ build/
 .vscode/
 
 # Environment files
-.env
-*.env
+application-dev.yml
