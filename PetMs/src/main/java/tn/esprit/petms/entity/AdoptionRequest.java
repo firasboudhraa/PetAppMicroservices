@@ -11,6 +11,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,7 +36,11 @@ public class AdoptionRequest {
     private Boolean isRejected ;
     private Boolean isChangedByPetOwner ;
     private Boolean isChangedByRequestOwner ;
-
     private LocalDate date;
     private LocalTime time;
+    @ElementCollection
+    @CollectionTable(name = "changed_fields", joinColumns = @JoinColumn(name = "adoption_request_id"))
+    @Column(name = "field_name")
+    private List<String> changedFields = new ArrayList<>();
+
 }

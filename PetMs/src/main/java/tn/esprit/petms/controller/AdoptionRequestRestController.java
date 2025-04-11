@@ -21,6 +21,9 @@ public class AdoptionRequestRestController {
         return adoptionRequestService.saveAdoptionRequest(adoptionRequest);
     }
 
+
+
+
     // Endpoint to get all adoption requests for a specific pet owner
    /* @GetMapping("/owner/{petOwnerId}")
     public List<AdoptionRequest> getAllAdoptionRequestsForOwner(@PathVariable Long petOwnerId) {
@@ -30,6 +33,12 @@ public class AdoptionRequestRestController {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(@PathVariable Long requesterUserId) {
         return adoptionRequestService.getAllAdoptionRequestByThisUser(requesterUserId);
     }
+    @PutMapping
+    public AdoptionRequest editAdoptionRequest(@RequestBody AdoptionRequest request) {
+        return adoptionRequestService.saveAdoptionRequest(request);
+    }
+
+
     @GetMapping("/{requestId}")
     public AdoptionRequest getAdoptionRequestById(@PathVariable Long requestId) {
         return adoptionRequestService.findByIdRequestAdoption(requestId);

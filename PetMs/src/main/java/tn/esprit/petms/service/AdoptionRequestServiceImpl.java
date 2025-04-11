@@ -22,6 +22,7 @@ public class AdoptionRequestServiceImpl {
         return repository.findById(requestId).get();
     }
 
+
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) {
         return repository.findAllByRequesterUserId( requesterUserId);
     }
@@ -38,6 +39,8 @@ public class AdoptionRequestServiceImpl {
         return repository.save(adpReq) ;
 
     }
+
+
     public AdoptionRequest rejectRequest(Long requestId,String reason) {
         AdoptionRequest adpReq = repository.findById(requestId).get();
         adpReq.setIsRejected(true);
