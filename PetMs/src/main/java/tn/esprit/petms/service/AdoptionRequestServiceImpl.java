@@ -21,7 +21,24 @@ public class AdoptionRequestServiceImpl {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) {
         return repository.findAllByRequesterUserId( requesterUserId);
     }
+    public List<AdoptionRequest> getAllAdoptionRequestSentToPetOwner(Long ownerId) {
+        return repository.findByAdoptedPetOwnerId(ownerId);
+    }
+
     public void deleteAdoptionRequest(Long requestId){
         repository.deleteById(requestId);
+    }
+    public AdoptionRequest confirmReques(Long requestId) {
+        AdoptionRequest adpReq = repository.findById(requestId).get();
+        adpReq.setIsConfirmed(true);
+        return repository.save(adpReq) ;
+
+    }
+    public AdoptionRequest rejectRequest(Long requestId,String reason) {
+        AdoptionRequest adpReq = repository.findById(requestId).get();
+        adpReq.setIsRejected(true);
+        adpReq.setRejectionReason(reason);
+        return repository.save(adpReq) ;
+
     }
 }

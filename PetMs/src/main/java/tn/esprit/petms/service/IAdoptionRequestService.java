@@ -10,4 +10,8 @@ public interface IAdoptionRequestService {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) ;
     public void deleteAdoptionRequest(Long requestId) ;
 
-    }
+    public List<AdoptionRequest> getAllAdoptionRequestSentToPetOwner(Long ownerId) ;
+    public AdoptionRequest confirmReques(Long requestId) ;
+  public AdoptionRequest rejectRequest(Long requestId,String reason) ;
+
+}

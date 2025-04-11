@@ -27,7 +27,7 @@ public class AdoptionRequest {
     private Pet adoptedPet;
 
     private Long requesterUserId;
-
+    private String rejectionReason ;
     private String location;
     private String message;
     private Boolean isConfirmed ;

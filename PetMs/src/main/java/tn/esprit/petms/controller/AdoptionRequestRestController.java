@@ -34,5 +34,18 @@ public class AdoptionRequestRestController {
     public void deleteAdoptionRequest(@PathVariable("adoptionRequestId") Long adoptionRequestId){
         adoptionRequestService.deleteAdoptionRequest(adoptionRequestId);
     }
+    @GetMapping("/owner/{ownerId}")
+    public List<AdoptionRequest> getAllAdoptionRequestSentToPetOwner(@PathVariable Long ownerId) {
+        return adoptionRequestService.getAllAdoptionRequestSentToPetOwner(ownerId);
+    }
+    @PutMapping("/confirm/{adoptionRequestId}")
+    public AdoptionRequest confirmRequest(@PathVariable("adoptionRequestId") Long adoptionRequestId) {
+        return adoptionRequestService.confirmReques(adoptionRequestId);
+    }
+
+    @PutMapping("/reject/{requestId}")
+    public AdoptionRequest rejectRequest(@PathVariable("requestId") Long requestId , @RequestBody String reason){
+        return adoptionRequestService.rejectRequest(requestId,reason ) ;
+    }
 
 }
