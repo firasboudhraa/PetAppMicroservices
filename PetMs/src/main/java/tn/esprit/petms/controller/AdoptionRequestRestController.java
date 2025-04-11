@@ -30,6 +30,10 @@ public class AdoptionRequestRestController {
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(@PathVariable Long requesterUserId) {
         return adoptionRequestService.getAllAdoptionRequestByThisUser(requesterUserId);
     }
+    @GetMapping("/{requestId}")
+    public AdoptionRequest getAdoptionRequestById(@PathVariable Long requestId) {
+        return adoptionRequestService.findByIdRequestAdoption(requestId);
+    }
     @DeleteMapping("/{adoptionRequestId}")
     public void deleteAdoptionRequest(@PathVariable("adoptionRequestId") Long adoptionRequestId){
         adoptionRequestService.deleteAdoptionRequest(adoptionRequestId);
@@ -38,6 +42,7 @@ public class AdoptionRequestRestController {
     public List<AdoptionRequest> getAllAdoptionRequestSentToPetOwner(@PathVariable Long ownerId) {
         return adoptionRequestService.getAllAdoptionRequestSentToPetOwner(ownerId);
     }
+
     @PutMapping("/confirm/{adoptionRequestId}")
     public AdoptionRequest confirmRequest(@PathVariable("adoptionRequestId") Long adoptionRequestId) {
         return adoptionRequestService.confirmReques(adoptionRequestId);

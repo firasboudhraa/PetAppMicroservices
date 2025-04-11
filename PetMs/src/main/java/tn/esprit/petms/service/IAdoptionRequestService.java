@@ -13,5 +13,6 @@ public interface IAdoptionRequestService {
     public List<AdoptionRequest> getAllAdoptionRequestSentToPetOwner(Long ownerId) ;
     public AdoptionRequest confirmReques(Long requestId) ;
   public AdoptionRequest rejectRequest(Long requestId,String reason) ;
+  public AdoptionRequest findByIdRequestAdoption(Long requestId) ;
 
 }

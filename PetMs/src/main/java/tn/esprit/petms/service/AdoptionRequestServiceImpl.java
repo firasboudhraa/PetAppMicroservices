@@ -18,6 +18,10 @@ public class AdoptionRequestServiceImpl {
     /*public List<AdoptionRequest> getAllAdoptionRequestForOwner(Long petOwnerId) {
         return repository.findAllByPetOwnerId( petOwnerId);
     }*/
+    public AdoptionRequest findByIdRequestAdoption(Long requestId) {
+        return repository.findById(requestId).get();
+    }
+
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(Long requesterUserId) {
         return repository.findAllByRequesterUserId( requesterUserId);
     }
