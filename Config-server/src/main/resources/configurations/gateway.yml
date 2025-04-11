@@ -29,10 +29,10 @@ spring:
             allowCredentials: true
         routes:
           - id: user
-            uri: http://localhost:8030
+            uri: http://localhost:8081
             predicates:
               - Path=/api/user/**
           - id: admin
-            uri: http://localhost:8030
+            uri: http://localhost:8081
             predicates:
               - Path=/api/admin/**
