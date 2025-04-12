@@ -55,6 +55,10 @@ spring:
           uri: http://localhost:8050
           predicates:
             - Path=/api/v1/adoptionRequest/**
+        - id: PetMs-chatbot
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/chat/**
 management:
   tracing:
     sampling:
