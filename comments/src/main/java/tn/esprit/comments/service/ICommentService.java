@@ -9,4 +9,6 @@ public interface ICommentService {
     Comment addComment(Comment comment, Long postId, Long userId);
     void likeComment(Long commentId, Long userId);
     void deleteComment(Long commentId);
+
+    void reportComment(Long commentId);
 }

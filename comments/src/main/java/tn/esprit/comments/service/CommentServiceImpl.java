@@ -25,6 +25,10 @@ public class CommentServiceImpl implements ICommentService {
         comment.setPostId(postId);
         comment.setUserId(userId);
         comment.setCreatedAt(LocalDateTime.now());
+
+        // 🔍 Appliquer le filtre sur le contenu avant d'enregistrer
+        comment.setContent(filterBadWords(comment.getContent()));
+
         return commentRepository.save(comment);
     }
 
@@ -42,4 +46,22 @@ public class CommentServiceImpl implements ICommentService {
     public void deleteComment(Long commentId) {
         commentRepository.deleteById(commentId);
     }
+
+    @Override
+    public void reportComment(Long commentId) {
+
+    }
+
+    private static final List<String> BAD_WORDS = List.of("merde", "isreal", "con", "putain", "fuck", "shit");
+
+    private String filterBadWords(String content) {
+        String filteredContent = content;
+        for (String badWord : BAD_WORDS) {
+            String stars = "*".repeat(badWord.length());
+            filteredContent = filteredContent.replaceAll("(?i)\\b" + badWord + "\\b", stars);
+        }
+        return filteredContent;
+    }
+
+
 }

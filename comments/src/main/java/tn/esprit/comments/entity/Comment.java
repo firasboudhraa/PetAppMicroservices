@@ -16,6 +16,9 @@ public class Comment {
     private LocalDateTime createdAt;
     private Long postId;  // Associated Post ID
     private Long userId;  // User ID of the commenter
+    @Column(nullable = false)
+    private boolean reported = false;
+
 
     private int likes;
 
