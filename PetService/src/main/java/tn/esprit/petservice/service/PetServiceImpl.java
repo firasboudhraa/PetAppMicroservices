@@ -1,6 +1,5 @@
 package tn.esprit.petservice.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -34,6 +35,7 @@ public class PetServiceImpl implements IPetService {
     public List<PetService> getAllServices() {
         return petServiceRepository.findAll();
     }
+
 
     @Override
     public PetService getServiceById(Long id) {
@@ -71,31 +73,6 @@ public class PetServiceImpl implements IPetService {
         return petServiceRepository.findByProviderId(providerId);
     }
 
-
-    /*@Override
-    public List<LocalDateTime> getAvailableSlots(Long serviceId) {
-        PetService service = getServiceById(serviceId);
-        List<Appointment> appointments = appointmentClient.getAppointmentsByService(serviceId);
-        List<LocalDateTime> availableSlots = new ArrayList<>();
-
-        LocalDateTime currentSlot = service.getStartDate();
-        while (currentSlot.isBefore(service.getEndDate())) {
-            boolean isSlotTaken = false;
-            for (Appointment appointment : appointments) {
-                LocalDateTime appointmentDate = appointment.getDateAppointment();
-                if (currentSlot.isEqual(appointmentDate)) {
-                    isSlotTaken = true;
-                    break;
-                }
-            }
-            if (!isSlotTaken) {
-                availableSlots.add(currentSlot);
-            }
-            currentSlot = currentSlot.plusMinutes(service.getDurationInMinutes());
-        }
-
-        return availableSlots;
-    }*/
 
     @Override
     public List<LocalDateTime> getAvailableSlots(Long serviceId) {
@@ -154,12 +131,14 @@ public class PetServiceImpl implements IPetService {
     }
 
     @Override
-    public void acceptAppointment(Long id) {
-        appointmentClient.acceptAppointment(id);
+    public void acceptAppointment(Long id ,String reason) {
+        Map<String, String> body = Map.of("reason", reason);
+        appointmentClient.acceptAppointment(id, body);
     }
 
     @Override
-    public void rejectAppointment(Long id) {
-        appointmentClient.rejectAppointment(id);
+    public void rejectAppointment(Long id ,String reason) {
+        Map<String, String> body = Map.of("reason", reason);
+        appointmentClient.rejectAppointment(id, body);
     }
 }

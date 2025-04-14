@@ -7,6 +7,7 @@ import tn.esprit.appointment.entity.AppointmentStatus;
 import tn.esprit.appointment.service.IAppointmentService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/appointments")
@@ -45,12 +46,14 @@ public class AppointmentController {
     }
 
     @PutMapping("/{id}/accept")
-    public Appointment acceptAppointment(@PathVariable("id") Long id) {
-        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CONFIRMED);
+    public Appointment acceptAppointment(@PathVariable("id") Long id , @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CONFIRMED, reason);
     }
 
     @PutMapping("/{id}/reject")
-    public Appointment rejectAppointment(@PathVariable("id") Long id) {
-        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CANCELLED);
+    public Appointment rejectAppointment(@PathVariable("id") Long id, @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CANCELLED,reason);
     }
 }

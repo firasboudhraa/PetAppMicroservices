@@ -8,6 +8,7 @@ import tn.esprit.petservice.service.IPetService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/services")
@@ -55,12 +56,14 @@ public class PetServiceController {
     }
 
     @PutMapping("/with-appoitments/{id}/accept")
-    public void acceptAppointment(@PathVariable("id") Long id) {
-        petService.acceptAppointment(id);
+    public void acceptAppointment(@PathVariable("id") Long id , @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        petService.acceptAppointment(id, reason);
     }
 
     @PutMapping("/with-appoitments/{id}/reject")
-    public void rejectAppointment(@PathVariable("id") Long id) {
-        petService.rejectAppointment(id);
+    public void rejectAppointment(@PathVariable("id") Long id , @RequestBody Map<String, String> body) {
+        String reason = body.get("reason");
+        petService.rejectAppointment(id, reason);
     }
 }

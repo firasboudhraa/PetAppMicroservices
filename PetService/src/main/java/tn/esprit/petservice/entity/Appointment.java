@@ -15,5 +15,6 @@ import java.time.LocalDateTime;
 public class Appointment {
     private Long idAppointment;
     private LocalDateTime dateAppointment;
+    private String reason;
     private AppointmentStatus status;
 }

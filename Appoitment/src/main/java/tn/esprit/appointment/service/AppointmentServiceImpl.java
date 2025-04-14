@@ -52,9 +52,10 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     }
 
     @Override
-    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status) {
+    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status, String reason) {
         Appointment appointment = appointmentRepository.findById(id).get();
         appointment.setStatus(status);
+        appointment.setReason(reason);
         return appointmentRepository.save(appointment);
     }
 }

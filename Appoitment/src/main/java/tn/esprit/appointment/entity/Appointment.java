@@ -1,10 +1,7 @@
 package tn.esprit.appointment.entity;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,7 +20,9 @@ public class Appointment {
     private Long idAppointment;
     private LocalDateTime dateAppointment;
 
+    @Enumerated(EnumType.STRING)
     private AppointmentStatus status;
+    private String reason;
     private Long idVet;
     private Long idPet;
     private Long idOwner;

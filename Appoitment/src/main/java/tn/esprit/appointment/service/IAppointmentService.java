@@ -15,6 +15,6 @@ public interface IAppointmentService {
     public List<Appointment> getAppointmentsByService(Long serviceId);
 
     public void deleteAppointmentByService(Long idService);
-    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status);
+    public Appointment updateAppointmentStatus(Long id, AppointmentStatus status, String reason);
 
 }
