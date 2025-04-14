@@ -11,3 +11,32 @@ spring:
       discovery:
         locator:
           enabled: true
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "Accept"
+            allowCredentials: true
+      routes:
+        - id: marketplaces
+          uri: http://localhost:8010
+          predicates:
+            - Path=/api/marketplaces/**
+        - id: products
+          uri: http://localhost:8011
+          predicates:
+            - Path=/api/products/**
+management:
+  tracing:
+    sampling:
+      probability: 1.0

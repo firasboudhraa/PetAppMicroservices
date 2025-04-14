@@ -1,0 +1,52 @@
+package tn.esprit.basket.Controller;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tn.esprit.basket.Entity.Basket;
+import tn.esprit.basket.Service.IBasketService;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/baskets")
+@RequiredArgsConstructor
+public class BasketController {
+    private final IBasketService basketService;
+
+    // Créer un panier
+    @PostMapping
+    public ResponseEntity<Basket> createBasket(@RequestBody Basket basket) {
+        Basket createdBasket = basketService.createBasket(basket);
+        return ResponseEntity.ok(createdBasket);
+    }
+
+    // Récupérer tous les paniers d'un utilisateur
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Basket>> getBasketsByUser(@PathVariable Long userId) {
+        List<Basket> baskets = basketService.getBasketsByUserId(userId);
+        return ResponseEntity.ok(baskets);
+    }
+
+    // Récupérer un panier par ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Basket> getBasketById(@PathVariable Long id) {
+        Optional<Basket> basket = basketService.getBasketById(id);
+        return basket.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // Mettre à jour un panier
+    @PutMapping("/{id}")
+    public ResponseEntity<Basket> updateBasket(@PathVariable Long id, @RequestBody Basket basket) {
+        Basket updatedBasket = basketService.updateBasket(id, basket);
+        return updatedBasket != null ? ResponseEntity.ok(updatedBasket) : ResponseEntity.notFound().build();
+    }
+
+    // Supprimer un panier
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBasket(@PathVariable Long id) {
+        boolean isDeleted = basketService.deleteBasket(id);
+        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+    }
+}
