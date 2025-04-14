@@ -49,7 +49,7 @@ public class EventRestController {
 
 
     @GetMapping("/with-events/{event-id}")
-    public ResponseEntity<FullEventResponse> findAllSchools(
+    public ResponseEntity<FullEventResponse> findAllEvents(
             @PathVariable("event-id") Long eventId
     ) {
         return ResponseEntity.ok(eventService.findEventsWithDonations(eventId));

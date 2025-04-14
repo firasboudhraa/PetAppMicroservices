@@ -55,4 +55,21 @@ public class DonationRestController {
         return ResponseEntity.ok(donationService.findAllDonationsByEvent(eventId));
     }
 
+    @GetMapping("/user/{user-id}")
+    public ResponseEntity<List<Donation>> findAllDonationsByUser(
+            @PathVariable("user-id") Long userId
+    ) {
+        return ResponseEntity.ok(donationService.findAllDonationsByUser(userId));
+    }
+
+    @GetMapping("/user/{user-id}/event/{event-id}")
+    public ResponseEntity<List<Donation>> findAllDonationsByUserAndEvent(
+            @PathVariable("user-id") Long userId,
+            @PathVariable("event-id") Long eventId) {
+        System.out.println("Fetching donations for user: " + userId + " and event: " + eventId);
+        List<Donation> donations = donationService.findAllDonationsByUserAndEvent(userId, eventId);
+        System.out.println("Found donations: " + donations.size());
+        return ResponseEntity.ok(donations);
+    }
+
 }

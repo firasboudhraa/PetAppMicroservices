@@ -20,6 +20,10 @@ public class Donation {
     @JsonProperty
     private Long eventId;
 
+    @Column(name = "user_id")
+    @JsonProperty
+    private Long userId;
+
     @JsonProperty
     private String paymentMethod;
 
@@ -33,11 +37,12 @@ public class Donation {
     public Donation() {
     }
 
-    public Donation(Long id, float amount, LocalDateTime date, Long eventId, String paymentMethod, String transactionId, String status) {
+    public Donation(Long id, float amount, LocalDateTime date, Long eventId, Long userId, String paymentMethod, String transactionId, String status) {
         this.id = id;
         this.amount = amount;
         this.date = date;
         this.eventId = eventId;
+        this.userId = userId;
         this.paymentMethod = paymentMethod;
         this.transactionId = transactionId;
         this.status = status;
@@ -74,6 +79,14 @@ public class Donation {
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getPaymentMethod() {

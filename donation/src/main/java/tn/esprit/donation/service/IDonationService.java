@@ -12,4 +12,6 @@ public interface IDonationService {
     public Donation modifyDonation(Donation donation);
 
     public  List<Donation> findAllDonationsByEvent(Long eventId);
+    public List<Donation> findAllDonationsByUser(Long userId);
+    public List<Donation> findAllDonationsByUserAndEvent(Long userId, Long eventId);
 }

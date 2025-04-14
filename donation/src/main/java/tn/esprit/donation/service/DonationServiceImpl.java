@@ -32,4 +32,12 @@ public class DonationServiceImpl implements IDonationService{
     public  List<Donation> findAllDonationsByEvent(Long eventId){
         return DonationRepository.findAllByEventId(eventId);
     }
+
+    public List<Donation> findAllDonationsByUser(Long userId) {
+        return DonationRepository.findAllByUserId(userId);
+    }
+
+    public List<Donation> findAllDonationsByUserAndEvent(Long userId, Long eventId) {
+        return DonationRepository.findAllByUserIdAndEventId(userId, eventId);
+    }
 }

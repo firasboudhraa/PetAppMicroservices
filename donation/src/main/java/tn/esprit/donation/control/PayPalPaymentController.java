@@ -38,18 +38,21 @@ public class PayPalPaymentController {
     public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> orderDetails) {
         try {
             // Validation
-            if (orderDetails == null || orderDetails.get("amount") == null || orderDetails.get("eventId") == null) {
-                return ResponseEntity.badRequest().body(errorResponse("Amount and eventId are required"));
+            if (orderDetails == null || orderDetails.get("amount") == null ||
+                    orderDetails.get("eventId") == null || orderDetails.get("userId") == null) {
+                return ResponseEntity.badRequest().body(errorResponse("Amount, eventId and userId are required"));
             }
 
             float amount;
             Long eventId;
+            Long userId;
 
             try {
                 amount = Float.parseFloat(orderDetails.get("amount").toString());
                 eventId = Long.parseLong(orderDetails.get("eventId").toString());
+                userId = Long.parseLong(orderDetails.get("userId").toString());
             } catch (NumberFormatException e) {
-                return ResponseEntity.badRequest().body(errorResponse("Invalid amount or eventId format"));
+                return ResponseEntity.badRequest().body(errorResponse("Invalid amount, eventId or userId format"));
             }
 
             // Validate amount
@@ -60,6 +63,11 @@ public class PayPalPaymentController {
             // Validate eventId
             if (eventId <= 0) {
                 return ResponseEntity.badRequest().body(errorResponse("Invalid event ID"));
+            }
+
+            // Validate eventId
+            if (userId <= 0) {
+                return ResponseEntity.badRequest().body(errorResponse("Invalid user ID"));
             }
 
             // Create PayPal order
@@ -79,7 +87,7 @@ public class PayPalPaymentController {
             }
 
             // Create donation record
-            Donation donation = createDonation(amount, eventId);
+            Donation donation = createDonation(amount, eventId, userId);
             Donation savedDonation = donationService.addDonation(donation);
 
             // Return success response
@@ -191,10 +199,11 @@ public class PayPalPaymentController {
         );
     }
 
-    private Donation createDonation(float amount, Long eventId) {
+    private Donation createDonation(float amount, Long eventId, Long userId) {
         Donation donation = new Donation();
         donation.setAmount(amount);
         donation.setEventId(eventId);
+        donation.setUserId(userId);
         donation.setDate(LocalDateTime.now());
         donation.setPaymentMethod("paypal");
         donation.setStatus("PENDING");
