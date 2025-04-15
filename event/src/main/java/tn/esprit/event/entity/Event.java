@@ -2,8 +2,9 @@ package tn.esprit.event.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Event {
@@ -26,6 +27,16 @@ public class Event {
 
     @JsonProperty
     private float goalAmount;
+
+    @ElementCollection
+    @CollectionTable(name = "event_ratings", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "rating")
+    private List<Integer> ratings = new ArrayList<>();
+
+    @ElementCollection
+    @CollectionTable(name = "event_feedbacks", joinColumns = @JoinColumn(name = "event_id"))
+    @Column(name = "feedback")
+    private List<String> feedbacks = new ArrayList<>();
 
     // Constructors
     public Event() {
@@ -134,5 +145,34 @@ public class Event {
 
     public void setGoalAmount(float goalAmount) {
         this.goalAmount = goalAmount;
+    }
+
+    public List<Integer> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(List<Integer> ratings) {
+        this.ratings = ratings;
+    }
+
+    public List<String> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<String> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+
+    // Add helper methods
+    public void addRating(int rating, String feedback) {
+        this.ratings.add(rating);
+        this.feedbacks.add(feedback);
+    }
+
+    public double getAverageRating() {
+        if (ratings.isEmpty()) {
+            return 0.0;
+        }
+        return ratings.stream().mapToInt(Integer::intValue).average().orElse(0.0);
     }
 }

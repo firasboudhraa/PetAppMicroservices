@@ -13,6 +13,7 @@ import tn.esprit.event.repository.EventRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -61,5 +62,22 @@ public class EventServiceImpl implements IEventService{
                 .goalAmount(event.getGoalAmount())
                 .donations(donations)
                 .build();
+    }
+
+    @Override
+    public Event addRatingToEvent(Long eventId, int rating, String feedback) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            event.addRating(rating, feedback);
+            return EventRepository.save(event);
+        }
+        return null;
+    }
+
+    @Override
+    public double getAverageRating(Long eventId) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        return eventOptional.map(Event::getAverageRating).orElse(0.0);
     }
 }
