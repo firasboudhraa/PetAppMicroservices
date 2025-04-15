@@ -52,7 +52,7 @@ public class CommentServiceImpl implements ICommentService {
 
     }
 
-    private static final List<String> BAD_WORDS = List.of("merde", "isreal", "con", "putain", "fuck", "shit");
+    private static final List<String> BAD_WORDS = List.of("merde", "israel", "con", "putain", "fuck", "shit");
 
     private String filterBadWords(String content) {
         String filteredContent = content;

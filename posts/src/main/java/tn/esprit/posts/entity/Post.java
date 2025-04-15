@@ -19,6 +19,9 @@ public class Post {
     private int likes;
     private LocalDateTime createdAt;
     private String imageUrl; // Store image URL instead of binary data
+    private Double latitude;
+    private Double longitude;
+
 
     @Enumerated(EnumType.STRING)
     private PostTypeEnum type;
@@ -108,4 +111,21 @@ public class Post {
     public void setLikedBy(Set<Long> likedBy) {
         this.likedBy = likedBy;
     }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
+    }
+
 }
