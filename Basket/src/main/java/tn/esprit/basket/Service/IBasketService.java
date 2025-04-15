@@ -12,4 +12,5 @@ public interface IBasketService {
     Optional<Basket> getBasketById(Long id);
     Basket updateBasket(Long id, Basket basket);
     boolean deleteBasket(Long id);
+
 }

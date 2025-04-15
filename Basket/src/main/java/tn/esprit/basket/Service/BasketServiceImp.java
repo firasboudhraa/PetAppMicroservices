@@ -2,9 +2,13 @@ package tn.esprit.basket.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import tn.esprit.basket.Client.ProductClient;
+import tn.esprit.basket.Dto.ProductDTO;
 import tn.esprit.basket.Entity.Basket;
 import tn.esprit.basket.Repository.BasketRepository;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,6 +17,7 @@ import java.util.Optional;
 public class BasketServiceImp implements IBasketService {
 
     private final BasketRepository basketRepository;
+    private final ProductClient productClient;
 
 
     // Créer un panier
@@ -22,6 +27,7 @@ public class BasketServiceImp implements IBasketService {
         basket.setStatut("en cours");
         return basketRepository.save(basket);
     }
+
 
     // Récupérer tous les paniers d'un utilisateur
     @Override
@@ -60,4 +66,7 @@ public class BasketServiceImp implements IBasketService {
         }
         return false; // Si panier non trouvé
     }
+
+
+
 }

@@ -1,18 +1,26 @@
 package tn.esprit.basket.Controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.basket.Entity.Basket;
+import tn.esprit.basket.Repository.BasketRepository;
 import tn.esprit.basket.Service.IBasketService;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/api/baskets")
 @RequiredArgsConstructor
 public class BasketController {
+
+    @Autowired
+    private BasketRepository basketRepository;
+
     private final IBasketService basketService;
 
     // Créer un panier
@@ -49,4 +57,19 @@ public class BasketController {
         boolean isDeleted = basketService.deleteBasket(id);
         return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
+
+    @PutMapping("/{basketId}/validate")
+    public ResponseEntity<Basket> validateBasket(@PathVariable Long basketId) {
+        Basket basket = basketRepository.findById(basketId)
+                .orElseThrow(() -> new RuntimeException("Basket not found"));
+
+        basket.setDateValidation(LocalDate.now());
+        basket.setStatut("validé"); // ou "confirmé" si tu préfères
+        Basket updatedBasket = basketRepository.save(basket);
+
+        return ResponseEntity.ok(updatedBasket);
+    }
+
+
+
 }

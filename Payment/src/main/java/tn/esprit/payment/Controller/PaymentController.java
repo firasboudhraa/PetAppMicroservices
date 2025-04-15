@@ -10,6 +10,7 @@ import tn.esprit.payment.Service.IPaymentService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("api/payment")
 public class PaymentController {
@@ -20,13 +21,17 @@ public class PaymentController {
     // Créer un paiement
     @PostMapping("/create")
     public Payment createPayment(@RequestBody PaymentRequest paymentRequest) {
-        // Utilisation de basketDTO et userDTO à partir de PaymentRequest
         Long basketId = paymentRequest.getBasketDTO().getId_Basket();
         Long userId = paymentRequest.getUserDTO().getId_User();
 
-        // Création du paiement en passant les ID
-        return paymentService.createPayment(basketId, userId);
+        // Création du paiement
+        Payment createdPayment = paymentService.createPayment(basketId, userId);
+
+        paymentService.validateBasket(basketId);
+
+        return createdPayment;
     }
+
 
     // Lire un paiement par ID
     @GetMapping("/{paymentId}")

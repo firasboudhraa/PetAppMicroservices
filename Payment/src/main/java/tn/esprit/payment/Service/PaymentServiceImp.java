@@ -32,7 +32,6 @@ public class PaymentServiceImp implements IPaymentService {
             BasketDTO basketDTO = basketClient.getBasketById(basketId);
             UserDTO userDTO = userClient.getUserById(userId);
 
-            // Vérification des valeurs retournées
             if (basketDTO == null) {
                 throw new IllegalArgumentException("Basket not found for ID: " + basketId);
             }
@@ -40,27 +39,33 @@ public class PaymentServiceImp implements IPaymentService {
                 throw new IllegalArgumentException("User not found for ID: " + userId);
             }
 
+            // Valider le panier AVANT de créer le paiement
+            basketClient.validateBasket(basketId);
+
             // Création du paiement
             Payment payment = new Payment();
             payment.setUserId(userDTO.getId_User());
             payment.setBasketId(basketDTO.getId_Basket());
             payment.setAmount(basketDTO.getTotal());
-            payment.setStatus("pending"); // Statut initial
+            payment.setStatus("pending");
             payment.setPaymentMethod("carte");
             payment.setPaymentDate(LocalDate.now());
 
-            // Sauvegarde du paiement
             return paymentRepository.save(payment);
+
         } catch (IllegalArgumentException e) {
-            // Gestion des cas où le panier ou l'utilisateur sont introuvables
             throw new RuntimeException("Invalid data: " + e.getMessage(), e);
         } catch (FeignException e) {
-            // Gestion des erreurs liées aux appels aux services externes
             throw new RuntimeException("Failed to communicate with external services", e);
         } catch (Exception e) {
-            // Gestion des autres exceptions
             throw new RuntimeException("Failed to create payment due to an unknown error", e);
         }
+    }
+
+
+    @Override
+    public void validateBasket(Long basketId) {
+        basketClient.validateBasket(basketId); // méthode à ajouter dans le client Feign
     }
 
 
