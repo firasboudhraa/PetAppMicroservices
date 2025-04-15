@@ -59,8 +59,9 @@ public class EventRestController {
     public ResponseEntity<Event> rateEvent(
             @PathVariable Long eventId,
             @RequestParam int rating,
-            @RequestParam String feedback) {
-        Event event = eventService.addRatingToEvent(eventId, rating, feedback);
+            @RequestParam String feedback,
+            @RequestParam Long userId) {
+        Event event = eventService.addRatingToEvent(eventId, rating, feedback, userId);
         if (event != null) {
             return ResponseEntity.ok(event);
         }
@@ -69,7 +70,14 @@ public class EventRestController {
 
     @GetMapping("/{eventId}/average-rating")
     public ResponseEntity<Double> getAverageRating(@PathVariable Long eventId) {
-        double average = eventService.getAverageRating(eventId);
-        return ResponseEntity.ok(average);
+        return ResponseEntity.ok(eventService.getAverageRating(eventId));
+    }
+
+    @GetMapping("/{eventId}/user/{userId}/rating")
+    public ResponseEntity<Integer> getUserRating(
+            @PathVariable Long eventId,
+            @PathVariable Long userId) {
+        Integer rating = eventService.getUserRatingForEvent(eventId, userId);
+        return rating != null ? ResponseEntity.ok(rating) : ResponseEntity.notFound().build();
     }
 }

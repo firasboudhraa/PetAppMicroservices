@@ -30,13 +30,7 @@ public class Event {
 
     @ElementCollection
     @CollectionTable(name = "event_ratings", joinColumns = @JoinColumn(name = "event_id"))
-    @Column(name = "rating")
-    private List<Integer> ratings = new ArrayList<>();
-
-    @ElementCollection
-    @CollectionTable(name = "event_feedbacks", joinColumns = @JoinColumn(name = "event_id"))
-    @Column(name = "feedback")
-    private List<String> feedbacks = new ArrayList<>();
+    private List<EventRating> ratings = new ArrayList<>();
 
     // Constructors
     public Event() {
@@ -147,32 +141,72 @@ public class Event {
         this.goalAmount = goalAmount;
     }
 
-    public List<Integer> getRatings() {
-        return ratings;
+    @Embeddable
+    public static class EventRating {
+        private int value;
+        private String feedback;
+        private Long userId;
+
+        // Constructeurs
+        public EventRating() {}
+
+        public EventRating(int value, String feedback, Long userId) {
+            this.value = value;
+            this.feedback = feedback;
+            this.userId = userId;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
+
+        public String getFeedback() {
+            return feedback;
+        }
+
+        public void setFeedback(String feedback) {
+            this.feedback = feedback;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
     }
 
-    public void setRatings(List<Integer> ratings) {
-        this.ratings = ratings;
-    }
-
-    public List<String> getFeedbacks() {
-        return feedbacks;
-    }
-
-    public void setFeedbacks(List<String> feedbacks) {
-        this.feedbacks = feedbacks;
-    }
-
-    // Add helper methods
-    public void addRating(int rating, String feedback) {
-        this.ratings.add(rating);
-        this.feedbacks.add(feedback);
+    // Méthodes pour gérer les ratings
+    public void addRating(int value, String feedback, Long userId) {
+        // Vérifie si l'utilisateur a déjà noté
+        EventRating existingRating = getUserRating(userId);
+        if (existingRating != null) {
+            existingRating.setValue(value);
+            existingRating.setFeedback(feedback);
+        } else {
+            this.ratings.add(new EventRating(value, feedback, userId));
+        }
     }
 
     public double getAverageRating() {
         if (ratings.isEmpty()) {
             return 0.0;
         }
-        return ratings.stream().mapToInt(Integer::intValue).average().orElse(0.0);
+        return ratings.stream()
+                .mapToInt(EventRating::getValue)
+                .average()
+                .orElse(0.0);
+    }
+
+    public EventRating getUserRating(Long userId) {
+        return ratings.stream()
+                .filter(r -> r.getUserId().equals(userId))
+                .findFirst()
+                .orElse(null);
     }
 }

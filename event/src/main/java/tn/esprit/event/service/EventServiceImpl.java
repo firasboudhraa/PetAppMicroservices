@@ -65,11 +65,11 @@ public class EventServiceImpl implements IEventService{
     }
 
     @Override
-    public Event addRatingToEvent(Long eventId, int rating, String feedback) {
+    public Event addRatingToEvent(Long eventId, int rating, String feedback, Long userId) {
         Optional<Event> eventOptional = EventRepository.findById(eventId);
         if (eventOptional.isPresent()) {
             Event event = eventOptional.get();
-            event.addRating(rating, feedback);
+            event.addRating(rating, feedback, userId);
             return EventRepository.save(event);
         }
         return null;
@@ -79,5 +79,15 @@ public class EventServiceImpl implements IEventService{
     public double getAverageRating(Long eventId) {
         Optional<Event> eventOptional = EventRepository.findById(eventId);
         return eventOptional.map(Event::getAverageRating).orElse(0.0);
+    }
+
+    @Override
+    public Integer getUserRatingForEvent(Long eventId, Long userId) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        if (eventOptional.isPresent()) {
+            Event.EventRating userRating = eventOptional.get().getUserRating(userId);
+            return userRating != null ? userRating.getValue() : null;
+        }
+        return null;
     }
 }

@@ -12,6 +12,7 @@ public interface IEventService {
     void removeEvent(Long eventId);
     Event modifyEvent(Event event);
     FullEventResponse findEventsWithDonations(Long eventId);
-    Event addRatingToEvent(Long eventId, int rating, String feedback);
+    Event addRatingToEvent(Long eventId, int rating, String feedback, Long userId);
     double getAverageRating(Long eventId);
+    Integer getUserRatingForEvent(Long eventId, Long userId);
 }
