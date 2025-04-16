@@ -1,7 +1,9 @@
 package tn.esprit.product.Service;
 
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.product.Entity.Product;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface IProductService {
