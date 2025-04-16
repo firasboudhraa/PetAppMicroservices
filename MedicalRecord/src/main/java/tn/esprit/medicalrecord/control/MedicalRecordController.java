@@ -23,9 +23,8 @@ public class MedicalRecordController {
     }
 
     @GetMapping("/retrieve-medicalRecord/{medicalRecord-id}")
-    public MedicalRecord retrieveMedicalRecord(@PathVariable("medicalRecord") Long med) {
-        MedicalRecord medicalRecord = medicalRecordService.retrieveMedicalRecord(med);
-        return medicalRecord;
+    public MedicalRecord retrieveMedicalRecord(@PathVariable("medicalRecord-id") Long med) {
+        return medicalRecordService.retrieveMedicalRecord(med);
     }
     @PostMapping("/add-medicalRecord")
     public MedicalRecord addMedicalRecord(@RequestBody MedicalRecord medicalRecord) {

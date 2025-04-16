@@ -27,5 +27,7 @@ public class MedicalRecord {
     private Date next_due_date;
     @JsonProperty
     private long carnetId;
+    @JsonProperty
+    private long poids;
 
 }
