@@ -19,7 +19,11 @@ public class Post {
     private int likes;
     private LocalDateTime createdAt;
     private String imageUrl; // Store image URL instead of binary data
+
+    @Column(nullable = true)
     private Double latitude;
+
+    @Column(nullable = true)
     private Double longitude;
 
 

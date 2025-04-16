@@ -1,30 +1,26 @@
 package tn.esprit.posts.service;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.stereotype.Service;
 import tn.esprit.posts.entity.Post;
 import tn.esprit.posts.repository.PostRepository;
-
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
-@EnableFeignClients // Enable Feign Clients
-
-
 public class PostServiceImpl implements IPostService {
 
-    @Autowired
-    private PostRepository postRepository;
+    private final PostRepository postRepository;
+    private final EmailService emailService;
 
+    // 🔧 Constructeur manuel
     @Autowired
-    private UserClient userClient;
+    public PostServiceImpl(PostRepository postRepository, EmailService emailService) {
+        this.postRepository = postRepository;
+        this.emailService = emailService;
+    }
 
     @Override
     public List<Post> retrieveAllPosts() {
@@ -48,13 +44,18 @@ public class PostServiceImpl implements IPostService {
         Optional<Post> optionalPost = postRepository.findById(postId);
         if (optionalPost.isPresent()) {
             Post post = optionalPost.get();
-            post.like(userId);
+            post.like(userId); // gestion des doublons dans la méthode like()
             postRepository.save(post);
         }
     }
 
     @Override
     public void deletePost(Long postId) {
-        postRepository.deleteById(postId);
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+
+        postRepository.delete(post);
+        emailService.sendPostDeletionEmail(post);
+
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.posts.entity.Post;
 import tn.esprit.posts.entity.PostTypeEnum;
+import tn.esprit.posts.service.EmailService;
 import tn.esprit.posts.service.IPostService;
 
 import java.io.IOException;
@@ -22,14 +23,18 @@ public class PostRestController {
     @Autowired
     private IPostService postService;
 
+    @Autowired
+    private EmailService emailService;
+
     private static final String UPLOAD_DIR = "posts/uploads/";
 
     /**
      * Récupérer tous les posts
      */
     @GetMapping
-    public List<Post> getPosts() {
-        return postService.retrieveAllPosts();
+    public ResponseEntity<List<Post>> getPosts() {
+        List<Post> posts = postService.retrieveAllPosts();
+        return ResponseEntity.ok(posts);
     }
 
     /**
@@ -56,10 +61,10 @@ public class PostRestController {
             @RequestParam("longitude") Double longitude) {
 
         try {
-            // Save the image and get the URL
+            // Sauvegarder l'image et obtenir l'URL
             String imageUrl = saveImage(image);
 
-            // Create the Post object and set attributes
+            // Créer l'objet Post et définir les attributs
             Post post = new Post();
             post.setTitle(title);
             post.setContent(content);
@@ -69,11 +74,18 @@ public class PostRestController {
             post.setLatitude(latitude);
             post.setLongitude(longitude);
 
-            return ResponseEntity.ok(postService.addPost(post, userId));
+            // Ajouter le post dans la base de données
+            Post savedPost = postService.addPost(post, userId);
+
+            return ResponseEntity.ok(savedPost);
 
         } catch (IOException e) {
+            // Gestion des erreurs
             e.printStackTrace();
             return ResponseEntity.status(500).body(null);
+        } catch (IllegalArgumentException e) {
+            // Mauvais type pour le PostTypeEnum
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
@@ -115,6 +127,8 @@ public class PostRestController {
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(null);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
         }
     }
 
@@ -128,14 +142,27 @@ public class PostRestController {
     }
 
     /**
-     * Supprimer un post
+     * Supprimer un post et envoyer un email de suppression
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletePost(@PathVariable Long id) {
-        postService.deletePost(id);
-        return ResponseEntity.ok().build();
+        Post post = postService.retrievePost(id);
+        if (post != null) {
+            // Delete the post
+            postService.deletePost(id);
+
+            // Send the email after deletion
+            emailService.sendPostDeletionEmail(post);
+
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
+
+    /**
+     * Sauvegarder une image sur le serveur et retourner son chemin
+     */
     private String saveImage(MultipartFile image) throws IOException {
         String fileName = image.getOriginalFilename();
         Path uploadPath = Paths.get(System.getProperty("user.dir"), UPLOAD_DIR);
