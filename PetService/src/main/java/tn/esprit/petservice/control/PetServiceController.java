@@ -66,4 +66,13 @@ public class PetServiceController {
         String reason = body.get("reason");
         petService.rejectAppointment(id, reason);
     }
+
+    @GetMapping("/with-appoitments")
+    public List<FullPetServiceResponse> getAllServicesWithAppoitments() {
+        return petService.getAllServicesWithAppoitments();
+    }
+    @GetMapping("/with-appoitments/provider/{idProvider}")
+    public List<FullPetServiceResponse> getAllServicesWithAppoitmentsByProvider(@PathVariable("idProvider") Long idProvider) {
+        return petService.getAllServicesWithAppoitmentsByProvider(idProvider);
+    }
 }

@@ -56,4 +56,18 @@ public class AppointmentController {
         String reason = body.get("reason");
         return appointmentService.updateAppointmentStatus(id, AppointmentStatus.CANCELLED,reason);
     }
+
+    @GetMapping("/owner/{idOwner}")
+    public List<Appointment> getAppointmentsByOwner(@PathVariable("idOwner") Long idOwner) {
+        return appointmentService.getAppointmentsByOwner(idOwner);
+    }
+
+    @GetMapping("/vet/{idVet}")
+    public List<Appointment> getAppointmentsByVet(@PathVariable("idVet") Long idVet) {
+        return appointmentService.getAppointmentsByVet(idVet);
+    }
+    @GetMapping("/pet/{idPet}")
+    public List<Appointment> getAppointmentsByPet(@PathVariable("idPet") Long idPet) {
+        return appointmentService.getAppointmentsByPet(idPet);
+    }
 }

@@ -16,5 +16,8 @@ public interface IAppointmentService {
 
     public void deleteAppointmentByService(Long idService);
     public Appointment updateAppointmentStatus(Long id, AppointmentStatus status, String reason);
+    public List<Appointment> getAppointmentsByOwner(Long idOwner);
+    public List<Appointment> getAppointmentsByVet(Long idVet);
+    public List<Appointment> getAppointmentsByPet(Long idPet);
 
 }

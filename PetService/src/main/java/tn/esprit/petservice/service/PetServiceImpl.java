@@ -14,7 +14,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -140,5 +139,39 @@ public class PetServiceImpl implements IPetService {
     public void rejectAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         appointmentClient.rejectAppointment(id, body);
+    }
+
+    @Override
+    public List<FullPetServiceResponse> getAllServicesWithAppoitments() {
+        return petServiceRepository.findAll().stream()
+                .map(service -> {
+                    var appointments = appointmentClient.getAppointmentsByService(service.getIdService());
+                    return FullPetServiceResponse.builder()
+                            .name(service.getName())
+                            .description(service.getDescription())
+                            .price(service.getPrice())
+                            .appointments(appointments)
+                            .address(service.getAddress())
+                            .durationInMinutes(service.getDurationInMinutes())
+                            .build();
+                })
+                .toList();
+    }
+
+    @Override
+    public List<FullPetServiceResponse> getAllServicesWithAppoitmentsByProvider(Long idProvider) {
+        return petServiceRepository.findByProviderId(idProvider).stream()
+                .map(service -> {
+                    var appointments = appointmentClient.getAppointmentsByService(service.getIdService());
+                    return FullPetServiceResponse.builder()
+                            .name(service.getName())
+                            .description(service.getDescription())
+                            .price(service.getPrice())
+                            .appointments(appointments)
+                            .address(service.getAddress())
+                            .durationInMinutes(service.getDurationInMinutes())
+                            .build();
+                })
+                .toList();
     }
 }

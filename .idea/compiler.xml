@@ -20,6 +20,7 @@
         </processorPath>
         <module name="Appointment" />
         <module name="PetService" />
+        <module name="Notification" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -32,6 +33,7 @@
       <module name="Appointment" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
+      <module name="Notification" options="-parameters" />
       <module name="PetService" options="-parameters" />
     </option>
   </component>

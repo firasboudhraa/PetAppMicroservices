@@ -18,4 +18,6 @@ public interface IPetService {
      FullPetServiceResponse getServiceWithAppoitment(Long id);
      void acceptAppointment(Long id , String reason);
      void rejectAppointment(Long id , String reason);
+     List<FullPetServiceResponse> getAllServicesWithAppoitments();
+        List<FullPetServiceResponse> getAllServicesWithAppoitmentsByProvider(Long idProvider);
 }
