@@ -15,6 +15,10 @@ spring:
             uri: http://localhost:8050
             predicates:
               - Path=/api/v1/adoptionRequest/**
+          - id: PetMs-petSittingOffer
+            uri: http://localhost:8050
+            predicates:
+              - Path=/api/v1/petSittingOffer/**
           - id: PetMs-chatbot
             uri: http://localhost:8051
             predicates:

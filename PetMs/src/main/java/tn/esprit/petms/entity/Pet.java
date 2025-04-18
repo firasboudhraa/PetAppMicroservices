@@ -35,6 +35,9 @@ public class Pet {
     @OneToMany(mappedBy = "adoptedPet", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<AdoptionRequest> adoptionRequests;
 
+    @JsonIgnoreProperties("pet")
+    @OneToMany(mappedBy = "pet" , cascade = CascadeType.ALL)
+    private List<PetSittingOffer> petSittingOffers ;
 
     public Pet(String name, String species, int age,
                String color, String sex,String description , String location
