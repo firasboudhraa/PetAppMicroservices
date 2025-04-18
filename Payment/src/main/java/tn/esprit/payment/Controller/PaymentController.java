@@ -8,6 +8,7 @@ import tn.esprit.payment.Entity.Payment;
 import tn.esprit.payment.Entity.PaymentRequest;
 import tn.esprit.payment.Service.IPaymentService;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -57,4 +58,12 @@ public class PaymentController {
     public List<Payment> getAllPayments() {
         return paymentService.getAllPayments();
     }
+
+    @GetMapping("/history")
+    public List<Payment> getPaymentHistory(
+            @RequestParam(required = false) String status) {
+
+        return paymentService.getPaymentHistoryByStatus(status);
+    }
+
 }

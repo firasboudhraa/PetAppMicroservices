@@ -36,13 +36,28 @@ public class Basket {
     @Transient
     private List<Long> productIdsList; // Liste des IDs de produits
 
-    @PrePersist
-    public void prePersist() {
-        if (this.productIds == null) {
-            this.productIds = "";
+    @PostLoad
+    @PostPersist
+    @PostUpdate
+    public void syncProductIdsToList() {
+        if (productIds != null && !productIds.isEmpty()) {
+            productIdsList = Arrays.stream(productIds.split(","))
+                    .map(Long::parseLong)
+                    .collect(Collectors.toList());
+        } else {
+            productIdsList = new ArrayList<>();
         }
-        if (this.productIdsList == null) {
-            this.productIdsList = new ArrayList<>();
+    }
+
+    @PreUpdate
+    @PrePersist
+    public void syncListToProductIds() {
+        if (productIdsList != null && !productIdsList.isEmpty()) {
+            productIds = productIdsList.stream()
+                    .map(String::valueOf)
+                    .collect(Collectors.joining(","));
+        } else {
+            productIds = "";
         }
     }
 

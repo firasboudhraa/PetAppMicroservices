@@ -95,4 +95,15 @@ public class PaymentServiceImp implements IPaymentService {
     public List<Payment> getAllPayments() {
         return paymentRepository.findAll();
     }
+
+    @Override
+    public List<Payment> getPaymentHistoryByStatus(String status) {
+        if (status != null && !status.isEmpty()) {
+            return paymentRepository.findByStatus(status);  // Utilisez votre propre méthode de recherche
+        } else {
+            return paymentRepository.findAll();  // Si aucun statut n'est fourni, récupérer tous les paiements
+        }
+    }
+
+
 }

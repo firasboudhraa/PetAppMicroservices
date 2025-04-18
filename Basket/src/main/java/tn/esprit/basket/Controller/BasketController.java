@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.basket.Dto.ProductDTO;
 import tn.esprit.basket.Entity.Basket;
 import tn.esprit.basket.Repository.BasketRepository;
 import tn.esprit.basket.Service.IBasketService;
@@ -69,6 +70,7 @@ public class BasketController {
 
         return ResponseEntity.ok(updatedBasket);
     }
+
 
 
 

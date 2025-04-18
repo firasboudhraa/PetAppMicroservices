@@ -4,6 +4,7 @@ import tn.esprit.payment.Dto.BasketDTO;
 import tn.esprit.payment.Dto.UserDTO;
 import tn.esprit.payment.Entity.Payment;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IPaymentService {
@@ -14,4 +15,5 @@ public interface IPaymentService {
     Payment updatePayment(Long paymentId, Payment payment);
     void deletePayment(Long paymentId);
     List<Payment> getAllPayments();
+    List<Payment> getPaymentHistoryByStatus(String status);
 }
