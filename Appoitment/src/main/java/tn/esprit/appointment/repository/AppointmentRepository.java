@@ -3,6 +3,7 @@ package tn.esprit.appointment.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import tn.esprit.appointment.entity.Appointment;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface AppointmentRepository  extends JpaRepository<Appointment, Long> {
@@ -15,4 +16,6 @@ public interface AppointmentRepository  extends JpaRepository<Appointment, Long>
     List<Appointment> findByIdVet(Long idVet);
 
     List<Appointment> findByIdPet(Long idPet);
+
+    List<Appointment> findByDateAppointmentBetween(LocalDateTime now, LocalDateTime targetTime);
 }

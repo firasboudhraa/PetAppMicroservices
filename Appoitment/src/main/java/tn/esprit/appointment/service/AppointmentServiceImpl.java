@@ -18,6 +18,7 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+
     @Autowired
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
     @Override
@@ -94,4 +95,5 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     public List<Appointment> getAppointmentsByPet(Long idPet) {
         return appointmentRepository.findByIdPet(idPet);
     }
+
 }

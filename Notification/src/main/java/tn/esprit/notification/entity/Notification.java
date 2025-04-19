@@ -14,7 +14,6 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long recipientId; // owner ID or vet ID
     private String message;
     private boolean isRead;
     private LocalDateTime createdAt;

@@ -50,28 +50,28 @@ public class PetServiceController {
         return petService.getAvailableSlots(id);
     }
 
-    @GetMapping("/with-appoitments/{id}")
+    @GetMapping("/with-appointments/{id}")
     public FullPetServiceResponse getServiceWithAppoitment(@PathVariable("id") Long id) {
         return petService.getServiceWithAppoitment(id);
     }
 
-    @PutMapping("/with-appoitments/{id}/accept")
+    @PutMapping("/with-appointments/{id}/accept")
     public void acceptAppointment(@PathVariable("id") Long id , @RequestBody Map<String, String> body) {
         String reason = body.get("reason");
         petService.acceptAppointment(id, reason);
     }
 
-    @PutMapping("/with-appoitments/{id}/reject")
+    @PutMapping("/with-appointments/{id}/reject")
     public void rejectAppointment(@PathVariable("id") Long id , @RequestBody Map<String, String> body) {
         String reason = body.get("reason");
         petService.rejectAppointment(id, reason);
     }
 
-    @GetMapping("/with-appoitments")
+    @GetMapping("/with-appointments")
     public List<FullPetServiceResponse> getAllServicesWithAppoitments() {
         return petService.getAllServicesWithAppoitments();
     }
-    @GetMapping("/with-appoitments/provider/{idProvider}")
+    @GetMapping("/with-appointments/provider/{idProvider}")
     public List<FullPetServiceResponse> getAllServicesWithAppoitmentsByProvider(@PathVariable("idProvider") Long idProvider) {
         return petService.getAllServicesWithAppoitmentsByProvider(idProvider);
     }

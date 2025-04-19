@@ -1,5 +1,8 @@
 package tn.esprit.appointment.entity;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +26,5 @@ public class PetService {
     private LocalDateTime startDate;
     private LocalDateTime endDate;
 
-    List<LocalDateTime>  availableSlots;
+    private Long providerId;
 }

@@ -2,6 +2,7 @@ package tn.esprit.appointment.service;
 
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.entity.AppointmentStatus;
+import tn.esprit.appointment.entity.PetService;
 
 import java.util.List;
 
@@ -19,5 +20,4 @@ public interface IAppointmentService {
     public List<Appointment> getAppointmentsByOwner(Long idOwner);
     public List<Appointment> getAppointmentsByVet(Long idVet);
     public List<Appointment> getAppointmentsByPet(Long idPet);
-
 }

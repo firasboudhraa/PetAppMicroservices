@@ -1,11 +1,18 @@
 package tn.esprit.appointment.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.entity.AppointmentStatus;
+import tn.esprit.appointment.entity.PetService;
 import tn.esprit.appointment.service.IAppointmentService;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -70,4 +77,5 @@ public class AppointmentController {
     public List<Appointment> getAppointmentsByPet(@PathVariable("idPet") Long idPet) {
         return appointmentService.getAppointmentsByPet(idPet);
     }
+    
 }
