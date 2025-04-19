@@ -21,8 +21,8 @@ public class PetSittingOffer {
 
     private LocalDate startDate;
     private LocalDate endDate ;
-    private String position ;
-
+    private String offerType ;
+    private Long  amountPerDay ;
     @JsonIgnoreProperties("petSittingOffers")
     @ManyToOne
     private Pet pet ;
