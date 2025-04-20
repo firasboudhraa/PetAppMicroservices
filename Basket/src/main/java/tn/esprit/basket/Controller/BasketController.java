@@ -71,6 +71,39 @@ public class BasketController {
         return ResponseEntity.ok(updatedBasket);
     }
 
+    // Ajouter un produit au panier
+    @PostMapping("/{basketId}/add-product/{productId}")
+    public ResponseEntity<Basket> addProductToBasket(@PathVariable Long basketId, @PathVariable Long productId) {
+        Optional<Basket> basket = basketService.getBasketById(basketId);
+        if (basket.isPresent()) {
+            Basket updatedBasket = basketService.addProductToBasket(basketId, productId);
+            return ResponseEntity.ok(updatedBasket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    // Supprimer un produit du panier
+    @PostMapping("/{basketId}/remove-product/{productId}")
+    public ResponseEntity<Basket> removeProductFromBasket(@PathVariable Long basketId, @PathVariable Long productId) {
+        Optional<Basket> basket = basketService.getBasketById(basketId);
+        if (basket.isPresent()) {
+            Basket updatedBasket = basketService.removeProductFromBasket(basketId, productId);
+            return ResponseEntity.ok(updatedBasket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("/clear/{basketId}")
+    public ResponseEntity<Basket> clearBasket(@PathVariable Long basketId) {
+        Basket clearedBasket = basketService.clearBasket(basketId);
+        if (clearedBasket != null) {
+            return ResponseEntity.ok(clearedBasket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 

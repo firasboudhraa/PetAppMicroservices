@@ -12,4 +12,9 @@ public interface IBasketService {
     Optional<Basket> getBasketById(Long id);
     Basket updateBasket(Long id, Basket basket);
     boolean deleteBasket(Long id);
+    Basket addProductToBasket(Long basketId, Long productId);
+    Basket removeProductFromBasket(Long basketId, Long productId);
+    Basket validateBasket(Long basketId);
+
+    Basket clearBasket(Long basketId);
 }

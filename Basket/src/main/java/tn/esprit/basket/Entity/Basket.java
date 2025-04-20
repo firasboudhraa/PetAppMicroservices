@@ -61,4 +61,23 @@ public class Basket {
         }
     }
 
+    // Méthode pour ajouter un produit au panier
+    public void addProduct(Long productId) {
+        if (productIdsList == null) {
+            productIdsList = new ArrayList<>();
+        }
+        if (!productIdsList.contains(productId)) {
+            productIdsList.add(productId);
+            syncListToProductIds();
+        }
+    }
+
+
+    // Méthode pour supprimer un produit du panier
+    public void removeProduct(Long productId) {
+        if (productIdsList != null && productIdsList.contains(productId)) {
+            productIdsList.remove(productId);
+            syncListToProductIds();
+        }
+    }
 }
