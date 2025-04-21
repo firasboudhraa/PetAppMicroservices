@@ -30,4 +30,12 @@ public class PetSittingOfferRestController {
     public List<PetSittingOffer> getAllAvailablePetSittingOffers(@PathVariable("userId") Long userId) {
         return petSittingOfferService.getAllAvailablePetSittingOffers(userId);
     }
+    @PostMapping("/{offerId}/request/{sitterId}")
+    public PetSittingOffer requestPetSittingOffer(@PathVariable Long offerId, @PathVariable Long sitterId) {
+        return petSittingOfferService.requestPetSittingOffer(offerId, sitterId);
+    }
+    @PostMapping("/{offerId}/confirm/{sitterId}")
+    public PetSittingOffer confirmPetSitter(@PathVariable Long offerId, @PathVariable Long sitterId) {
+       return petSittingOfferService.confirmPetSitter(offerId, sitterId);
+    }
 }

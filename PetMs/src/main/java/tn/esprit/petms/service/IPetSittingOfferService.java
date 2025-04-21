@@ -9,5 +9,8 @@ public interface IPetSittingOfferService {
     public PetSittingOffer savePetSittingOffer (PetSittingOffer request) ;
     public List<PetSittingOffer> getAllPetSittingOffers();
     public List<PetSittingOffer> getAllAvailablePetSittingOffers(Long userId) ;
+    public PetSittingOffer confirmPetSitter(long offerId , long sitterId);
+    public PetSittingOffer requestPetSittingOffer(long offerId, long userId) ;
 
-}
+
+    }

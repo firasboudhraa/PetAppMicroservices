@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -23,7 +27,13 @@ public class PetSittingOffer {
     private LocalDate endDate ;
     private String offerType ;
     private Long  amountPerDay ;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<UserRequestStatus> userRequestStatuses = new ArrayList<>();
+
+
     @JsonIgnoreProperties("petSittingOffers")
     @ManyToOne
     private Pet pet ;
+
 }
