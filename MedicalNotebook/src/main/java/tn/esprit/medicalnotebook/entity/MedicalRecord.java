@@ -21,5 +21,6 @@ public class MedicalRecord {
     private MedicalRecordType type;
     @JsonProperty
     private long poids;
-
+    @JsonProperty
+    private String imagePath;
     }

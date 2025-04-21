@@ -29,5 +29,21 @@ public class MedicalRecord {
     private long carnetId;
     @JsonProperty
     private long poids;
+    @JsonProperty
+    private String imagePath;
 
+    @Override
+    public String toString() {
+        return "MedicalRecord{" +
+                "id=" + id +
+                ", dateTime=" + dateTime +
+                ", type=" + type +
+                ", description='" + description + '\'' +
+                ", owner_id=" + owner_id +
+                ", next_due_date=" + next_due_date +
+                ", carnetId=" + carnetId +
+                ", poids=" + poids +
+                ", imageUrl='" + imagePath + '\'' +
+                '}';
+    }
 }
