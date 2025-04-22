@@ -1,5 +1,6 @@
 package tn.esprit.appointment.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.entity.AppointmentStatus;
 import tn.esprit.appointment.entity.PetService;
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface IAppointmentService {
     public Appointment addAppointment(Appointment appointment);
-    public Appointment updateAppointment(Appointment appointment);
+    public Appointment updateAppointment( Long id ,Appointment appointment);
     public void deleteAppointment(Long id);
     public Appointment findAppointmentById(Long id);
     public List<Appointment> findAllAppointments();
@@ -20,4 +21,5 @@ public interface IAppointmentService {
     public List<Appointment> getAppointmentsByOwner(Long idOwner);
     public List<Appointment> getAppointmentsByVet(Long idVet);
     public List<Appointment> getAppointmentsByPet(Long idPet);
+
 }

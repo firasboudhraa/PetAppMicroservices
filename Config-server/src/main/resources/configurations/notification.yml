@@ -21,16 +21,6 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: firassbdh@gmail.com
-    password: Tut28107403@@@
-    properties:
-      mail.smtp:
-        auth: true
-        starttls:
-          enable: true
   rabbitmq:
     host: localhost
     port: 5672
@@ -40,11 +30,15 @@ spring:
 
 rabbitmq:
   exchanges:
-    petservice: appointment.exchange
+    appointment: appointment.exchange
+    petservice: petservice.exchange
   queues:
-    petservice: appointment.queue
+    appointment: appointment.queue
+    petservice: petservice.queue
   routing-keys:
-    petservice: appointment.routingkey
+    appointment: appointment.routingkey
+    petservice: petservice.routing-key
+
 
 
 management:

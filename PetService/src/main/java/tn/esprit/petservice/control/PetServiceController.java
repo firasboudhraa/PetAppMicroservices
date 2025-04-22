@@ -36,9 +36,11 @@ public class PetServiceController {
         return this.petService.createService(petService);
     }
 
-    @PutMapping("/update-service")
-    public PetService updateService(@RequestBody PetService petService) {
-        return this.petService.updateService(petService);
+    @PutMapping("/update-service/{id}")
+    public PetService updateService(
+            @PathVariable("id") Long id,
+            @RequestBody PetService petService) {
+        return this.petService.updateService(id,petService);
     }
 
     @DeleteMapping("/delete-service/{id}")
@@ -74,5 +76,10 @@ public class PetServiceController {
     @GetMapping("/with-appointments/provider/{idProvider}")
     public List<FullPetServiceResponse> getAllServicesWithAppoitmentsByProvider(@PathVariable("idProvider") Long idProvider) {
         return petService.getAllServicesWithAppoitmentsByProvider(idProvider);
+    }
+
+    @GetMapping("/name/{name}")
+    public PetService findServiceByName(@PathVariable("name") String name) {
+        return petService.findServiceByName(name);
     }
 }

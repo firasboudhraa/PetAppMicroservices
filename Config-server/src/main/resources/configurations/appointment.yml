@@ -42,6 +42,7 @@ spring:
 rabbitmq:
   exchanges:
     petservice: petservice.exchange
+    appointment: appointment.exchange
   queues:
     petservice: petservice.queue
   routing-keys:

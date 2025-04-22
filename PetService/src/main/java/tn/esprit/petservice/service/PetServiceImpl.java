@@ -1,5 +1,6 @@
 package tn.esprit.petservice.service;
 
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,15 +43,42 @@ public class PetServiceImpl implements IPetService {
     }
 
     @Override
+    public PetService findServiceByName(String name) {
+        return petServiceRepository.findFirstByNameContainingIgnoreCase(name)
+                .orElseThrow(() -> new RuntimeException("Service not found"));
+    }
+
+
+    @Override
+    @Transactional
     public PetService createService(PetService petService) {
+        String message = "Service Created";
+        rabbitMQMessageProducer.publish(
+                message,
+                "petservice.exchange",
+                "petservice.routingkey"
+        );
         return petServiceRepository.save(petService);
     }
 
     @Override
-    public PetService updateService(PetService petService) {
-        if (!petServiceRepository.existsById(petService.getIdService())) {
-            throw new RuntimeException("Service not found");
-        }
+    public PetService updateService(Long id ,PetService petService) {
+       PetService existingService = petServiceRepository.findById(id).get();
+        existingService.setName(petService.getName());
+        existingService.setDescription(petService.getDescription());
+        existingService.setPrice(petService.getPrice());
+        existingService.setAddress(petService.getAddress());
+        existingService.setStartDate(petService.getStartDate());
+        existingService.setEndDate(petService.getEndDate());
+        existingService.setDurationInMinutes(petService.getDurationInMinutes());
+        existingService.setProviderId(petService.getProviderId());
+
+        String message = "Service Updated";
+        rabbitMQMessageProducer.publish(
+                message,
+                "petservice.exchange",
+                "petservice.routingkey"
+        );
         return petServiceRepository.save(petService);
     }
 

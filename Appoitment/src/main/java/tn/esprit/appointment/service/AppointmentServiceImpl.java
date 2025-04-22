@@ -1,5 +1,7 @@
 package tn.esprit.appointment.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,15 +25,9 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
     @Override
     @Transactional
-    public Appointment addAppointment(Appointment appointment) {
+    public Appointment addAppointment(Appointment appointment)  {
         appointment.setStatus(AppointmentStatus.PENDING);
-        String email = "firassbdh@gmail.com";
-        String message = String.format(
-                "{ \"email\": \"%s\", \"dateAppointment\": \"%s\", \"reason\": \"%s\" }",
-                email,
-                appointment.getDateAppointment(),
-                appointment.getReason()
-        );
+        String message = "Appointment Created";
 
         rabbitMQMessageProducer.publish(
                 message,
@@ -43,12 +39,32 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     }
 
     @Override
-    public Appointment updateAppointment(Appointment appointment) {
-        return appointmentRepository.save(appointment);
+    public Appointment updateAppointment(Long id ,Appointment appointment) {
+        Appointment existingAppointment = appointmentRepository.findById((id)).get();
+        existingAppointment.setDateAppointment(appointment.getDateAppointment());
+        existingAppointment.setReason(appointment.getReason());
+        existingAppointment.setIdPet(appointment.getIdPet());
+        existingAppointment.setIdVet(appointment.getIdVet());
+        existingAppointment.setIdService(appointment.getIdService());
+        String message = "Appointment Updated";
+
+        rabbitMQMessageProducer.publish(
+                message,
+                "appointment.exchange",
+                "appointment.routingkey"
+        );
+        System.out.println("Message sent to RabbitMQ: " + message);
+        return appointmentRepository.save(existingAppointment);
     }
 
     @Override
     public void deleteAppointment(Long id) {
+        String message = "Appointment Deleted";
+        rabbitMQMessageProducer.publish(
+                message,
+                "appointment.exchange",
+                "appointment.routingkey"
+        );
         appointmentRepository.deleteById(id);
     }
 
@@ -95,5 +111,6 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     public List<Appointment> getAppointmentsByPet(Long idPet) {
         return appointmentRepository.findByIdPet(idPet);
     }
+
 
 }

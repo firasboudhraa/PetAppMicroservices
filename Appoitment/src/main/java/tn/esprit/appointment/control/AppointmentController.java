@@ -1,18 +1,12 @@
 package tn.esprit.appointment.control;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.entity.AppointmentStatus;
-import tn.esprit.appointment.entity.PetService;
 import tn.esprit.appointment.service.IAppointmentService;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
 
@@ -23,13 +17,16 @@ public class AppointmentController {
     private IAppointmentService appointmentService;
 
     @PostMapping("/addAppointment")
-    public Appointment addAppointment(@RequestBody Appointment appointment) {
+    public Appointment addAppointment(
+            @RequestBody Appointment appointment)  {
         return appointmentService.addAppointment(appointment);
     }
 
-    @PutMapping("/updateAppointment")
-    public Appointment updateAppointment(@RequestBody Appointment appointment) {
-        return appointmentService.updateAppointment(appointment);
+    @PutMapping("/updateAppointment/{id}")
+    public Appointment updateAppointment(
+            @PathVariable("id") Long id,
+            @RequestBody Appointment appointment) {
+        return appointmentService.updateAppointment(id,appointment);
     }
 
     @DeleteMapping("/deleteAppointment/{id}")
@@ -77,5 +74,5 @@ public class AppointmentController {
     public List<Appointment> getAppointmentsByPet(@PathVariable("idPet") Long idPet) {
         return appointmentService.getAppointmentsByPet(idPet);
     }
-    
+
 }

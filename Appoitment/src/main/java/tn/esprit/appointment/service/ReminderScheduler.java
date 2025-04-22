@@ -27,7 +27,7 @@ public class ReminderScheduler {
     private Set<Long> sentReminderAppointments = new HashSet<>();
 
 
-    @Scheduled(cron = "0 * * * * *") // every minute
+    @Scheduled(cron = "0 0 * * * *") // every minute
     public void sendReminders(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime targetTime = now.plusHours(24);
