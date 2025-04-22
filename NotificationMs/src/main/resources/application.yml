@@ -1,12 +1,12 @@
 spring:
   application:
-    name: PetMs
+    name: notification-ms
   config:
     import: optional:configserver:http://localhost:8888
 
   main:
     allow-bean-definition-overriding: true
     web-application-type: servlet
-  feign:
-    hystrix:
-      enabled: false
+
+  profiles:
+    active: default

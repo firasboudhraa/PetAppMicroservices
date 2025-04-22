@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.petms.entity.AdoptionRequest;
 import tn.esprit.petms.service.AdoptionRequestServiceImpl;
+import tn.esprit.petms.service.NotificationService;
 
 import java.util.List;
 
@@ -14,7 +15,8 @@ import java.util.List;
 public class AdoptionRequestRestController {
     @Autowired
     private AdoptionRequestServiceImpl adoptionRequestService;
-
+    @Autowired
+    NotificationService notificationService ;
     // Endpoint to save a new adoption request
     @PostMapping
     public AdoptionRequest saveAdoptionRequest(@RequestBody AdoptionRequest adoptionRequest) {
@@ -22,19 +24,18 @@ public class AdoptionRequestRestController {
     }
 
 
-
-
-    // Endpoint to get all adoption requests for a specific pet owner
-   /* @GetMapping("/owner/{petOwnerId}")
-    public List<AdoptionRequest> getAllAdoptionRequestsForOwner(@PathVariable Long petOwnerId) {
-        return adoptionRequestService.getAllAdoptionRequestForOwner(petOwnerId);
-    }*/
     @GetMapping("/requester/{requesterUserId}")
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(@PathVariable Long requesterUserId) {
         return adoptionRequestService.getAllAdoptionRequestByThisUser(requesterUserId);
     }
     @PutMapping
     public AdoptionRequest editAdoptionRequest(@RequestBody AdoptionRequest request) {
+        if(request.getIsChangedByRequestOwner()){
+            notificationService.sendAdoptionNotification(String.valueOf(request.getAdoptedPet().getOwnerId()), "The adopter has requested some changes to the adoption request for your pet "+request.getAdoptedPet().getName()  );
+        } else if (request.getIsChangedByPetOwner()){
+            notificationService.sendAdoptionNotification(String.valueOf(request.getRequesterUserId()), "The pet owner has requested some changes to the adoption request for the pet "+request.getAdoptedPet().getName()  );
+
+        }
         return adoptionRequestService.saveAdoptionRequest(request);
     }
 

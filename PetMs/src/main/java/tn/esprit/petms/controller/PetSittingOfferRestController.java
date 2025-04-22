@@ -15,12 +15,13 @@ import java.util.List;
 
 public class PetSittingOfferRestController {
     @Autowired
-    PetSittingOfferServiceImpl petSittingOfferService ;
+    PetSittingOfferServiceImpl petSittingOfferService;
 
     @PostMapping
     public PetSittingOffer saveAdoptionRequest(@RequestBody PetSittingOffer petSittingOffer) {
         return petSittingOfferService.savePetSittingOffer(petSittingOffer);
     }
+
     @GetMapping
     public List<PetSittingOffer> getAllPetSittingOffers() {
         return petSittingOfferService.getAllPetSittingOffers();
@@ -30,12 +31,33 @@ public class PetSittingOfferRestController {
     public List<PetSittingOffer> getAllAvailablePetSittingOffers(@PathVariable("userId") Long userId) {
         return petSittingOfferService.getAllAvailablePetSittingOffers(userId);
     }
+
     @PostMapping("/{offerId}/request/{sitterId}")
     public PetSittingOffer requestPetSittingOffer(@PathVariable Long offerId, @PathVariable Long sitterId) {
         return petSittingOfferService.requestPetSittingOffer(offerId, sitterId);
     }
-    @PostMapping("/{offerId}/confirm/{sitterId}")
-    public PetSittingOffer confirmPetSitter(@PathVariable Long offerId, @PathVariable Long sitterId) {
-       return petSittingOfferService.confirmPetSitter(offerId, sitterId);
+
+    @PutMapping("/{offerId}/confirm/{sitterId}")
+    public PetSittingOffer confirmPetSitter(@PathVariable("offerId") Long offerId, @PathVariable("sitterId") Long sitterId) {
+        return petSittingOfferService.confirmPetSitter(offerId, sitterId);
+    }
+
+    @GetMapping("/receivedRequests/{userId}")
+    public List<PetSittingOffer> getReceivedPetSittingRequest(@PathVariable("userId") Long userId) {
+        return petSittingOfferService.getReceivedPetSittingRequest(userId);
+    }
+
+    @GetMapping("/sentRequests/{userId}")
+    public List<PetSittingOffer> getSentPetSittingRequest(@PathVariable("userId") Long userId) {
+        return petSittingOfferService.getSentPetSittingRequest(userId);
+    }
+
+    @DeleteMapping("/{offerId}/reject/{sitterId}")
+    public PetSittingOffer rejectPetSitter(@PathVariable("offerId") Long offerId, @PathVariable("sitterId") Long sitterId) {
+        return petSittingOfferService.rejectPetSitter(offerId, sitterId);
+    }
+    @DeleteMapping("/{offerId}/cancel/{sitterId}")
+    public PetSittingOffer cancelPetSittingRequest(@PathVariable("offerId") Long offerId, @PathVariable("sitterId") Long sitterId) {
+        return petSittingOfferService.cancelPetSittingRequest(offerId, sitterId);
     }
 }

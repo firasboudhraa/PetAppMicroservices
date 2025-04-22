@@ -20,6 +20,7 @@
         </processorPath>
         <module name="ChatbotMs" />
         <module name="PetMs" />
+        <module name="NotificationMs" />
       </profile>
     </annotationProcessing>
   </component>
@@ -29,6 +30,7 @@
       <module name="ChatbotMs" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="Eureka-server" options="-parameters" />
+      <module name="NotificationMs" options="-parameters" />
       <module name="PetMs" options="-parameters" />
     </option>
   </component>
