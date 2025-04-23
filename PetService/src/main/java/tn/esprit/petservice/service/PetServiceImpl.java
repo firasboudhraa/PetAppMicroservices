@@ -160,12 +160,24 @@ public class PetServiceImpl implements IPetService {
     @Override
     public void acceptAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
+        String message = "Appointment Accepted";
+        rabbitMQMessageProducer.publish(
+                message,
+                "appointment.exchange",
+                "appointment.routingkey"
+        );
         appointmentClient.acceptAppointment(id, body);
     }
 
     @Override
     public void rejectAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
+        String message = "Appointment Rejected";
+        rabbitMQMessageProducer.publish(
+                message,
+                "appointment.exchange",
+                "appointment.routingkey"
+        );
         appointmentClient.rejectAppointment(id, body);
     }
 

@@ -3,6 +3,8 @@ package tn.esprit.notification.entity;
 public enum NotificationType {
     APPOINTMENT_CREATED,
     APPOINTMENT_CANCELED,
+    APPOINTMENT_CONFIRMED,
+    APPOINTMENT_REJECTED,
     APPOINTMENT_REMINDER,
     APPOINTMENT_UPDATED,
     APPOINTMENT_DELETED,

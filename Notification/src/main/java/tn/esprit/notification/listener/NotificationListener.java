@@ -26,7 +26,15 @@ public class NotificationListener {
     public void handleAppointmentNotification(@Payload String message) {
         System.out.println("Message received from RabbitMQ: " + message);
             Notification notification = new Notification();
-            notification.setType(NotificationType.valueOf("APPOINTMENT_CREATED"));
+            if (message.contains("created")) {
+                notification.setType(NotificationType.valueOf("APPOINTMENT_CREATED"));
+            } else if (message.contains("updated")) {
+                notification.setType(NotificationType.valueOf("APPOINTMENT_UPDATED"));
+            } else if (message.contains("deleted")) {
+                notification.setType(NotificationType.valueOf("APPOINTMENT_DELETED"));
+            } else if (message.contains("reminder")) {
+                notification.setType(NotificationType.valueOf("APPOINTMENT_REMINDER"));
+            }
             notification.setMessage(message);
             notification.setCreatedAt(LocalDateTime.now());
             notificationService.createNotification(notification);
@@ -34,44 +42,33 @@ public class NotificationListener {
             messagingTemplate.convertAndSend("/topic/notifications", notification);
 
     }
+
 
     @RabbitListener(queues = "petservice.queue")
     @Transactional
     public void handlePetServiceNotification(@Payload String message) {
         System.out.println("Message received from RabbitMQ: " + message);
-            Notification notification = new Notification();
+
+        Notification notification = new Notification();
+        if (message.contains("created")) {
             notification.setType(NotificationType.valueOf("SERVICE_CREATED"));
-            notification.setMessage(message);
-            notification.setCreatedAt(LocalDateTime.now());
-            notificationService.createNotification(notification);
-            //send it with websocket
-            messagingTemplate.convertAndSend("/topic/notifications", notification);
+        } else if (message.contains("updated")) {
+            notification.setType(NotificationType.valueOf("SERVICE_UPDATED"));
+        } else if (message.contains("deleted")) {
+            notification.setType(NotificationType.valueOf("SERVICE_DELETED"));
+        } else if (message.contains("confirmed")) {
+            notification.setType(NotificationType.valueOf("APPOINTMENT_CONFIRMED"));
+        } else if (message.contains("rejected")) {
+            notification.setType(NotificationType.valueOf("APPOINTMENT_REJECTED"));
+        }
+
+        notification.setMessage(message);
+        notification.setCreatedAt(LocalDateTime.now());
+        notificationService.createNotification(notification);
+        //send it with websocket
+        messagingTemplate.convertAndSend("/topic/notifications", notification);
     }
 
-    @RabbitListener(queues = "appointment.queue")
-    @Transactional
-    public void handleAppointmentUpdateNotification(@Payload String message) {
-        System.out.println("Message received from RabbitMQ: " + message);
-            Notification notification = new Notification();
-            notification.setType(NotificationType.valueOf("APPOINTMENT_UPDATED"));
-            notification.setMessage(message);
-            notification.setCreatedAt(LocalDateTime.now());
-            notificationService.createNotification(notification);
-            //send it with websocket
-            messagingTemplate.convertAndSend("/topic/notifications", notification);
-    }
 
-    @RabbitListener(queues = "appointment.queue")
-    @Transactional
-    public void handleAppointmentDeleteNotification(@Payload String message) {
-        System.out.println("Message received from RabbitMQ: " + message);
-            Notification notification = new Notification();
-            notification.setType(NotificationType.valueOf("APPOINTMENT_DELETED"));
-            notification.setMessage(message);
-            notification.setCreatedAt(LocalDateTime.now());
-            notificationService.createNotification(notification);
-            //send it with websocket
-            messagingTemplate.convertAndSend("/topic/notifications", notification);
-    }
 
 }
