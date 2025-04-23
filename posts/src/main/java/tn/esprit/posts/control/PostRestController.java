@@ -157,6 +157,21 @@ public class PostRestController {
         return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/delete-without-mail/{id}")
+    public ResponseEntity<Void> deletePostWithouMail(@PathVariable Long id) {
+        Post post = postService.retrievePost(id);
+        if (post != null) {
+            // Delete the post
+            postService.deletePostWithouMail(id);
+
+
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 
     /**
      * Sauvegarder une image sur le serveur et retourner son chemin

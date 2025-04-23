@@ -10,4 +10,6 @@ public interface IPostService {
     Post addPost(Post post, Long userId);
     void likePost(Long postId, Long userId);
     void deletePost(Long postId);
+
+    void deletePostWithouMail(Long postId);
 }

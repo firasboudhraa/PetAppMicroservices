@@ -58,4 +58,12 @@ public class PostServiceImpl implements IPostService {
         emailService.sendPostDeletionEmail(post);
 
     }
+    @Override
+    public void deletePostWithouMail(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
+
+        postRepository.delete(post);
+
+    }
 }
