@@ -151,8 +151,6 @@ public class PostRestController {
             // Delete the post
             postService.deletePost(id);
 
-            // Send the email after deletion
-            emailService.sendPostDeletionEmail(post);
 
             return ResponseEntity.ok().build();
         }
