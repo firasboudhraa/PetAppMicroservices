@@ -1,0 +1,93 @@
+package tn.esprit.event.service;
+
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.stereotype.Service;
+import tn.esprit.event.client.DonationClient;
+import tn.esprit.event.entity.Donation;
+import tn.esprit.event.entity.Event;
+import tn.esprit.event.entity.FullEventResponse;
+import tn.esprit.event.repository.EventRepository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class EventServiceImpl implements IEventService{
+    @Autowired
+    EventRepository EventRepository;
+    @Autowired
+    DonationClient donationClient;
+
+    public List<Event> retrieveAllEvents() {
+        return EventRepository.findAll();
+    }
+    public Event retrieveEvent(Long eventId) {
+        return EventRepository.findById(eventId).get();
+    }
+    public Event addEvent(Event e) {
+        return EventRepository.save(e);
+    }
+    public void removeEvent(Long eventId) {
+        EventRepository.deleteById(eventId);
+    }
+    public Event modifyEvent(Event event) {
+        return EventRepository.save(event);
+
+    }
+
+    @Override
+    public FullEventResponse findEventsWithDonations(Long eventId) {
+        Event event = EventRepository.findById(eventId)
+                .orElse(Event.builder()
+                        .nameEvent("NOT_FOUND")
+                        .description("NOT_FOUND")
+                        .dateEvent(LocalDateTime.now())
+                        .location("NOT_FOUND")
+                        .goalAmount(0)
+                        .build());
+
+        var donations = donationClient.findAllDonationsByEvent(eventId);
+
+        return FullEventResponse.builder()
+                .nameEvent(event.getNameEvent())
+                .description(event.getDescription())
+                .dateEvent(event.getDateEvent())
+                .location(event.getLocation())
+                .goalAmount(event.getGoalAmount())
+                .donations(donations)
+                .build();
+    }
+
+    @Override
+    public Event addRatingToEvent(Long eventId, int rating, String feedback, Long userId) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        if (eventOptional.isPresent()) {
+            Event event = eventOptional.get();
+            event.addRating(rating, feedback, userId);
+            return EventRepository.save(event);
+        }
+        return null;
+    }
+
+    @Override
+    public double getAverageRating(Long eventId) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        return eventOptional.map(Event::getAverageRating).orElse(0.0);
+    }
+
+    @Override
+    public Integer getUserRatingForEvent(Long eventId, Long userId) {
+        Optional<Event> eventOptional = EventRepository.findById(eventId);
+        if (eventOptional.isPresent()) {
+            Event.EventRating userRating = eventOptional.get().getUserRating(userId);
+            return userRating != null ? userRating.getValue() : null;
+        }
+        return null;
+    }
+}

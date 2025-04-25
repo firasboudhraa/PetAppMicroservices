@@ -15,7 +15,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath>
+        <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="user" />
@@ -24,7 +24,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath>
+        <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="Appointment" />
@@ -33,7 +33,9 @@
         <module name="comments" />
         <module name="PetMs" />
         <module name="NotificationMs" />
+        <module name="donation" />
         <module name="MedicalRecord" />
+        <module name="event" />
         <module name="posts" />
         <module name="Notification" />
       </profile>
@@ -52,6 +54,9 @@
       <module name="PetMs" options="-parameters" />
       <module name="PetService" options="-parameters" />
       <module name="comments" options="-parameters" />
+      <module name="donation" options="-parameters" />
+      <module name="event" options="-parameters" />
+      <module name="eventdonations" options="-parameters" />
       <module name="posts" options="-parameters" />
       <module name="user" options="-parameters" />
     </option>

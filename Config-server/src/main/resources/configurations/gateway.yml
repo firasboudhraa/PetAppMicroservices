@@ -92,10 +92,22 @@ spring:
           uri: http://localhost:8081
           predicates:
             - Path=/api/user/**
+        - id: auth
+          uri: http://localhost:8084
+          predicates:
+            - Path=/api/auth/**
         - id: admin
           uri: http://localhost:8081
           predicates:
             - Path=/api/admin/**
+        - id: donations
+          uri: http://localhost:8010
+          predicates:
+            - Path=/donation/**
+        - id: events
+          uri: http://localhost:8015
+          predicates:
+            - Path=/event/**
 
 management:
   tracing:
