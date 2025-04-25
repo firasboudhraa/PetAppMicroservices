@@ -1,0 +1,8 @@
+tn\esprit\medicalrecord\control\ImageController.class
+tn\esprit\medicalrecord\repository\MedicalRecordRepository.class
+tn\esprit\medicalrecord\services\MedicalRecordServiceImp.class
+tn\esprit\medicalrecord\control\MedicalRecordController.class
+tn\esprit\medicalrecord\entity\MedicalRecord.class
+tn\esprit\medicalrecord\MedicalRecordApplication.class
+tn\esprit\medicalrecord\services\IMedicalRecordService.class
+tn\esprit\medicalrecord\entity\MedicalRecordType.class
