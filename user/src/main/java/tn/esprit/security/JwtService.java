@@ -45,35 +45,34 @@ public class JwtService {
         return generateToken(new HashMap<>(), userDetails, userId);
     }
 
-    public String generateToken(
-            Map<String, Object> extraClaims,
-            UserDetails userDetails,
-            Long userId
-    ) {
-        // Add roles/authorities to claims
-        extraClaims.put("roles", userDetails.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toList()));
 
-        // Add user ID to claims
-        extraClaims.put("userId", userId);
+   public String generateToken(
+           Map<String, Object> extraClaims,
+           UserDetails userDetails,
+           Long userId
+   ) {
+       // Simplify roles - just collect role names without permissions
+       extraClaims.put("roles", userDetails.getAuthorities().stream()
+               .map(GrantedAuthority::getAuthority)
+               .filter(authority -> authority.startsWith("ROLE_"))
+               .collect(Collectors.toList()));
 
-        return Jwts.builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
-                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
-                .compact();
-    }
+       // Add user ID to claims
+       extraClaims.put("userId", userId);
 
-    // Keep this method for backward compatibility if needed
+       return Jwts.builder()
+               .setClaims(extraClaims)
+               .setSubject(userDetails.getUsername())
+               .setIssuedAt(new Date(System.currentTimeMillis()))
+               .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+               .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+               .compact();
+   }
     public String generateToken(
             Map<String, Object> extraClaims,
             UserDetails userDetails
     ) {
-        // If you don't have the userId, you might want to throw an exception
-        // or handle it differently based on your requirements
+
         throw new UnsupportedOperationException("User ID is required for token generation");
     }
 

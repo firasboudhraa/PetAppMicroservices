@@ -1,103 +1,82 @@
 package tn.esprit.control;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import tn.esprit.dto.UserUpdateRequest;
-import tn.esprit.entity.Role;
-import tn.esprit.entity.User;
+import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.dto.matching.MatchRequestDTO;
+import tn.esprit.dto.user.UserResponseDTO;
+import tn.esprit.dto.user.UserUpdateRequest;
+import tn.esprit.entity.role.Role;
+import tn.esprit.entity.user.User;
 import tn.esprit.repository.RoleRepository;
 import tn.esprit.repository.UserRepository;
-import tn.esprit.service.IUserService;
+import tn.esprit.service.user.IUserService;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/user")
-//@PreAuthorize("hasRole('PET_OWNER') and hasRole('ADMIN')")
+@AllArgsConstructor
 public class UserController {
 
     private final IUserService userService;
     private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ObjectMapper objectMapper;
+    private final UserRepository userRepository;
+    private final ImageController imageController;
 
-    public UserController(IUserService userService,
-                          RoleRepository roleRepository,
-                          UserRepository userRepository,
-                          PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.roleRepository = roleRepository;
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-    @PostMapping("/create_user")
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    @GetMapping("/retrieve-user/{userId}")
+    public ResponseEntity<?> retrieveUser(@PathVariable Long userId) {
         try {
-            if (userService.emailExists(user.getEmail())) {
-                return errorResponse("User exists", "Email already in use", HttpStatus.CONFLICT);
-            }
-            User savedUser = userService.createUser(user);
-            return ResponseEntity.ok(savedUser);
-        } catch (RuntimeException e) {
-            return errorResponse("Validation error", e.getMessage(), HttpStatus.BAD_REQUEST);
+            User user = userService.retrieveUser(userId);
+            return ResponseEntity.ok(UserResponseDTO.fromUser(user));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving user");
         }
     }
 
-    private ResponseEntity<Map<String, String>> errorResponse(String error, String message, HttpStatus status) {
-        return ResponseEntity.status(status)
-                .body(Map.of("error", error, "message", message));
+    @DeleteMapping("/remove-user/{userId}")
+    public ResponseEntity<?> removeUser(@PathVariable Long userId) {
+        try {
+            return userService.removeUser(userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting user");
+        }
     }
 
-    @PreAuthorize("hasAnyAuthority('admin:read')")
-    @GetMapping("/retrieve-all-users")
-    public List<User> getUsers() {
-        return userService.retrieveAllUsers();
-    }
-
-   // @PreAuthorize("hasAnyAuthority('pet_owner:read', 'admin:read')")
-    @GetMapping("/retrieve-user/{user-id}")
-    public ResponseEntity<?> retrieveUser(@PathVariable("user-id") Long id) {
-        User user = userService.retrieveUser(id);
-        return (user != null) ? ResponseEntity.ok(user) : ResponseEntity.badRequest().body("User not found");
-    }
-
-   // @PreAuthorize("hasAnyAuthority('pet_owner:delete', 'admin:delete')")
-    @DeleteMapping("/remove-user/{user-id}")
-    public ResponseEntity<?> removeUser(@PathVariable("user-id") Long id) {
-        return ResponseEntity.ok(userService.removeUser(id));
-    }
-
-
-
-
- //   @PreAuthorize("hasAnyRole('PET_OWNER', 'ADMIN')")
-    @PutMapping("/modify-user/{userId}")
+    @PutMapping(value = "/modify-user/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> modifyUser(
             @PathVariable Long userId,
-            @RequestBody UserUpdateRequest updateRequest) {
+            @RequestPart("user") String userJson,
+            @RequestPart(value = "image", required = false) MultipartFile image) {
+
         try {
-            Optional<User> optionalUser = userRepository.findById(userId);
-            if (optionalUser.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body(Map.of("error", "User not found"));
-            }
+            User existingUser = userService.retrieveUser(userId);
+            UserUpdateRequest updateRequest = objectMapper.readValue(userJson, UserUpdateRequest.class);
 
-            User existingUser = optionalUser.get();
-
-            // Update fields
+            // Update basic fields
             if (updateRequest.getFirstName() != null) {
                 existingUser.setFirstName(updateRequest.getFirstName());
             }
             if (updateRequest.getLastName() != null) {
                 existingUser.setLastName(updateRequest.getLastName());
             }
+
+            // Handle email update
             if (updateRequest.getEmail() != null && !updateRequest.getEmail().equals(existingUser.getEmail())) {
                 if (userRepository.existsByEmail(updateRequest.getEmail())) {
                     return ResponseEntity.status(HttpStatus.CONFLICT)
@@ -105,29 +84,59 @@ public class UserController {
                 }
                 existingUser.setEmail(updateRequest.getEmail());
             }
-            if (updateRequest.getPassword() != null) {
+
+            // Handle password update
+            if (updateRequest.getPassword() != null && !updateRequest.getPassword().isEmpty()) {
                 existingUser.setPassword(passwordEncoder.encode(updateRequest.getPassword()));
             }
 
-            // Update role (single role now)
+            // Handle role update
             if (updateRequest.getRole() != null) {
                 Role role = roleRepository.findByName(updateRequest.getRole())
                         .orElseThrow(() -> new IllegalArgumentException("Invalid role: " + updateRequest.getRole()));
-                existingUser.setRoles(Set.of(role)); // Set with single role
+                existingUser.setRoles(Set.of(role));
             }
 
-            User updatedUser = userService.updateUser(existingUser);
-            return ResponseEntity.ok(updatedUser);
+            // Handle bio update
+            if (updateRequest.getBio() != null) {
+                existingUser = userService.updateUserBio(userId, updateRequest.getBio());
+            }
+            // Handle image update
+            if (image != null && !image.isEmpty()) {
+                String imageUrl = imageController.handleImageUpload(image, existingUser.getProfileImageUrl());
+                existingUser.setProfileImageUrl(imageUrl);
+            }
 
+            // Save final changes
+            User updatedUser = userRepository.save(existingUser);
+            return ResponseEntity.ok(UserResponseDTO.fromUser(updatedUser));
+
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid role", "details", e.getMessage()));
+                    .body(Map.of("error", e.getMessage()));
+        } catch (JsonProcessingException e) {
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Invalid JSON format"));
         } catch (Exception e) {
             return ResponseEntity.internalServerError()
-                    .body(Map.of("error", "Update failed", "details", e.getMessage()));
+                    .body(Map.of("error", "Update failed: " + e.getMessage()));
         }
     }
 
+    // Endpoint to update adoption preferences
+    @PostMapping("/{userId}/adoptionPreferences")
+    public User updateAdoptionPreferences(@PathVariable Long userId,
+                                          @RequestBody MatchRequestDTO.UserProfile userPref) {
+        return userService.updateAdoptionPreferences(userId, userPref);
+    }
 
+
+    // Endpoint to get adoption preferences
+    @GetMapping("/{userId}/adoptionPreferences")
+    public Map<String, String> getAdoptionPreferences(@PathVariable Long userId) {
+        return userService.getAdoptionPreferences(userId);
+    }
 
 }

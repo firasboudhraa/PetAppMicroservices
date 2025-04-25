@@ -7,7 +7,6 @@ spring:
   servlet:
     multipart:
       max-file-size: 50MB
-
   application:
     name: user
 
@@ -23,7 +22,6 @@ spring:
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
-
   security:
     jwt:
       secret-key: ${SPRING_SECURITY_JWT_SECRET_KEY}
@@ -63,7 +61,7 @@ eureka:
     enabled: true
 
 server:
-  port: 8081
+  port: 8084
 
 springdoc:
   default-produces-type: application/json

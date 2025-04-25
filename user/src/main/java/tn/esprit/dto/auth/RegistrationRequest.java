@@ -1,4 +1,4 @@
-package tn.esprit.dto;
+package tn.esprit.dto.auth;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,7 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tn.esprit.entity.RoleEnum;
+import tn.esprit.entity.role.RoleEnum;
 
 @Data
 @Builder

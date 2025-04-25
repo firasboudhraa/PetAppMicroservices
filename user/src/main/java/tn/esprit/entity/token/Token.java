@@ -1,7 +1,8 @@
-package tn.esprit.entity;
+package tn.esprit.entity.token;
 
 import jakarta.persistence.*;
 import lombok.*;
+import tn.esprit.entity.user.User;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +18,6 @@ public class Token {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 1000, nullable = false, unique = true)
     private String token;
 
     @Column(nullable = false)
@@ -27,10 +27,17 @@ public class Token {
     private LocalDateTime expiresAt;
 
     private LocalDateTime validatedAt;
-    @Column(nullable = false)
-    private boolean revoked;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Column(nullable = false)
+    private boolean revoked; // Soft-delete flag
+
+    private boolean isActive; // Only relevant for ACTIVATION tokens (true = account activated)
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private TokenTypes tokenType;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

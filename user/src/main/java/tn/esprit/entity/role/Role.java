@@ -1,7 +1,8 @@
-package tn.esprit.entity;
+package tn.esprit.entity.role;
 
 import jakarta.persistence.*;
 import lombok.*;
+import tn.esprit.entity.user.Permission;
 
 import java.util.HashSet;
 import java.util.Set;
