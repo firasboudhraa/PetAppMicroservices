@@ -15,4 +15,8 @@ public interface BasketClient {
     @PutMapping("/{basketId}/validate")
     BasketDTO validateBasket(@PathVariable("basketId") Long basketId);
 
+    @PutMapping("/{basketId}/clear")
+    void clearBasket(@PathVariable("basketId") Long basketId);
+
+
 }

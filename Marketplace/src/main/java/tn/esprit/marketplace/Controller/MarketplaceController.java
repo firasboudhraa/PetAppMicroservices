@@ -1,6 +1,10 @@
 package tn.esprit.marketplace.Controller;
 
+import feign.FeignException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.marketplace.Client.ProductClient;
 import tn.esprit.marketplace.Dto.ProductDTO;
 import tn.esprit.marketplace.Entity.Marketplace;
 import tn.esprit.marketplace.Service.IMarketplaceService;
@@ -13,9 +17,11 @@ import java.util.List;
 public class MarketplaceController {
 
     private final IMarketplaceService marketplaceService;
+    private final ProductClient productClient;
 
-    public MarketplaceController(IMarketplaceService marketplaceService) {
+    public MarketplaceController(IMarketplaceService marketplaceService, ProductClient productClient) {
         this.marketplaceService = marketplaceService;
+        this.productClient = productClient;
     }
 
     @PostMapping
@@ -27,11 +33,11 @@ public class MarketplaceController {
     public Marketplace updateMarketplace(@PathVariable Long id, @RequestBody Marketplace marketplace) {
         return marketplaceService.updateMarketplace(id, marketplace);
     }
-
+/*
     @DeleteMapping("/{id}")
     public void deleteMarketplace(@PathVariable Long id) {
         marketplaceService.deleteMarketplace(id);
-    }
+    }*/
 
     @GetMapping("/{id}")
     public Marketplace getMarketplace(@PathVariable Long id) {
@@ -52,6 +58,24 @@ public class MarketplaceController {
         return marketplaceService.getProductsByMarketplaceId(id);
     }
 
+    @DeleteMapping("/{marketplaceId}")
+    public ResponseEntity<Void> deleteMarketplaceWithProducts(@PathVariable Long marketplaceId) {
+        try {
+            // 1. Supprimer tous les produits associés
+            productClient.deleteAllProductsByMarketplaceId(marketplaceId);
 
+            // 2. Supprimer la marketplace
+            marketplaceService.deleteMarketplace(marketplaceId);
+
+            return ResponseEntity.noContent().build();
+        } catch (FeignException e) {
+            if (e.status() == 404) {
+                // Cas où le marketplace n'a pas de produits
+                marketplaceService.deleteMarketplace(marketplaceId);
+                return ResponseEntity.noContent().build();
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 
 }

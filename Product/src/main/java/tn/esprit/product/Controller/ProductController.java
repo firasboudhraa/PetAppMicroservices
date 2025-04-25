@@ -113,6 +113,11 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
+    @DeleteMapping("/marketplace/{marketplaceId}")
+    public ResponseEntity<Void> deleteAllByMarketplaceId(@PathVariable Long marketplaceId) {
+        productService.deleteAllByMarketplaceId(marketplaceId);
+        return ResponseEntity.noContent().build();
+    }
 
     @GetMapping("/{marketplaceId}/products")
     public List<Product> getProductsByMarketplaceId(@PathVariable("marketplaceId") Long marketplaceId) {
@@ -132,5 +137,26 @@ public class ProductController {
         image.transferTo(filePath.toFile());
         return fileName;
     }
+
+    @PutMapping("/{id}/increase")
+    public ResponseEntity<Product> increaseQuantity(@PathVariable Long id) {
+        try {
+            Product updated = productService.increaseQuantity(id);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
+    @PutMapping("/{id}/decrease")
+    public ResponseEntity<Product> decreaseQuantity(@PathVariable Long id) {
+        try {
+            Product updated = productService.decreaseQuantity(id);
+            return ResponseEntity.ok(updated);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
 
 }

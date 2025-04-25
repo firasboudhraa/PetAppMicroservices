@@ -23,6 +23,12 @@ public class BasketServiceImp implements IBasketService {
     public Basket createBasket(Basket basket) {
         basket.setDateCreation(java.time.LocalDate.now());
         basket.setStatut("en cours");
+
+        // Calcule du total si des produits sont déjà ajoutés
+        basket.syncListToProductIds(); // s’assurer que la liste est en phase
+        double total = calculateTotal(basket.getProductIdsList());
+        basket.setTotal(total);
+        basketRepository.save(basket);
         return basketRepository.save(basket);
     }
 
@@ -39,6 +45,15 @@ public class BasketServiceImp implements IBasketService {
         return basketRepository.findById(id);
     }
 
+    private double calculateTotal(List<Long> productIds) {
+        return productIds.stream()
+                .map(productClient::getProductById)
+                .peek(product -> System.out.println("Produit récupéré : " + product))
+                .filter(java.util.Objects::nonNull)
+                .mapToDouble(product -> product.getPrix() * product.getQuantity())
+                .sum();
+    }
+
     // Mettre à jour un panier
     @Override
     public Basket updateBasket(Long id, Basket basket) {
@@ -49,6 +64,15 @@ public class BasketServiceImp implements IBasketService {
             updatedBasket.setTotal(basket.getTotal());
             updatedBasket.setModePaiement(basket.getModePaiement());
             updatedBasket.setDateModification(java.time.LocalDate.now());
+
+            // Mise à jour des produits
+            updatedBasket.setProductIds(basket.getProductIds());
+            updatedBasket.syncListToProductIds();
+
+            // Recalcul du total
+            double total = calculateTotal(updatedBasket.getProductIdsList());
+            updatedBasket.setTotal(total);
+
             return basketRepository.save(updatedBasket);
         }
         return null; // Si panier non trouvé
@@ -65,6 +89,11 @@ public class BasketServiceImp implements IBasketService {
         return false; // Si panier non trouvé
     }
 
+    @Override
+    public List<Basket> getAllBaskets() {
+        return basketRepository.findAll();
+    }
+
     // Ajouter un produit au panier
     @Override
     public Basket addProductToBasket(Long basketId, Long productId) {
@@ -74,6 +103,9 @@ public class BasketServiceImp implements IBasketService {
             basket.addProduct(productId);
             basket.syncListToProductIds();
             basket.setDateModification(LocalDate.now());
+
+            basket.setTotal(calculateTotal(basket.getProductIdsList()));
+
             return basketRepository.save(basket);
         }
         return null;
@@ -88,6 +120,10 @@ public class BasketServiceImp implements IBasketService {
             basket.removeProduct(productId);
             basket.syncListToProductIds();
             basket.setDateModification(LocalDate.now());
+
+            // Recalcul du total
+            basket.setTotal(calculateTotal(basket.getProductIdsList()));
+
             return basketRepository.save(basket);
         }
         return null;
@@ -117,7 +153,8 @@ public class BasketServiceImp implements IBasketService {
 
             // Afficher la date avant de sauvegarder
             System.out.println("Date de modification avant sauvegarde : " + basket.getDateModification());
-
+            // Réinitialise le total à 0
+            basket.setTotal(calculateTotal(basket.getProductIdsList()));
             // Sauvegarder et forcer la mise à jour avec flush()
             Basket updatedBasket = basketRepository.saveAndFlush(basket);
 

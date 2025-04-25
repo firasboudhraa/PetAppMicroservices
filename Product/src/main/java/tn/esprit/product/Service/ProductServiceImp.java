@@ -18,6 +18,7 @@ import java.util.List;
 @Service
 public class ProductServiceImp implements IProductService {
 
+
     private static final String UPLOAD_DIR = "Product/uploads/";
     private final ProductRepository productRepository;
     private final MarketplaceClient marketplaceClient;
@@ -145,5 +146,33 @@ public class ProductServiceImp implements IProductService {
         return fileName;
     }
 
+    @Override
+    public void deleteAllByMarketplaceId(Long marketplaceId) {
+        productRepository.deleteByMarketplaceId(marketplaceId);
+    }
+
+    @Override
+    public Product increaseQuantity(Long id) {
+        return productRepository.findById(id).map(product -> {
+            if (product.getQuantity() < product.getStock()) {
+                product.setQuantity(product.getQuantity() + 1);
+                return productRepository.save(product);
+            } else {
+                throw new RuntimeException("Quantité maximale atteinte.");
+            }
+        }).orElseThrow(() -> new RuntimeException("Produit non trouvé."));
+    }
+
+    @Override
+    public Product decreaseQuantity(Long id) {
+        return productRepository.findById(id).map(product -> {
+            if (product.getQuantity() > 1) {
+                product.setQuantity(product.getQuantity() - 1);
+                return productRepository.save(product);
+            } else {
+                throw new RuntimeException("Quantité minimale atteinte.");
+            }
+        }).orElseThrow(() -> new RuntimeException("Produit non trouvé."));
+    }
 
 }

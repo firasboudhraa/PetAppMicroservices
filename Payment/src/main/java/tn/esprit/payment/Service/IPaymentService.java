@@ -16,4 +16,6 @@ public interface IPaymentService {
     void deletePayment(Long paymentId);
     List<Payment> getAllPayments();
     List<Payment> getPaymentHistoryByStatus(String status);
+
+    Payment updatePaymentStatus(Long paymentId, String status);
 }

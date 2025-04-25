@@ -16,4 +16,7 @@ public interface IProductService {
     String saveImage(MultipartFile imageFile) throws IOException;
     Product addProductWithImage(Product product, MultipartFile imageFile) throws IOException;
     Product updateProductWithImage(Long id, Product updatedProduct, MultipartFile imageFile) throws IOException;
+    void deleteAllByMarketplaceId(Long marketplaceId);
+    Product increaseQuantity(Long id);
+    Product decreaseQuantity(Long id);
 }

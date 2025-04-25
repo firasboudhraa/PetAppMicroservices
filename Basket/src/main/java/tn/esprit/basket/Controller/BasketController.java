@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tn.esprit.basket.Client.ProductClient;
 import tn.esprit.basket.Dto.ProductDTO;
 import tn.esprit.basket.Entity.Basket;
 import tn.esprit.basket.Repository.BasketRepository;
@@ -43,6 +44,11 @@ public class BasketController {
     public ResponseEntity<Basket> getBasketById(@PathVariable Long id) {
         Optional<Basket> basket = basketService.getBasketById(id);
         return basket.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public List<Basket> getAllBaskets() {
+        return basketService.getAllBaskets();
     }
 
     // Mettre à jour un panier

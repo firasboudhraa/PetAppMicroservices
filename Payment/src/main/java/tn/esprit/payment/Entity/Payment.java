@@ -27,7 +27,6 @@ public class Payment {
     private String status;  // "pending", "completed", "failed"
     private String paymentMethod;
     private LocalDate paymentDate;
-
     private Long basketId;  // Référence au panier
     private Long userId;    // Référence à l'utilisateur
 

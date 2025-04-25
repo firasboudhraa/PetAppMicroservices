@@ -21,4 +21,5 @@ public class BasketDTO {
     private LocalDate dateValidation;
     private LocalDate dateModification;
     private Long userId;
+
 }
