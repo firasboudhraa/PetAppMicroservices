@@ -1,6 +1,5 @@
 tn\esprit\petservice\entity\PetService.class
 tn\esprit\petservice\service\IPetService.class
-tn\esprit\petservice\PetServiceApplication.class
 tn\esprit\petservice\service\PetServiceImpl.class
 tn\esprit\petservice\entity\Pet.class
 tn\esprit\petservice\entity\FullPetServiceResponse$FullPetServiceResponseBuilder.class
