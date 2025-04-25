@@ -21,6 +21,7 @@
         <option value="$PROJECT_DIR$/comments/pom.xml" />
         <option value="$PROJECT_DIR$/PetMs/pom.xml" />
         <option value="$PROJECT_DIR$/NotificationMs/pom.xml" />
+        <option value="$PROJECT_DIR$/user/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

@@ -88,8 +88,17 @@ spring:
           uri: http://localhost:8050
           predicates:
             - Path=/api/chat/**
+        - id: user
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/user/**
+        - id: admin
+          uri: http://localhost:8081
+          predicates:
+            - Path=/api/admin/**
 
 management:
   tracing:
     sampling:
       probability: 1.0
+

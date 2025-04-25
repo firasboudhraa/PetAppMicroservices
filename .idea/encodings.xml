@@ -15,5 +15,6 @@
     <file url="file://$PROJECT_DIR$/EurekaServer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/NotificationMs/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PetMs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
   </component>
 </project>

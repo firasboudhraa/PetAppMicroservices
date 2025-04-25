@@ -1,0 +1,75 @@
+spring:
+  profiles:
+    active: dev
+  main:
+    allow-bean-definition-overriding: true
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+  application:
+    name: user
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+  security:
+    jwt:
+      secret-key: ${SPRING_SECURITY_JWT_SECRET_KEY}
+      expiration: ${SPRING_SECURITY_JWT_EXPIRATION}
+
+  mailing:
+    frontend:
+      activation-url: ${SPRING_MAILING_FRONTEND_ACTIVATION_URL}
+
+  mail:
+    host: ${SPRING_MAIL_HOST}
+    port: ${SPRING_MAIL_PORT}
+    username: ${SPRING_MAIL_USERNAME}
+    password: ${SPRING_MAIL_PASSWORD}
+    admin:
+      email: ${SPRING_MAIL_ADMIN_EMAIL}
+    properties:
+      mail.smtp:
+        auth: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH}
+        starttls:
+          enable: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE}
+        connectiontimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_CONNECTIONTIMEOUT}
+        timeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_TIMEOUT}
+        writetimeout: ${SPRING_MAIL_PROPERTIES_MAIL_SMTP_WRITETIMEOUT}
+
+app:
+  admin:
+    email: ${APP_ADMIN_EMAIL}
+    password: ${APP_ADMIN_PASSWORD}
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE}
+    enabled: true
+
+server:
+  port: 8084
+
+springdoc:
+  default-produces-type: application/json
+  cloud:
+    discovery:
+      enabled: false
+
+logging:
+  level:
+    org.springframework.web: DEBUG
+    org.springframework.validation: DEBUG
