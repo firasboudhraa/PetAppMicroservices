@@ -11,7 +11,7 @@
         <module name="EurekaServer" />
         <module name="ApiGateway" />
       </profile>
-      <profile name="Annotation profile for Notification" enabled="true">
+      <profile name="Annotation profile for PetService" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,6 +20,8 @@
         </processorPath>
         <module name="Appointment" />
         <module name="PetService" />
+        <module name="MedicalNotebook" />
+        <module name="MedicalRecord" />
         <module name="Notification" />
       </profile>
     </annotationProcessing>
@@ -32,7 +34,10 @@
       <module name="ApiGateway" options="-parameters" />
       <module name="Appointment" options="-parameters" />
       <module name="Config-server" options="-parameters" />
+      <module name="Eureka-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
+      <module name="MedicalNotebook" options="-parameters" />
+      <module name="MedicalRecord" options="-parameters" />
       <module name="Notification" options="-parameters" />
       <module name="PetService" options="-parameters" />
     </option>
