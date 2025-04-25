@@ -24,6 +24,16 @@
         <module name="MedicalRecord" />
         <module name="Notification" />
       </profile>
+      <profile name="Annotation profile for posts" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="posts" />
+        <module name="comments" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="Rabbitmq" target="17" />
@@ -40,6 +50,8 @@
       <module name="MedicalRecord" options="-parameters" />
       <module name="Notification" options="-parameters" />
       <module name="PetService" options="-parameters" />
+      <module name="comments" options="-parameters" />
+      <module name="posts" options="-parameters" />
     </option>
   </component>
 </project>
