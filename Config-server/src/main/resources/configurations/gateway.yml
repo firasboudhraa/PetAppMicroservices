@@ -4,7 +4,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
-    register-with-eureka: true
+    register-with-eureka: false
 
 server:
   port: 8222
@@ -32,6 +32,16 @@ spring:
               - "Authorization"
               - "Content-Type"
               - "Accept"
+              - "Origin"
+              - "X-Requested-With"
+              - "Access-Control-Allow-Origin"
+              - "Access-Control-Allow-Credentials"
+            exposedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "Accept"
+              - "Access-Control-Allow-Origin"
+              - "Access-Control-Allow-Credentials"
             allowCredentials: true
       routes:
         - id: services
@@ -62,6 +72,22 @@ spring:
           uri: http://localhost:8083
           predicates:
             - Path=/comments/**
+        - id: PetMs-pet
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/pet/**
+        - id: PetMs-adoptionRequest
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/adoptionRequest/**
+        - id: PetMs-petSittingOffer
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/petSittingOffer/**
+        - id: PetMs-chatbot
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/chat/**
 
 management:
   tracing:

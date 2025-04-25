@@ -1,0 +1,12 @@
+tn\esprit\medicalnotebook\repository\CarnetRepository.class
+tn\esprit\medicalnotebook\control\CarnetController.class
+tn\esprit\medicalnotebook\entity\MedicalRecordType.class
+tn\esprit\medicalnotebook\entity\MedicalRecord.class
+tn\esprit\medicalnotebook\entity\Carnet$CarnetBuilder.class
+tn\esprit\medicalnotebook\entity\Carnet.class
+tn\esprit\medicalnotebook\service\CarnetServiceImp.class
+tn\esprit\medicalnotebook\Client\MedicalRecordClient.class
+tn\esprit\medicalnotebook\service\ICarnetService.class
+tn\esprit\medicalnotebook\entity\FullCarnetResponse.class
+tn\esprit\medicalnotebook\MedicalNotebookApplication.class
+tn\esprit\medicalnotebook\entity\FullCarnetResponse$FullCarnetResponseBuilder.class
