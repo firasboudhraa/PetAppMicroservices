@@ -108,6 +108,22 @@ spring:
           uri: http://localhost:8015
           predicates:
             - Path=/event/**
+        - id: marketplaces
+          uri: http://localhost:8010
+          predicates:
+            - Path=/api/marketplaces/**
+        - id: payments
+          uri: http://localhost:8014
+          predicates:
+            - Path=/api/payment/**
+        - id: baskets
+          uri: http://localhost:8013
+          predicates:
+            - Path=/api/baskets/**
+        - id: products
+          uri: http://localhost:8011
+          predicates:
+            - Path=/api/products/**
 
 management:
   tracing:

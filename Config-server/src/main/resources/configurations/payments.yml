@@ -1,0 +1,28 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8014
+
+spring:
+  application:
+    name: payments
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/payments?createDatabaseIfNotExist=true
+    username: root
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+
+
+stripe:
+  api:
+    key: sk_test_51RG5dVH61SNP6XKN7gIcOfs9sbqsfFGv7gt4R0UX7WsE9RemkJ5zDPhWqFLnit4sh3PxotpadPvnF1G8juE7w9YQ00Udt2ZC7I

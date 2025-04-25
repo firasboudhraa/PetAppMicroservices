@@ -25,6 +25,10 @@
         <option value="$PROJECT_DIR$/donation/pom.xml" />
         <option value="$PROJECT_DIR$/event/pom.xml" />
         <option value="$PROJECT_DIR$/eventdonations/pom.xml" />
+        <option value="$PROJECT_DIR$/Basket/pom.xml" />
+        <option value="$PROJECT_DIR$/Payment/pom.xml" />
+        <option value="$PROJECT_DIR$/Product/pom.xml" />
+        <option value="$PROJECT_DIR$/Marketplace/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
