@@ -15,7 +15,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
+        <processorPath>
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
         </processorPath>
         <module name="user" />
@@ -24,20 +24,24 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
+        <processorPath>
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="Appointment" />
         <module name="PetService" />
         <module name="MedicalNotebook" />
         <module name="comments" />
+        <module name="Product" />
+        <module name="Basket" />
+        <module name="MedicalRecord" />
+        <module name="posts" />
+        <module name="Notification" />
+        <module name="Payment" />
+        <module name="Marketplace" />
         <module name="PetMs" />
         <module name="NotificationMs" />
         <module name="donation" />
-        <module name="MedicalRecord" />
         <module name="event" />
-        <module name="posts" />
-        <module name="Notification" />
       </profile>
     </annotationProcessing>
   </component>
@@ -45,14 +49,18 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="ApiGateway" options="-parameters" />
       <module name="Appointment" options="-parameters" />
+      <module name="Basket" options="-parameters" />
       <module name="Config-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
+      <module name="Marketplace" options="-parameters" />
       <module name="MedicalNotebook" options="-parameters" />
       <module name="MedicalRecord" options="-parameters" />
       <module name="Notification" options="-parameters" />
       <module name="NotificationMs" options="-parameters" />
+      <module name="Payment" options="-parameters" />
       <module name="PetMs" options="-parameters" />
       <module name="PetService" options="-parameters" />
+      <module name="Product" options="-parameters" />
       <module name="comments" options="-parameters" />
       <module name="donation" options="-parameters" />
       <module name="event" options="-parameters" />
