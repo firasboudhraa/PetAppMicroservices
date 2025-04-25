@@ -12,6 +12,7 @@
         <module name="Eureka-server" />
       </profile>
       <profile name="Annotation profile for PetService" enabled="true">
+      <profile name="Annotation profile for PetMs" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,6 +21,9 @@
         </processorPath>
         <module name="PetService" />
         <module name="Appoitment" />
+        <module name="ChatbotMs" />
+        <module name="PetMs" />
+        <module name="NotificationMs" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -34,6 +38,11 @@
       <module name="Config-server" options="-parameters" />
       <module name="Eureka-server" options="-parameters" />
       <module name="PetService" options="-parameters" />
+      <module name="ChatbotMs" options="-parameters" />
+      <module name="Config-server" options="-parameters" />
+      <module name="Eureka-server" options="-parameters" />
+      <module name="NotificationMs" options="-parameters" />
+      <module name="PetMs" options="-parameters" />
     </option>
   </component>
 </project>

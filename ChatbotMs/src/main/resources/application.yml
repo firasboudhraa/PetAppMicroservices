@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: ChatbotMs
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
+
+github:
+  token: ${GITHUB_TOKEN}

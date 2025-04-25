@@ -1,6 +1,7 @@
 eureka:
   client:
     register-with-eureka: false
+
 server:
   port: 8222
 spring:
@@ -26,6 +27,19 @@ spring:
               - "Authorization"
               - "Content-Type"
               - "Accept"
+<<<<<<< HEAD
+=======
+              - "Origin"
+              - "X-Requested-With"
+              - "Access-Control-Allow-Origin"
+              - "Access-Control-Allow-Credentials"
+            exposedHeaders:
+              - "Authorization"
+              - "Content-Type"
+              - "Accept"
+              - "Access-Control-Allow-Origin"
+              - "Access-Control-Allow-Credentials"
+>>>>>>> 9d4586f5b7668b153416491cc882b700ec28816f
             allowCredentials: true
       routes:
         - id: services
@@ -36,7 +50,26 @@ spring:
           uri: http://localhost:8091
           predicates:
             - Path=/api/appointments/**
+<<<<<<< HEAD
 
+=======
+        - id: PetMs-pet
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/pet/**
+        - id: PetMs-adoptionRequest
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/adoptionRequest/**
+        - id: PetMs-petSittingOffer
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/v1/petSittingOffer/**
+        - id: PetMs-chatbot
+          uri: http://localhost:8050
+          predicates:
+            - Path=/api/chat/**
+>>>>>>> 9d4586f5b7668b153416491cc882b700ec28816f
 management:
   tracing:
     sampling:
