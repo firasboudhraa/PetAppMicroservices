@@ -11,7 +11,7 @@
         <module name="EurekaServer" />
         <module name="ApiGateway" />
       </profile>
-      <profile name="Annotation profile for PetService" enabled="true">
+      <profile name="Annotation profile for posts" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -21,18 +21,10 @@
         <module name="Appointment" />
         <module name="PetService" />
         <module name="MedicalNotebook" />
-        <module name="MedicalRecord" />
-        <module name="Notification" />
-      </profile>
-      <profile name="Annotation profile for posts" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
-        </processorPath>
-        <module name="posts" />
         <module name="comments" />
+        <module name="MedicalRecord" />
+        <module name="posts" />
+        <module name="Notification" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
