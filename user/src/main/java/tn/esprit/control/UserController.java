@@ -97,10 +97,11 @@ public class UserController {
                 existingUser.setRoles(Set.of(role));
             }
 
-            // Handle bio update
+            // ✅ Handle bio update (fixed)
             if (updateRequest.getBio() != null) {
-                existingUser = userService.updateUserBio(userId, updateRequest.getBio());
+                existingUser.setBio(updateRequest.getBio());
             }
+
             // Handle image update
             if (image != null && !image.isEmpty()) {
                 String imageUrl = imageController.handleImageUpload(image, existingUser.getProfileImageUrl());
@@ -114,16 +115,14 @@ public class UserController {
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", e.getMessage()));
+            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         } catch (JsonProcessingException e) {
-            return ResponseEntity.badRequest()
-                    .body(Map.of("error", "Invalid JSON format"));
+            return ResponseEntity.badRequest().body(Map.of("error", "Invalid JSON format"));
         } catch (Exception e) {
-            return ResponseEntity.internalServerError()
-                    .body(Map.of("error", "Update failed: " + e.getMessage()));
+            return ResponseEntity.internalServerError().body(Map.of("error", "Update failed: " + e.getMessage()));
         }
     }
+
 
     // Endpoint to update adoption preferences
     @PostMapping("/{userId}/adoptionPreferences")
