@@ -10,8 +10,7 @@ public class MatchResponseDTO {
 
     @Data
     public static class Match {
-        private String pet_name;
-        private String species;
+        private String id;
         private int match_score;
         private List<String> reasons;
         private String consideration;
