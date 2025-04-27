@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import tn.esprit.comments.entity.UserDTO;
 
-@FeignClient(name = "user", path = "/users")
+@FeignClient(name = "user", path = "http://localhost:8081/")
 public interface UserClient {
     @GetMapping("/{userId}")
     UserDTO getUserById(@PathVariable("userId") Long userId);

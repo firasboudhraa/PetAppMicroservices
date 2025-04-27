@@ -8,7 +8,7 @@ spring:
     multipart:
       max-file-size: 50MB
   application:
-    name: user_service
+    name: user-service
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -7,35 +7,27 @@ import org.springframework.stereotype.Service;
 import tn.esprit.posts.entity.Post;
 import tn.esprit.posts.entity.UserDTO;  // Assuming you are using UserDTO as the data transfer object
 
-
 @Service
 public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
 
+    public void sendPostDeletionEmail(String title, String author, String email) {
+        if (email != null && !email.isEmpty()) {
+            String subject = "Post Deleted Notification";
+            String content = "Hello " + author + ",\n\n" +
+                    "We wanted to let you know that your post titled \"" + title + "\" has been deleted by our admin team because it did not comply with our community guidelines.\n\n" +
+                    "If you believe this was a mistake, please contact us.\n\n" +
+                    "Thank you for your understanding.\n\n" +
+                    "FureverBuddy Admin Team";
 
-    @Autowired
-    private UserClient userClient;  // Use the Feign client to interact with the User service
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(email);
+            message.setSubject(subject);
+            message.setText(content);
 
-    public void sendPostDeletionEmail(Post post) {
-        if (post != null) {
-            Long userId = post.getUserId();
-            UserDTO user = userClient.getUserById(userId);
-
-            if (user != null) {
-                String subject = "Post Deleted Notification";
-                String content = "The post with title '" + post.getTitle() + "' has been deleted by one of our admins because it did not comply with our community guidelines or policies. If you believe this was a mistake, feel free to contact us.\n\nThank you for your understanding.\n\nAymen Thabet, FureverBuddy Admin Team";
-
-
-                SimpleMailMessage message = new SimpleMailMessage();
-                message.setTo(user.getEmail());
-                message.setSubject(subject);
-                message.setText(content);
-
-                mailSender.send(message);
-            }
+            mailSender.send(message);
         }
     }
-
 }
