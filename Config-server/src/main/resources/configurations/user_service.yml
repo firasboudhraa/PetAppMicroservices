@@ -1,48 +1,56 @@
+spring:
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/user_service?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: root
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQLDialect
+    open-in-view: false
+
+
+  security:
+    jwt:
+      secret-key: bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=
+      expiration: 86400000
+
+  mail:
+    host: smtp.gmail.com
+    port: "587"
+    username: yasminemzoughi4@gmail.com
+    password: "byzs pdhq kyil whiu"
+    admin:
+      email: yasminemzoughi4@gmail.com
+    properties:
+      mail.smtp:
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: "5000"
+        timeout: "5000"
+        writetimeout: "5000"
+
+
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+
+app:
+  admin:
+    email: yasminemzoughi4@gmail.com
+
+server:
+  port: 8084
+
+
 eureka:
   instance:
     hostname: localhost
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
-
-server:
-  port: 8081
-
-spring:
-  application:
-    name: user_service
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/user_DB?createDatabaseIfNotExist=true
-    username: root
-    password:
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQLDialect
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
-
-rabbitmq:
-  exchanges:
-    petservice: petservice.exchange
-  queues:
-    petservice: petservice.queue
-  routing-keys:
-    petservice: petservice.routing-key
-
-application:
-  config:
-    appointments-url: http://localhost:8091/api/appointments
-
-
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
