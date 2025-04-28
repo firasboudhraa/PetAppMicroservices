@@ -1,6 +1,5 @@
 package tn.esprit.petservice.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
 import java.util.List;

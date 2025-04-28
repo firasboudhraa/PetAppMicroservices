@@ -51,7 +51,7 @@ rabbitmq:
 
 application:
   config:
-    pet-services-url: http://localhost:8090/api/v1/services
+    notifications-url: http://localhost:8055
 
 management:
   tracing:
