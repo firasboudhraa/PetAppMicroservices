@@ -91,10 +91,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
-<<<<<<< HEAD
-=======
 
->>>>>>> c3d9507ad79d261ff9347f2c2b56b58830a98c30
         <dependency>
             <groupId>com.vaadin.external.google</groupId>
             <artifactId>android-json</artifactId>
