@@ -19,4 +19,11 @@ public interface IProductService {
     void deleteAllByMarketplaceId(Long marketplaceId);
     Product increaseQuantity(Long id);
     Product decreaseQuantity(Long id);
+    List<Product> getProductsByUserId(Long userId);
+
+    Product addProductByUser(Long userId, Product product, MultipartFile imageFile) throws IOException;
+
+    Product updateProductByUser(Long userId, Long productId, Product updatedProduct, MultipartFile imageFile) throws IOException;
+
+    void deleteProductByUser(Long userId, Long productId);
 }

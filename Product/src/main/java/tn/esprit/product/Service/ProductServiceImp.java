@@ -175,4 +175,74 @@ public class ProductServiceImp implements IProductService {
         }).orElseThrow(() -> new RuntimeException("Produit non trouvé."));
     }
 
+    @Override
+    public List<Product> getProductsByUserId(Long userId) {
+        return productRepository.findByUserId(userId);
+    }
+
+    // integration du user au crud
+
+    @Override
+    public Product addProductByUser(Long userId, Product product, MultipartFile imageFile) throws IOException {
+        if (imageFile != null && !imageFile.isEmpty()) {
+            String imageName = saveImage(imageFile);
+            product.setImageUrl(UPLOAD_DIR + imageName);
+        }
+
+        product.setUserId(userId);
+
+        MarketplaceDto marketplace = marketplaceClient.getUniqueMarketplace();
+        if (marketplace == null || marketplace.getId_Marketplace() == null) {
+            throw new IllegalArgumentException("Invalid marketplace data received.");
+        }
+        product.setMarketplaceId(marketplace.getId_Marketplace());
+
+        return productRepository.save(product);
+    }
+
+
+    @Override
+    public Product updateProductByUser(Long userId, Long productId, Product updatedProduct, MultipartFile imageFile) throws IOException {
+        return productRepository.findById(productId).map(product -> {
+            if (!product.getUserId().equals(userId)) {
+                throw new RuntimeException("Unauthorized operation: You are not the owner of this product.");
+            }
+
+            product.setNom(updatedProduct.getNom());
+            product.setDescription(updatedProduct.getDescription());
+            product.setPrix(updatedProduct.getPrix());
+            product.setStock(updatedProduct.getStock());
+            product.setCategory(updatedProduct.getCategory());
+            product.setQuantity(updatedProduct.getQuantity());
+
+            if (imageFile != null && !imageFile.isEmpty()) {
+                try {
+                    if (product.getImageUrl() != null) {
+                        Path oldImagePath = Paths.get(product.getImageUrl());
+                        Files.deleteIfExists(oldImagePath);
+                    }
+                    String imageName = saveImage(imageFile);
+                    product.setImageUrl(UPLOAD_DIR + imageName);
+                } catch (IOException e) {
+                    throw new RuntimeException("Failed to update image: " + e.getMessage());
+                }
+            }
+
+            return productRepository.save(product);
+        }).orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+    }
+
+    @Override
+    public void deleteProductByUser(Long userId, Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
+
+        if (!product.getUserId().equals(userId)) {
+            throw new RuntimeException("Unauthorized operation: You are not the owner of this product.");
+        }
+
+        productRepository.deleteById(productId);
+    }
+
+
 }

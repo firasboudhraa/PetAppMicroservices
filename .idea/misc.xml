@@ -16,7 +16,7 @@
         <option value="$PROJECT_DIR$/../4eme Arctic/PI_microservices/MedicalNotebook/pom.xml" />
         <option value="$PROJECT_DIR$/MedicalNotebook/pom.xml" />
         <option value="$PROJECT_DIR$/MedicalRecord/pom.xml" />
-        <option value="$PROJECT_DIR$/../../posts/pom.xml" />
+        <option value="$USER_HOME$/posts/pom.xml" />
         <option value="$PROJECT_DIR$/posts/pom.xml" />
         <option value="$PROJECT_DIR$/comments/pom.xml" />
         <option value="$PROJECT_DIR$/PetMs/pom.xml" />
@@ -37,7 +37,6 @@
         <option value="$PROJECT_DIR$/Common-events/pom.xml" />
       </set>
     </option>
-    <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
