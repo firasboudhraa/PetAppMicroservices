@@ -76,11 +76,11 @@ public class PetServiceImpl implements IPetService {
         existingService.setProviderId(petService.getProviderId());
 
         String message = "Service Updated";
-        rabbitMQMessageProducer.publish(
-                message,
-                "petservice.exchange",
-                "petservice.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "petservice.exchange",
+//                "petservice.routingkey"
+//        );
         return petServiceRepository.save(petService);
     }
 
@@ -90,11 +90,11 @@ public class PetServiceImpl implements IPetService {
         petServiceRepository.deleteById(id);
         // Send a message to the RabbitMQ queue
         String message = "{ \"idService\": " + id + " }";
-        rabbitMQMessageProducer.publish(
-                message,
-                "petservice.exchange",
-                "petservice.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "petservice.exchange",
+//                "petservice.routingkey"
+//        );
     }
 
     @Override
@@ -175,11 +175,11 @@ public class PetServiceImpl implements IPetService {
     public void acceptAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         String message = "Appointment Accepted";
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "appointment.exchange",
+//                "appointment.routingkey"
+//        );
         appointmentClient.acceptAppointment(id, body);
     }
 
@@ -187,11 +187,11 @@ public class PetServiceImpl implements IPetService {
     public void rejectAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         String message = "Appointment Rejected";
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "appointment.exchange",
+//                "appointment.routingkey"
+//        );
         appointmentClient.rejectAppointment(id, body);
     }
 

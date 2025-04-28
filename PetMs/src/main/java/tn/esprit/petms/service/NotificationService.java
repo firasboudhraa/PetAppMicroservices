@@ -24,4 +24,15 @@ public class NotificationService {
 
         notificationClient.sendNotification(notif);
     }
+    public void sendPetTransferNotification(String receiverId,String msg) {
+        NotificationDTO notif = NotificationDTO.builder()
+                .senderId("pet-service")
+                .receiverId(receiverId)
+                .message(msg)
+                .timestamp(LocalDateTime.now())
+                .seen(false)
+                .build();
+
+        notificationClient.sendNotification(notif);
+    }
 }
