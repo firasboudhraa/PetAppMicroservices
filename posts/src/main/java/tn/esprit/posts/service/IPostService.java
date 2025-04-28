@@ -9,7 +9,6 @@ public interface IPostService {
     Post retrievePost(Long postId);
     Post addPost(Post post, Long userId);
     void likePost(Long postId, Long userId);
-    void deletePost(Long postId);
-
+    public void deletePost(Long postId, String title, String firstName, String email);
     void deletePostWithouMail(Long postId);
 }

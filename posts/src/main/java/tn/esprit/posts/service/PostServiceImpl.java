@@ -49,15 +49,18 @@ public class PostServiceImpl implements IPostService {
         }
     }
 
-    @Override
-    public void deletePost(Long postId) {
+
+
+    public void deletePost(Long postId, String title, String firstName, String email) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
         postRepository.delete(post);
-        emailService.sendPostDeletionEmail(post);
 
+        // Send email
+        emailService.sendPostDeletionEmail(title, firstName, email);
     }
+
     @Override
     public void deletePostWithouMail(Long postId) {
         Post post = postRepository.findById(postId)

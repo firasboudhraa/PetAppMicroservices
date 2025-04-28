@@ -145,17 +145,22 @@ public class PostRestController {
      * Supprimer un post et envoyer un email de suppression
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(
+            @PathVariable Long id,
+            @RequestParam String title,
+            @RequestParam String firstName,
+            @RequestParam String email) {
+
         Post post = postService.retrievePost(id);
         if (post != null) {
-            // Delete the post
-            postService.deletePost(id);
-
-
+            postService.deletePost(id, title, firstName, email);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
+
+
+
 
     @DeleteMapping("/delete-without-mail/{id}")
     public ResponseEntity<Void> deletePostWithouMail(@PathVariable Long id) {
