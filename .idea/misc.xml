@@ -19,7 +19,20 @@
         <option value="$PROJECT_DIR$/../../posts/pom.xml" />
         <option value="$PROJECT_DIR$/posts/pom.xml" />
         <option value="$PROJECT_DIR$/comments/pom.xml" />
+<<<<<<< HEAD
         <option value="$PROJECT_DIR$/../../dev/PetAppMicroservices/user/pom.xml" />
+=======
+        <option value="$PROJECT_DIR$/PetMs/pom.xml" />
+        <option value="$PROJECT_DIR$/NotificationMs/pom.xml" />
+        <option value="$PROJECT_DIR$/user/pom.xml" />
+        <option value="$PROJECT_DIR$/donation/pom.xml" />
+        <option value="$PROJECT_DIR$/event/pom.xml" />
+        <option value="$PROJECT_DIR$/eventdonations/pom.xml" />
+        <option value="$PROJECT_DIR$/Basket/pom.xml" />
+        <option value="$PROJECT_DIR$/Payment/pom.xml" />
+        <option value="$PROJECT_DIR$/Product/pom.xml" />
+        <option value="$PROJECT_DIR$/Marketplace/pom.xml" />
+>>>>>>> c3d9507ad79d261ff9347f2c2b56b58830a98c30
       </list>
     </option>
     <option name="ignoredFiles">

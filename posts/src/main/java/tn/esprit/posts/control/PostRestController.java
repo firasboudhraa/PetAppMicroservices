@@ -148,6 +148,7 @@ public class PostRestController {
     public ResponseEntity<Void> deletePost(
             @PathVariable Long id,
             @RequestParam String title,
+<<<<<<< HEAD
             @RequestParam String firstName,
             @RequestParam String email) {
 
@@ -157,6 +158,13 @@ public class PostRestController {
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
+=======
+            @RequestParam String author,
+            @RequestParam String email
+    ) {
+        postService.deletePost(id, title, author, email);
+        return ResponseEntity.ok().build();
+>>>>>>> c3d9507ad79d261ff9347f2c2b56b58830a98c30
     }
 
 

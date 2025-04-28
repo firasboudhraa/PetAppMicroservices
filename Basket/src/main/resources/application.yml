@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: baskets
+  config:
+    import: optional:configserver:http://localhost:8888
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+      max-request-size: 50MB

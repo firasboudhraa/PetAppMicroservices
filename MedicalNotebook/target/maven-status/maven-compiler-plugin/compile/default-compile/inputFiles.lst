@@ -1,0 +1,10 @@
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\Client\MedicalRecordClient.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\control\CarnetController.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\entity\Carnet.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\entity\FullCarnetResponse.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\entity\MedicalRecord.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\entity\MedicalRecordType.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\MedicalNotebookApplication.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\repository\CarnetRepository.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\service\CarnetServiceImp.java
+C:\Users\21629\Desktop\ESPRIT\4arctic\Pi_Dev\DEV\PetAppMicroservices\MedicalNotebook\src\main\java\tn\esprit\medicalnotebook\service\ICarnetService.java

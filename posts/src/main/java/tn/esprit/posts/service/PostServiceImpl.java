@@ -27,7 +27,7 @@ public class PostServiceImpl implements IPostService {
         return postRepository.findAll();
     }
 
-    @Override
+
     public Post retrievePost(Long postId) {
         return postRepository.findById(postId).orElse(null);
     }
@@ -51,14 +51,24 @@ public class PostServiceImpl implements IPostService {
 
 
 
+<<<<<<< HEAD
     public void deletePost(Long postId, String title, String firstName, String email) {
+=======
+    @Override
+    public void deletePost(Long postId, String title, String author, String email) {
+>>>>>>> c3d9507ad79d261ff9347f2c2b56b58830a98c30
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new RuntimeException("Post not found with id: " + postId));
 
         postRepository.delete(post);
 
+<<<<<<< HEAD
         // Send email
         emailService.sendPostDeletionEmail(title, firstName, email);
+=======
+        // After delete, send email with given info
+        emailService.sendPostDeletionEmail(title, author, email);
+>>>>>>> c3d9507ad79d261ff9347f2c2b56b58830a98c30
     }
 
     @Override

@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: notification-ms
+  config:
+    import: optional:configserver:http://localhost:8888
+
+  main:
+    allow-bean-definition-overriding: true
+    web-application-type: servlet
+
+  profiles:
+    active: default
