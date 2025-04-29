@@ -1,6 +1,8 @@
 spring:
   config:
     import: optional:configserver:http://localhost:8888
+  application:
+    name: user_service
 
   datasource:
     url: jdbc:mysql://localhost:3306/user_service?createDatabaseIfNotExist=true&serverTimezone=UTC
