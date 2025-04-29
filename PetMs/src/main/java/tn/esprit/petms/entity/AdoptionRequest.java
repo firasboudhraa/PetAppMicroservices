@@ -38,6 +38,7 @@ public class AdoptionRequest {
     private Boolean isChangedByRequestOwner ;
     private LocalDate date;
     private LocalTime time;
+    private Boolean isTransfered ;
     @ElementCollection
     @CollectionTable(name = "changed_fields", joinColumns = @JoinColumn(name = "adoption_request_id"))
     @Column(name = "field_name")

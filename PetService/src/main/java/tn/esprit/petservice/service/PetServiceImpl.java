@@ -15,8 +15,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -74,11 +76,11 @@ public class PetServiceImpl implements IPetService {
         existingService.setProviderId(petService.getProviderId());
 
         String message = "Service Updated";
-        rabbitMQMessageProducer.publish(
-                message,
-                "petservice.exchange",
-                "petservice.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "petservice.exchange",
+//                "petservice.routingkey"
+//        );
         return petServiceRepository.save(petService);
     }
 
@@ -88,11 +90,11 @@ public class PetServiceImpl implements IPetService {
         petServiceRepository.deleteById(id);
         // Send a message to the RabbitMQ queue
         String message = "{ \"idService\": " + id + " }";
-        rabbitMQMessageProducer.publish(
-                message,
-                "petservice.exchange",
-                "petservice.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "petservice.exchange",
+//                "petservice.routingkey"
+//        );
     }
 
     @Override
@@ -100,36 +102,47 @@ public class PetServiceImpl implements IPetService {
         return petServiceRepository.findByProviderId(providerId);
     }
 
-
     @Override
     public List<LocalDateTime> getAvailableSlots(Long serviceId) {
+        // Retrieve the pet service and appointments for the given service
         PetService service = getServiceById(serviceId);
         List<Appointment> appointments = appointmentClient.getAppointmentsByService(serviceId);
-        List<LocalDateTime> availableSlots = new ArrayList<>();
 
+        // Prepare list of available slots and other needed variables
+        List<LocalDateTime> availableSlots = new ArrayList<>();
         LocalDate currentDate = LocalDate.now(); // Start from today
         LocalTime startTime = service.getStartDate().toLocalTime();
         LocalTime endTime = service.getEndDate().toLocalTime();
         int duration = service.getDurationInMinutes();
 
+        // Group appointments by their date for quick lookup
+        Map<LocalDate, List<Appointment>> appointmentsByDate = appointments.stream()
+                .collect(Collectors.groupingBy(a -> a.getDateAppointment().toLocalDate()));
+
+        // Initialize the starting slot
         LocalDateTime currentSlot = LocalDateTime.of(currentDate, startTime);
         int maxDays = 30;  // Limit available slots to the next 30 days
 
+        // Loop until we gather at least 100 available slots or reach the 30-day limit
         while (availableSlots.size() <= 100 && maxDays > 0) {
             if (currentSlot.isBefore(LocalDateTime.now())) {
-                currentSlot = LocalDateTime.of(LocalDate.now(), startTime);
+                currentSlot = LocalDateTime.of(LocalDate.now(), startTime); // Skip past slots
             }
 
             // Generate slots for the day
             while (currentSlot.toLocalTime().isBefore(endTime)) {
+                // Check if the current slot is already taken
+                LocalDate currentSlotDate = currentSlot.toLocalDate();
                 LocalDateTime finalCurrentSlot = currentSlot;
-                boolean isSlotTaken = appointments.stream()
+                boolean isSlotTaken = appointmentsByDate.getOrDefault(currentSlotDate, Collections.emptyList())
+                        .stream()
                         .anyMatch(appointment -> appointment.getDateAppointment().isEqual(finalCurrentSlot));
 
                 if (!isSlotTaken) {
-                    availableSlots.add(currentSlot);
+                    availableSlots.add(currentSlot); // Add the slot if it's free
                 }
 
+                // Move to the next slot by adding duration
                 currentSlot = currentSlot.plusMinutes(duration);
             }
 
@@ -141,6 +154,7 @@ public class PetServiceImpl implements IPetService {
 
         return availableSlots;
     }
+
 
     @Override
     public FullPetServiceResponse getServiceWithAppoitment(Long id) {
@@ -161,11 +175,11 @@ public class PetServiceImpl implements IPetService {
     public void acceptAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         String message = "Appointment Accepted";
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "appointment.exchange",
+//                "appointment.routingkey"
+//        );
         appointmentClient.acceptAppointment(id, body);
     }
 
@@ -173,11 +187,11 @@ public class PetServiceImpl implements IPetService {
     public void rejectAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         String message = "Appointment Rejected";
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
+//        rabbitMQMessageProducer.publish(
+//                message,
+//                "appointment.exchange",
+//                "appointment.routingkey"
+//        );
         appointmentClient.rejectAppointment(id, body);
     }
 

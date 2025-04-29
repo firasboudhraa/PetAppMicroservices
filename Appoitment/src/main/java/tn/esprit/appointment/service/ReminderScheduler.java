@@ -39,14 +39,11 @@ public class ReminderScheduler {
     public void sendReminders(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime targetTime = now.plusHours(24);
-        logger.info("Sending reminders for appointments between " + now + " and " + targetTime);
 
         List<Appointment> appointments = appointmentRepository.findByDateAppointmentBetween(now, targetTime);
 
-        logger.info("Found " + appointments.size() + " appointments to send reminders for.");
         for(Appointment appointment : appointments) {
             if (!sentReminderAppointments.contains(appointment.getIdAppointment())) {
-                logger.info("Reminder  sent for appointment ID: " + appointment.getIdAppointment());
                 sendEmailReminder("firassbdh@gmail.com", appointment);
                 String message = "Appointment Reminder";
                 rabbitMQMessageProducer.publish(

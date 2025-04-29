@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Config-server" />
         <module name="EurekaServer" />
+        <module name="Eureka-server" />
         <module name="ApiGateway" />
       </profile>
       <profile name="Annotation profile for user" enabled="true">
@@ -54,6 +55,7 @@
       <module name="Appointment" options="-parameters" />
       <module name="Basket" options="-parameters" />
       <module name="Config-server" options="-parameters" />
+      <module name="Eureka-server" options="-parameters" />
       <module name="EurekaServer" options="-parameters" />
       <module name="Marketplace" options="-parameters" />
       <module name="MedicalNotebook" options="-parameters" />

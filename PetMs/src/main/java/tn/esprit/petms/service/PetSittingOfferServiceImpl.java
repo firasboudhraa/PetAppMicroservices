@@ -18,7 +18,9 @@ public class PetSittingOfferServiceImpl implements IPetSittingOfferService {
     public PetSittingOffer savePetSittingOffer(PetSittingOffer request) {
         return petSittingOfferRepository.save(request);
     }
-
+    public List<PetSittingOffer> getOfferMadeByUser(long userId){
+        return petSittingOfferRepository.findAll().stream().filter(o -> o.getPet().getOwnerId() == userId).toList();
+    }
     public List<PetSittingOffer> getAllPetSittingOffers(){
         return petSittingOfferRepository.findAll() ;
     }

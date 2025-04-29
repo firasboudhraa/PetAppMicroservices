@@ -16,22 +16,24 @@ public class MatchRequestDTO {
 
     @Data
     @NoArgsConstructor
-    public static class UserProfile { // Rename from UserPref to UserProfile
-        private String id; // Add this missing field
+    public static class UserProfile {
+        private String id;
         private String lifestyle;
         private String experience;
-        private String living_space; // Change from livingSpace to living_space
+        private String living_space;
         private String preferences;
     }
 
     @Data
     @NoArgsConstructor
     public static class PetProfile {
+        private String id;
         private String name;
         private String species;
         private int age;
         private String color;
         private String sex;
         private String description;
+        private boolean forAdoption;
     }
 }

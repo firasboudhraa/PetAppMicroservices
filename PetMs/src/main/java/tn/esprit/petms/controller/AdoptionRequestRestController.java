@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.petms.entity.AdoptionRequest;
+import tn.esprit.petms.entity.Pet;
 import tn.esprit.petms.service.AdoptionRequestServiceImpl;
 import tn.esprit.petms.service.NotificationService;
 
@@ -22,7 +23,11 @@ public class AdoptionRequestRestController {
     public AdoptionRequest saveAdoptionRequest(@RequestBody AdoptionRequest adoptionRequest) {
         return adoptionRequestService.saveAdoptionRequest(adoptionRequest);
     }
+    @PutMapping("/transferPet/{adoptionRequestId}/{petId}/{newOwnerId}")
+    public boolean tranferPet(@PathVariable("petId") long petId , @PathVariable("newOwnerId") long newOwnerId,@PathVariable("adoptionRequestId") long adoptionRequestId) {
 
+        return adoptionRequestService.tranfertPet(petId,newOwnerId,adoptionRequestId) ;
+    }
 
     @GetMapping("/requester/{requesterUserId}")
     public List<AdoptionRequest> getAllAdoptionRequestByThisUser(@PathVariable Long requesterUserId) {

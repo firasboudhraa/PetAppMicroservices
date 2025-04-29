@@ -1,6 +1,7 @@
 package tn.esprit.petms.service;
 
 import tn.esprit.petms.entity.AdoptionRequest;
+import tn.esprit.petms.entity.Pet;
 
 import java.util.List;
 
@@ -14,5 +15,7 @@ public interface IAdoptionRequestService {
     public AdoptionRequest confirmReques(Long requestId) ;
   public AdoptionRequest rejectRequest(Long requestId,String reason) ;
   public AdoptionRequest findByIdRequestAdoption(Long requestId) ;
+  public boolean tranfertPet(Long petId, Long newOwnerId, Long adoptionRequestId) ;
+
 
 }

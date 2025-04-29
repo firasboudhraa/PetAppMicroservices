@@ -19,6 +19,8 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     @Autowired
     private AppointmentRepository appointmentRepository;
 
+    @Autowired
+    private NotificationService notificationService ;
 
     @Autowired
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
@@ -33,7 +35,7 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
                 "appointment.exchange",
                 "appointment.routingkey"
         );
-        System.out.println("Message sent to RabbitMQ: " + message);
+        notificationService.sendAppointmentNotification(appointment.getIdService().toString(),"You have an appointment to check",appointment.getIdOwner().toString());
         return appointmentRepository.save(appointment);
     }
 
