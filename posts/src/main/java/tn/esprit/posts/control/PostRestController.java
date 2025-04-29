@@ -2,8 +2,10 @@ package tn.esprit.posts.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.posts.entity.ContactFormDTO;
 import tn.esprit.posts.entity.Post;
 import tn.esprit.posts.entity.PostTypeEnum;
 import tn.esprit.posts.service.EmailService;
@@ -160,7 +162,6 @@ public class PostRestController {
     }
 
 
-
     @DeleteMapping("/delete-without-mail/{id}")
     public ResponseEntity<Void> deletePostWithouMail(@PathVariable Long id) {
         Post post = postService.retrievePost(id);
@@ -173,8 +174,6 @@ public class PostRestController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
 
 
     /**
@@ -192,4 +191,23 @@ public class PostRestController {
         image.transferTo(filePath.toFile());
         return fileName;
     }
+
+
+    @PostMapping("/contact")
+    public ResponseEntity<String> sendContactEmail(@RequestBody ContactFormDTO form) {
+        try {
+            emailService.sendContactEmail(
+                    "fureverbuddy93@gmail.com", // recipient
+                    form.getName(),
+                    form.getEmail(),
+                    form.getSubject(),
+                    form.getMessage()
+            );
+            return ResponseEntity.ok("Email sent successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to send email: " + e.getMessage());
+        }
+    }
+
+
 }

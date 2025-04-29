@@ -28,4 +28,18 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+
+    // ✅ Contact Form mailing
+    public void sendContactEmail(String to, String name, String email, String subject, String messageBody) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("New Contact Form Message from: " + name);
+        message.setText("Name: " + name + "\n"
+                + "Email: " + email + "\n"
+                + "Subject: " + subject + "\n"
+                + "Message:\n" + messageBody);
+
+        mailSender.send(message);
+    }
 }
