@@ -158,5 +158,104 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Product> getProductsByUserId(@PathVariable Long userId) {
+        return productService.getProductsByUserId(userId);
+    }
+
+   // integration du user au crud
+
+    @PostMapping("/user/{userId}")
+    public ResponseEntity<Product> addProductByUser(
+            @PathVariable Long userId,
+            @RequestParam("nom") String nom,
+            @RequestParam("description") String description,
+            @RequestParam("prix") Double prix,
+            @RequestParam("image") MultipartFile image,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("category") String category,
+            @RequestParam("quantity") Integer quantity) {
+
+        try {
+            String imageUrl = saveImage(image);
+
+            Product product = new Product();
+            product.setNom(nom);
+            product.setDescription(description);
+            product.setPrix(prix);
+            product.setImageUrl(imageUrl);
+            product.setStock(stock);
+            product.setCategory(category);
+            product.setQuantity(quantity);
+            product.setUserId(userId); // 🟰 Associer le produit à l'utilisateur
+
+            Product savedProduct = productService.addProduct(product);
+            return ResponseEntity.status(201).body(savedProduct);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+    @PutMapping("/user/{userId}/product/{id}")
+    public ResponseEntity<Product> updateProductByUser(
+            @PathVariable Long userId,
+            @PathVariable Long id,
+            @RequestParam("nom") String nom,
+            @RequestParam("description") String description,
+            @RequestParam("prix") Double prix,
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestParam("stock") Integer stock,
+            @RequestParam("category") String category,
+            @RequestParam("quantity") Integer quantity) {
+
+        try {
+            Product product = productService.getProductById(id);
+            if (product == null) {
+                return ResponseEntity.notFound().build();
+            }
+            // 🛑 Vérifier si c'est le propriétaire
+            if (!product.getUserId().equals(userId)) {
+                return ResponseEntity.status(403).build(); // 403 Forbidden
+            }
+
+            product.setNom(nom);
+            product.setDescription(description);
+            product.setPrix(prix);
+            product.setStock(stock);
+            product.setCategory(category);
+            product.setQuantity(quantity);
+
+            if (image != null && !image.isEmpty()) {
+                String imageUrl = saveImage(image);
+                product.setImageUrl(imageUrl);
+            }
+
+            Product updatedProduct = productService.updateProduct(id, product);
+            return ResponseEntity.ok(updatedProduct);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
+
+    @DeleteMapping("/user/{userId}/product/{id}")
+    public ResponseEntity<Void> deleteProductByUser(
+            @PathVariable Long userId,
+            @PathVariable Long id) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return ResponseEntity.notFound().build();
+        }
+        // 🛑 Vérifier si c'est bien le propriétaire
+        if (!product.getUserId().equals(userId)) {
+            return ResponseEntity.status(403).build(); // Forbidden
+        }
+
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
+    }
 
 }

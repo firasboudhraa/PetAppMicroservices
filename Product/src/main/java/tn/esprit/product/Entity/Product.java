@@ -31,4 +31,6 @@ public class Product {
     private Integer quantity;
 
     private Long marketplaceId;
+    private Long userId;
+
 }
