@@ -1,6 +1,4 @@
 spring:
-  config:
-    import: optional:configserver:http://localhost:8888
   application:
     name: user_service
 
@@ -10,7 +8,7 @@ spring:
     password: ""
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
@@ -24,10 +22,10 @@ spring:
   mail:
     host: smtp.gmail.com
     port: "587"
-    username: yasminemzoughi4@gmail.com
-    password: "byzs pdhq kyil whiu"
+    username: fureverbuddy93@gmail.com
+    password: "ikqe nksu nqnq mnkc"
     admin:
-      email: yasminemzoughi4@gmail.com
+      email: fureverbuddy93@gmail.com
     properties:
       mail.smtp:
         auth: true
@@ -44,7 +42,7 @@ spring:
 
 app:
   admin:
-    email: yasminemzoughi4@gmail.com
+    email: fureverbuddy93@gmail.com
 
 server:
   port: 8084
