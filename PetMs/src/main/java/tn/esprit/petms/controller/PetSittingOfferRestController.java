@@ -29,6 +29,10 @@ public class PetSittingOfferRestController {
     public List<PetSittingOffer> getAllPetSittingOffers() {
         return petSittingOfferService.getAllPetSittingOffers();
     }
+    @DeleteMapping("delete/{id]")
+    public boolean delete(@PathVariable("id") long id ){
+        return petSittingOfferService.delete(id);
+    }
 
     @GetMapping("AvailableOffers/{userId}")
     public List<PetSittingOffer> getAllAvailablePetSittingOffers(@PathVariable("userId") Long userId) {
