@@ -1,4 +1,4 @@
-package tn.esprit.payment.Dto;
+package tn.esprit.appointment.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,11 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
-
-    private Long id_User;
+    private Long id;
     private String name;
+    private String email;
+    private String profilePictureUrl;
 }

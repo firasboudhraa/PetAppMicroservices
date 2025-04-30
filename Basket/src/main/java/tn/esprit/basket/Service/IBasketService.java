@@ -19,4 +19,5 @@ public interface IBasketService {
     Basket removeProductFromBasket(Long basketId, Long productId);
     Basket validateBasket(Long basketId);
     Basket clearBasket(Long basketId);
+    Basket addProductToBasketbyUser(Long userId, Long basketId, Long productId);
 }

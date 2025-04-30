@@ -2,6 +2,7 @@ package tn.esprit.basket.Controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tn.esprit.basket.Client.ProductClient;
@@ -111,6 +112,26 @@ public class BasketController {
         }
     }
 
+    // Ajouter un produit au panier
+    @PostMapping("/user/{userId}/{basketId}/add-product/{productId}")
+    public ResponseEntity<Basket> addProductToBasketbyUser(
+            @PathVariable Long userId,
+            @PathVariable Long basketId,
+            @PathVariable Long productId) {
+
+        Optional<Basket> basket = basketService.getBasketById(basketId);
+        if (basket.isPresent()) {
+            // Vérifie que le panier appartient bien à l'utilisateur
+            if (!basket.get().getUserId().equals(userId)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+            }
+
+            Basket updatedBasket = basketService.addProductToBasketbyUser(userId, basketId, productId);
+            return ResponseEntity.ok(updatedBasket);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }
