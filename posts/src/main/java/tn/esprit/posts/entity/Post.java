@@ -19,6 +19,16 @@ public class Post {
     private int likes;
     private LocalDateTime createdAt;
     private String imageUrl; // Store image URL instead of binary data
+    private boolean reported = false;
+
+    public boolean isReported() {
+        return reported;
+    }
+
+    public void setReported(boolean reported) {
+        this.reported = reported;
+    }
+
 
     @Column(nullable = true)
     private Double latitude;

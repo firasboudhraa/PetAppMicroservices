@@ -17,4 +17,5 @@ public interface IPostService {
 
     public void deletePostWithouMail(Long postId) ;
 
-    }
+    void reportPost(Long postId);
+}
