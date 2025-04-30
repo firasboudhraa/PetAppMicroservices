@@ -158,12 +158,13 @@ public class ProductController {
         }
     }
 
+
+   // integration du user au crud
+
     @GetMapping("/user/{userId}")
     public List<Product> getProductsByUserId(@PathVariable Long userId) {
         return productService.getProductsByUserId(userId);
     }
-
-   // integration du user au crud
 
     @PostMapping("/user/{userId}")
     public ResponseEntity<Product> addProductByUser(
