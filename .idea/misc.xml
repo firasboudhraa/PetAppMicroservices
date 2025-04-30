@@ -19,9 +19,9 @@
         <option value="$USER_HOME$/posts/pom.xml" />
         <option value="$PROJECT_DIR$/posts/pom.xml" />
         <option value="$PROJECT_DIR$/comments/pom.xml" />
+        <option value="$PROJECT_DIR$/user/pom.xml" />
         <option value="$PROJECT_DIR$/PetMs/pom.xml" />
         <option value="$PROJECT_DIR$/NotificationMs/pom.xml" />
-        <option value="$PROJECT_DIR$/user/pom.xml" />
         <option value="$PROJECT_DIR$/donation/pom.xml" />
         <option value="$PROJECT_DIR$/event/pom.xml" />
         <option value="$PROJECT_DIR$/eventdonations/pom.xml" />

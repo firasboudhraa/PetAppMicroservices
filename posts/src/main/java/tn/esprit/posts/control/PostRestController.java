@@ -2,8 +2,10 @@ package tn.esprit.posts.control;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tn.esprit.posts.entity.ContactFormDTO;
 import tn.esprit.posts.entity.Post;
 import tn.esprit.posts.entity.PostTypeEnum;
 import tn.esprit.posts.service.EmailService;
@@ -145,17 +147,20 @@ public class PostRestController {
      * Supprimer un post et envoyer un email de suppression
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(
+            @PathVariable Long id,
+            @RequestParam String title,
+            @RequestParam String firstName,
+            @RequestParam String email) {
+
         Post post = postService.retrievePost(id);
         if (post != null) {
-            // Delete the post
-            postService.deletePost(id);
-
-
+            postService.deletePost(id, title, firstName, email);
             return ResponseEntity.ok().build();
         }
         return ResponseEntity.notFound().build();
     }
+
 
     @DeleteMapping("/delete-without-mail/{id}")
     public ResponseEntity<Void> deletePostWithouMail(@PathVariable Long id) {
@@ -169,8 +174,6 @@ public class PostRestController {
         }
         return ResponseEntity.notFound().build();
     }
-
-
 
 
     /**
@@ -188,4 +191,23 @@ public class PostRestController {
         image.transferTo(filePath.toFile());
         return fileName;
     }
+
+
+    @PostMapping("/contact")
+    public ResponseEntity<String> sendContactEmail(@RequestBody ContactFormDTO form) {
+        try {
+            emailService.sendContactEmail(
+                    "fureverbuddy93@gmail.com", // recipient
+                    form.getName(),
+                    form.getEmail(),
+                    form.getSubject(),
+                    form.getMessage()
+            );
+            return ResponseEntity.ok("Email sent successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Failed to send email: " + e.getMessage());
+        }
+    }
+
+
 }

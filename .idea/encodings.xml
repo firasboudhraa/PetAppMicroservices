@@ -3,25 +3,24 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/ApiGateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Appoitment/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Appoitment/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Basket/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Config-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/EurekaServer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Notification/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/PetService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Marketplace/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MedicalNotebook/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/MedicalRecord/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/comments/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/posts/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Config-server/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/EurekaServer/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Notification/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/NotificationMs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Payment/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/PetMs/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PetService/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/PetService/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Product/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/comments/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/donation/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/event/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eventdonations/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Marketplace/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Payment/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Product/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/Basket/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/posts/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/user/src/main/java" charset="UTF-8" />
   </component>
 </project>

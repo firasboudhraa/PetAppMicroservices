@@ -6,6 +6,7 @@ tn\esprit\posts\config\WebConfig.class
 tn\esprit\posts\entity\Post.class
 tn\esprit\posts\service\EmailService.class
 tn\esprit\posts\control\ImageController.class
+tn\esprit\posts\entity\ContactFormDTO.class
 tn\esprit\posts\service\PostServiceImpl.class
 tn\esprit\posts\control\PostRestController.class
 tn\esprit\posts\repository\PostRepository.class

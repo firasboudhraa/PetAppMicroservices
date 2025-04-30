@@ -1,12 +1,13 @@
 package tn.esprit.posts.service;
 
+import tn.esprit.posts.entity.UserDTO;  // Your DTO class to represent the user response
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import tn.esprit.posts.entity.UserDTO;
 
-@FeignClient(name = "user", path = "/user")
+@FeignClient(name = "user-service")
 public interface UserClient {
-    @GetMapping("/retrieve-user/{userId}")
+
+    @GetMapping("/api/user/retrieve-user/{userId}")
     UserDTO getUserById(@PathVariable("userId") Long userId);
 }

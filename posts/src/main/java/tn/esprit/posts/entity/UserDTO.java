@@ -3,7 +3,8 @@ package tn.esprit.posts.entity;
 public class UserDTO {
 
     private Long id;
-    private String name;
+    private String firstName;  // Separate first name
+    private String lastName;   // Separate last name
     private String email;
     private String profilePictureUrl;
 
@@ -11,9 +12,10 @@ public class UserDTO {
     public UserDTO() {
     }
 
-    public UserDTO(Long id, String name, String email, String profilePictureUrl) {
+    public UserDTO(Long id, String firstName, String lastName, String email, String profilePictureUrl) {
         this.id = id;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.profilePictureUrl = profilePictureUrl;
     }
@@ -27,12 +29,20 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
