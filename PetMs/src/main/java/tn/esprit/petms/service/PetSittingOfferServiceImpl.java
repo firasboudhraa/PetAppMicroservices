@@ -96,5 +96,13 @@ public class PetSittingOfferServiceImpl implements IPetSittingOfferService {
         offer.getUserRequestStatuses().removeIf(status -> status.getUserId() == userId);
         return petSittingOfferRepository.save(offer);
     }
+    public boolean delete(long id){
+        try {
+            petSittingOfferRepository.deleteById(id);
+            return true ;
+        }catch (Exception e ){
+            return false ;
+        }
+    }
 
 }
