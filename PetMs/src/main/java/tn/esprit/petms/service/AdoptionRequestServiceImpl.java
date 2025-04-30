@@ -33,6 +33,7 @@ public class AdoptionRequestServiceImpl implements IAdoptionRequestService{
         }
         return false;
     }
+
     public AdoptionRequest saveAdoptionRequest(AdoptionRequest request) {
         notificationService.sendAdoptionNotification(String.valueOf(request.getAdoptedPet().getOwnerId()), "New adoption request for your pet  "+request.getAdoptedPet().getName() +"!" );
         return repository.save(request);
