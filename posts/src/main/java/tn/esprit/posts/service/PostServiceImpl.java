@@ -71,4 +71,14 @@ public class PostServiceImpl implements IPostService {
         postRepository.delete(post);
 
     }
+
+    @Override
+    public void reportPost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        post.setReported(true);
+        postRepository.save(post);
+    }
+
 }

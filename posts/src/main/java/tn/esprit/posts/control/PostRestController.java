@@ -209,5 +209,13 @@ public class PostRestController {
         }
     }
 
+    @PutMapping("/{id}/report")
+    public ResponseEntity<String> reportPost(@PathVariable Long id) {
+        postService.reportPost(id);
+        return ResponseEntity.ok("Post reported successfully");
+    }
+
+
+
 
 }
