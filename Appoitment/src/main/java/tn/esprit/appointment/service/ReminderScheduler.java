@@ -5,6 +5,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import tn.esprit.appointment.client.UserClient;
+import tn.esprit.appointment.dto.UserDTO;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.rabbitmq.RabbitMQMessageProducer;
 import tn.esprit.appointment.repository.AppointmentRepository;
@@ -26,6 +28,9 @@ public class ReminderScheduler {
     private JavaMailSender mailSender;
 
     @Autowired
+    private UserClient userClient;
+
+    @Autowired
     private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
     private Set<Long> sentReminderAppointments = new HashSet<>();
@@ -35,7 +40,7 @@ public class ReminderScheduler {
     }
 
 
-    @Scheduled(cron = "0 0 * * * *") // every minute
+    @Scheduled(cron = "0 0 * * * *")
     public void sendReminders(){
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime targetTime = now.plusHours(24);
@@ -44,7 +49,9 @@ public class ReminderScheduler {
 
         for(Appointment appointment : appointments) {
             if (!sentReminderAppointments.contains(appointment.getIdAppointment())) {
-                sendEmailReminder("firassbdh@gmail.com", appointment);
+                Long idOwner = appointment.getIdOwner();
+                UserDTO user = userClient.getUserById(idOwner);
+                sendEmailReminder(user.getEmail(), appointment);
                 String message = "Appointment Reminder";
                 rabbitMQMessageProducer.publish(
                         message,

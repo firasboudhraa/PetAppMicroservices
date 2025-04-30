@@ -25,7 +25,7 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: fureverbuddy93@gmail.com
-    password: ikqe nksu nqnq mnkc
+    password: hynd dmwb wypn pgtr
     properties:
       mail.smtp:
         auth: true

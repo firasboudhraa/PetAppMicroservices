@@ -14,6 +14,7 @@ public class FullPetServiceResponse {
 
     private String name;
     private String description;
+    private Long idService;
     private Float price;
     private int durationInMinutes;
     private String address;
