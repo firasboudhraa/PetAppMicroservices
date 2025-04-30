@@ -42,6 +42,14 @@ public class PetSittingOfferServiceImpl implements IPetSittingOfferService {
         });
         return offer ;
     }
+    public boolean deleteoffer(long offerId){
+        try {
+            petSittingOfferRepository.deleteById(offerId);
+            return true ;
+        }catch (Exception e){
+            return false ;
+        }
+    }
 
     public PetSittingOffer requestPetSittingOffer(long offerId, long userId) {
         PetSittingOffer offer = petSittingOfferRepository.findById(offerId)
@@ -87,6 +95,14 @@ public class PetSittingOfferServiceImpl implements IPetSittingOfferService {
                 .orElseThrow(() -> new RuntimeException("Offer not found with ID: " + offerId));
         offer.getUserRequestStatuses().removeIf(status -> status.getUserId() == userId);
         return petSittingOfferRepository.save(offer);
+    }
+    public boolean delete(long id){
+        try {
+            petSittingOfferRepository.deleteById(id);
+            return true ;
+        }catch (Exception e ){
+            return false ;
+        }
     }
 
 }

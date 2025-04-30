@@ -167,4 +167,17 @@ public class UserServiceImpl implements IUserService {
         }
     }
 
+    @Override
+    @Transactional
+    public ResponseEntity<?> softDelete(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        user.setDeleted(true); // or user.setDeletedAt(LocalDateTime.now());
+        userRepository.save(user);
+
+        return ResponseEntity.ok().body("User soft deleted successfully");
+    }
+
+
 }

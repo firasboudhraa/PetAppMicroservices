@@ -22,5 +22,6 @@ public interface IUserService {
      User updateUserBio(Long userId, String bio);
      User updateAdoptionPreferences(Long userId, MatchRequestDTO.UserProfile preferencesDTO) ;
      Map<String, String> getAdoptionPreferences(Long userId) ;
+    ResponseEntity<?> softDelete(Long id);
 
     }

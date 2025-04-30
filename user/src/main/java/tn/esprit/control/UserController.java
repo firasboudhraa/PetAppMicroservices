@@ -137,5 +137,8 @@ public class UserController {
     public Map<String, String> getAdoptionPreferences(@PathVariable Long userId) {
         return userService.getAdoptionPreferences(userId);
     }
-
+    @DeleteMapping("/{id}/soft-delete")
+    public ResponseEntity<?> softDeleteUser(@PathVariable Long id) {
+        return userService.softDelete(id);
+    }
 }
