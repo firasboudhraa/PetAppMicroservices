@@ -55,7 +55,7 @@ public class PaymentServiceImp implements IPaymentService {
 
             // Création du paiement
             Payment payment = new Payment();
-            payment.setUserId(userDTO.getId_User());
+            payment.setUserId(userDTO.getId());
             payment.setBasketId(basketDTO.getId_Basket());
             payment.setAmount(basketDTO.getTotal());
             payment.setStatus("pending");

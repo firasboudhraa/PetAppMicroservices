@@ -141,4 +141,17 @@ public class UserController {
     public ResponseEntity<?> softDeleteUser(@PathVariable Long id) {
         return userService.softDelete(id);
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
+        try {
+            User user = userService.retrieveUser(userId);
+            return ResponseEntity.ok(UserResponseDTO.fromUser(user));
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving user");
+        }
+    }
 }

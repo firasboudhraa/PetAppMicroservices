@@ -1,5 +1,6 @@
 package tn.esprit.payment.Dto;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserDTO {
 
-    private Long id_User;
-    private String name;
+    private Long id;
+
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
 }

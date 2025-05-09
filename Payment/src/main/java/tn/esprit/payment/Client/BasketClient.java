@@ -9,6 +9,9 @@ import tn.esprit.payment.Dto.BasketDTO;
 @FeignClient(name = "basket-service", url = "http://localhost:8013/api/baskets")
 public interface BasketClient {
 
+    @GetMapping("/user/{userId}")
+    BasketDTO getBasketByUser(@PathVariable("userId") Long userId);
+
     @GetMapping("/{basketId}")
     BasketDTO getBasketById(@PathVariable("basketId") Long basketId);
 
