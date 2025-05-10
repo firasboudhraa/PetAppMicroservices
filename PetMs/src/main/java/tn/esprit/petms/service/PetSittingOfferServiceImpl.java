@@ -42,6 +42,14 @@ public class PetSittingOfferServiceImpl implements IPetSittingOfferService {
         });
         return offer ;
     }
+    public boolean deleteoffer(long offerId){
+        try {
+            petSittingOfferRepository.deleteById(offerId);
+            return true ;
+        }catch (Exception e){
+            return false ;
+        }
+    }
 
     public PetSittingOffer requestPetSittingOffer(long offerId, long userId) {
         PetSittingOffer offer = petSittingOfferRepository.findById(offerId)

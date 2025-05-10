@@ -21,6 +21,10 @@ public class PetSittingOfferRestController {
     public PetSittingOffer saveAdoptionRequest(@RequestBody PetSittingOffer petSittingOffer) {
         return petSittingOfferService.savePetSittingOffer(petSittingOffer);
     }
+    @DeleteMapping("delete/{offerId}")
+    public boolean deleteOffer(@PathVariable("offerId") long offerId){
+        return petSittingOfferService.deleteoffer(offerId) ;
+    }
     @GetMapping("getAllMadeByUser/{userId}")
     public List<PetSittingOffer> getOfferMadeByUser(@PathVariable("userId") long userId) {
         return petSittingOfferService.getOfferMadeByUser(userId) ;

@@ -47,6 +47,7 @@ public class User implements UserDetails {
 
     @Column(length = 1000)
     private String bio;
+     private boolean isDeleted = false ;
 
     // Roles and Permissions
     @ManyToMany(fetch = FetchType.EAGER)

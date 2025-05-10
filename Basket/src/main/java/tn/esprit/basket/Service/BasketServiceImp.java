@@ -166,6 +166,25 @@ public class BasketServiceImp implements IBasketService {
         return null;
     }
 
+    @Override
+    public Basket addProductToBasketbyUser(Long userId, Long basketId, Long productId) {
+        Optional<Basket> basketOptional = basketRepository.findById(basketId);
+        if (basketOptional.isPresent()) {
+            Basket basket = basketOptional.get();
+
+            // Vérifie que ce panier appartient bien à l'utilisateur
+            if (!basket.getUserId().equals(userId)) {
+                throw new RuntimeException("Ce panier n'appartient pas à l'utilisateur avec l'ID : " + userId);
+            }
+
+            basket.addProduct(productId);
+            basket.setDateModification(LocalDate.now());
+            basket.setTotal(calculateTotal(basket.getProductIdsList()));
+
+            return basketRepository.save(basket);
+        }
+        throw new RuntimeException("Panier avec l'ID " + basketId + " introuvable.");
+    }
 
 
 

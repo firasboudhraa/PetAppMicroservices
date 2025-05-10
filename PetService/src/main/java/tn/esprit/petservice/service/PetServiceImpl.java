@@ -218,6 +218,7 @@ public class PetServiceImpl implements IPetService {
                 .map(service -> {
                     var appointments = appointmentClient.getAppointmentsByService(service.getIdService());
                     return FullPetServiceResponse.builder()
+                            .idService(service.getIdService())
                             .name(service.getName())
                             .description(service.getDescription())
                             .price(service.getPrice())
