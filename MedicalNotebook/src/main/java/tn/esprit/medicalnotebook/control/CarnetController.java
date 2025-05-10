@@ -12,8 +12,9 @@ import tn.esprit.medicalnotebook.service.ICarnetService;
 import java.util.List;
 @RestController
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/carnet")
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class CarnetController {
     @Autowired
     ICarnetService carnetService;
