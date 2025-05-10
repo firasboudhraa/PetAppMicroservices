@@ -32,5 +32,5 @@ rabbitmq:
 
 application:
   config:
-    appointments-url: http://${APPOINTMENT_URL:localhost}:8091/api/appointments
+    appointments-url: ${APPOINTMENT_URL:http://localhost}:8091/api/appointments
 

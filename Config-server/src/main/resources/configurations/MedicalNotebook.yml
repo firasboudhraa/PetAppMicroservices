@@ -1,11 +1,11 @@
 eureka:
   instance:
-    hostname: ${EUREKA_HOST:localhost}
+    hostname: ${EUREKA_SERVER_HOSTNAME:localhost}
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${EUREKA_HOST:localhost}:${SERVER_PORT:8070}/eureka/
+      defaultZone: http://${EUREKA_SERVER_HOSTNAME:localhost}:${SERVER_PORT:8070}/eureka/
 
 server:
   port: ${SERVER_PORT:8070}
@@ -26,4 +26,4 @@ spring:
 
 application:
   config:
-    record-url: ${RECORD_URL:http://localhost:8071/api/medicalrecord}
+    record-url: ${RECORD_URL:http://localhost}:8071/api/medicalrecord
