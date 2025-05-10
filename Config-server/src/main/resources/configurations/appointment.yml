@@ -45,5 +45,5 @@ rabbitmq:
 
 application:
   config:
-    notifications-url: http://${NOTIFICATIONS8URL:localhost}:8055
-    user-url: http://${USER_URL:localhost}:8084
+    notifications-url: ${NOTIFICATIONS_URL:http://localhost}:8055
+    user-url: ${USER_URL:http://localhost}:8084
