@@ -89,17 +89,11 @@ spring:
           predicates:
             - Path=/api/chat/**
         - id: user
-          uri: http://localhost:8081
+          uri: lb://USER_SERVICE
           predicates:
             - Path=/api/user/**
-        - id: auth
-          uri: http://localhost:8084
-          predicates:
-            - Path=/api/auth/**
-        - id: admin
-          uri: http://localhost:8081
-          predicates:
             - Path=/api/admin/**
+            - Path=/api/auth/**
         - id: donations
           uri: http://localhost:8010
           predicates:

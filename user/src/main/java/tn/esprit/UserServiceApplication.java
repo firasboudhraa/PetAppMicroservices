@@ -15,7 +15,6 @@ import tn.esprit.entity.role.Role;
 import tn.esprit.entity.role.RoleEnum;
 import tn.esprit.repository.RoleRepository;
 
-
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -24,24 +23,24 @@ import java.util.HashSet;
 @EnableFeignClients
 @ConfigurationPropertiesScan
 @SpringBootApplication(scanBasePackages = "tn.esprit")
-
 @Slf4j
 public class UserServiceApplication {
+
+    // Inject admin email from environment or application.yml
     @Value("${app.admin.email}")
     private String adminEmail;
 
     public static void main(String[] args) {
+
         SpringApplication.run(UserServiceApplication.class, args);
     }
 
+
+
     @Bean
     @Transactional
-    public CommandLineRunner commandLineRunner(
-            RoleRepository roleRepository)
-    {
-        return args -> {
-            initializeRoles(roleRepository);
-        };
+    public CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
+        return args -> initializeRoles(roleRepository);
     }
 
     private void initializeRoles(RoleRepository roleRepository) {
@@ -51,10 +50,8 @@ public class UserServiceApplication {
                         .name(roleEnum)
                         .permissions(new HashSet<>(roleEnum.getPermissions()))
                         .build();
-
                 roleRepository.save(role);
-                log.info("Created role: {} with permissions: {}",
-                        roleEnum.name(), roleEnum.getPermissions());
+                log.info("Created role: {} with permissions: {}", roleEnum.name(), roleEnum.getPermissions());
             }
         });
     }

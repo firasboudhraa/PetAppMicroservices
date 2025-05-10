@@ -3,30 +3,28 @@ spring:
     name: user_service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/user_service?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: ""
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/user_service?createDatabaseIfNotExist=true&serverTimezone=UTC
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     database: mysql
     database-platform: org.hibernate.dialect.MySQLDialect
     open-in-view: false
 
-
   security:
     jwt:
-      secret-key: bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=
-      expiration: 86400000
+      secret-key: ${JWT_SECRET:bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=}
+      expiration: ${JWT_EXPIRATION:86400000}
 
   mail:
-    host: smtp.gmail.com
-    port: 587
-    username: fureverbuddy93@gmail.com
-    password: mwgizughkyacrmaz
-
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:fureverbuddy93@gmail.com}
+    password: ${MAIL_PASSWORD:mwgizughkyacrmaz}
     admin:
-      email: fureverbuddy93@gmail.com
+      email: ${ADMIN_EMAIL:fureverbuddy93@gmail.com}
     properties:
       mail.smtp:
         auth: true
@@ -36,22 +34,20 @@ spring:
         timeout: "5000"
         writetimeout: "5000"
 
-
   mailing:
     frontend:
-      activation-url: http://localhost:4200/activate-account
+      activation-url: ${FRONTEND_URL:http://localhost}:4200/activate-account
 
 app:
   admin:
-    email: fureverbuddy93@gmail.com
+    email: ${ADMIN_EMAIL:fureverbuddy93@gmail.com}
 
 server:
-  port: 8084
-
+  port: ${SERVER_PORT:8084}
 
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_HOSTNAME:localhost}
   client:
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+      defaultZone: ${EUREKA_HOSTNAME:http://localhost}:8761/eureka/
