@@ -21,12 +21,6 @@ spring:
       ddl-auto: create-drop
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
 
 rabbitmq:
   exchanges:
@@ -39,9 +33,3 @@ rabbitmq:
     appointment: appointment.routingkey
     petservice: petservice.routing-key
 
-
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
