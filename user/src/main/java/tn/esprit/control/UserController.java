@@ -141,4 +141,38 @@ public class UserController {
     public ResponseEntity<?> softDeleteUser(@PathVariable Long id) {
         return userService.softDelete(id);
     }
+
+    @PutMapping(value = "/update-profile-image/{userId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> updateProfileImage(
+            @PathVariable Long userId,
+            @RequestPart("image") MultipartFile image) {
+
+        try {
+            // Get existing user
+            User existingUser = userService.retrieveUser(userId);
+
+            // Check if image is valid
+            if (image == null || image.isEmpty()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "No image provided"));
+            }
+
+            // Handle image upload using the existing ImageController
+            String imageUrl = imageController.handleImageUpload(image, existingUser.getProfileImageUrl());
+
+            // Update user profile image URL
+            existingUser.setProfileImageUrl(imageUrl);
+
+            // Save changes
+            User updatedUser = userRepository.save(existingUser);
+
+            // Return updated user data
+            return ResponseEntity.ok(UserResponseDTO.fromUser(updatedUser));
+
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Map.of("error", "Failed to update profile image: " + e.getMessage()));
+        }
+    }
 }

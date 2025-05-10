@@ -81,15 +81,15 @@ spring:
           predicates:
             - Path=/api/v1/petSittingOffer/**
         - id: user
-          uri: http://localhost:8081
+          uri: lb://USER_SERVICE
           predicates:
             - Path=/api/user/**
         - id: auth
-          uri: http://localhost:8081
+          uri: lb://USER_SERVICE
           predicates:
             - Path=/api/auth/**
         - id: admin
-          uri: http://localhost:8081
+          uri: lb://USER_SERVICE
           predicates:
             - Path=/api/admin/**
         - id: donations

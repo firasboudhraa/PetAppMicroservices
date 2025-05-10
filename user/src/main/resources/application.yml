@@ -1,55 +1,5 @@
 spring:
+  application:
+    name: user_service
   config:
-    import: optional:configserver:http://localhost:8888
-
-  datasource:
-    url: jdbc:mysql://localhost:3306/user_service?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password: ""
-  jpa:
-    hibernate:
-      ddl-auto: update
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQLDialect
-    open-in-view: false
-
-
-  security:
-    jwt:
-      secret-key: bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=
-      expiration: 86400000
-
-  mail:
-    host: smtp.gmail.com
-    port: "587"
-    username: yasminemzoughi4@gmail.com
-    password: "byzs pdhq kyil whiu"
-    admin:
-      email: yasminemzoughi4@gmail.com
-    properties:
-      mail.smtp:
-        auth: true
-        starttls:
-          enable: true
-        connectiontimeout: "5000"
-        timeout: "5000"
-        writetimeout: "5000"
-
-
-  mailing:
-    frontend:
-      activation-url: http://localhost:4200/activate-account
-
-app:
-  admin:
-    email: yasminemzoughi4@gmail.com
-
-server:
-  port: 8084
-
-
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
+    import: optional:configserver:http://${CONFIG_SERVER_URL:http://localhost}:8888

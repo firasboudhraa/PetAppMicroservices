@@ -6,7 +6,7 @@ import tn.esprit.dto.matching.MatchRequestDTO;
 
 import java.util.List;
 
-@FeignClient(name = "PetMs", url = "http://localhost:8050")
+@FeignClient(name = "pet-ms", url = "${application.config.pet-url}")
 public interface PetServiceClient {
 
     @GetMapping("/api/v1/pet/retrieve-all-pets")
