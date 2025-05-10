@@ -7,7 +7,7 @@ import tn.esprit.dto.matching.MatchResponseDTO;
 import tn.esprit.service.matching.IMatchingService;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/matching")
 @RequiredArgsConstructor
 public class MatchingController {

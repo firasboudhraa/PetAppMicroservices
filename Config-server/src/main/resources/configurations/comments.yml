@@ -23,3 +23,7 @@ spring:
       ddl-auto: ${JPA_DDL_AUTO:update}
     database: ${JPA_DATABASE:mysql}
     database-platform: ${JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQL8Dialect}
+
+application:
+  config:
+    user-url: ${USER_URL:http://localhost:8084}

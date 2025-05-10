@@ -4,7 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import tn.esprit.product.Dto.MarketplaceDto;
 
-@FeignClient(name = "marketplace-service", url = "http://localhost:8016/api/marketplaces")
+@FeignClient(name = "marketplace-service", url = "${application.config.marketplace.url}")
 public interface MarketplaceClient {
 
     @GetMapping("/unique")

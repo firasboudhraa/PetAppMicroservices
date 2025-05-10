@@ -36,7 +36,7 @@ spring:
 
   mailing:
     frontend:
-      activation-url: ${FRONTEND_URL:http://localhost}:4200/activate-account
+      activation-url: ${FRONTEND_URL:http://localhost:4200}/activate-account
 
 app:
   admin:

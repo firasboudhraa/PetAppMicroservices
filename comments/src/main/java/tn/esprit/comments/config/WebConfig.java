@@ -14,7 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         // Allow cross-origin requests from your Angular frontend
         registry.addMapping("/**")  // Apply CORS for all paths
-                .allowedOrigins("http://localhost:4200")  // Allow requests from Angular running on localhost:4200
+                .allowedOrigins("*")  // Allow requests from Angular running on localhost:4200
                 .allowedMethods("GET", "POST", "PUT", "DELETE")  // Allow these HTTP methods
                 .allowedHeaders("*");  // Allow any headers
     }

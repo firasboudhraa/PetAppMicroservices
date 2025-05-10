@@ -35,8 +35,6 @@ public class UserServiceApplication {
         SpringApplication.run(UserServiceApplication.class, args);
     }
 
-
-
     @Bean
     @Transactional
     public CommandLineRunner commandLineRunner(RoleRepository roleRepository) {
