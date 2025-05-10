@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tn.esprit.appointment.entity.Appointment;
 import tn.esprit.appointment.entity.AppointmentStatus;
-import tn.esprit.appointment.rabbitmq.RabbitMQMessageProducer;
 import tn.esprit.appointment.repository.AppointmentRepository;
 
 import java.util.List;
@@ -19,23 +18,11 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
     @Autowired
     private AppointmentRepository appointmentRepository;
 
-    @Autowired
-    private NotificationService notificationService ;
 
-    @Autowired
-    private final RabbitMQMessageProducer rabbitMQMessageProducer;
     @Override
     @Transactional
     public Appointment addAppointment(Appointment appointment)  {
         appointment.setStatus(AppointmentStatus.PENDING);
-        String message = "Appointment Created";
-
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
-        notificationService.sendAppointmentNotification(appointment.getIdService().toString(),"You have an appointment to check",appointment.getIdOwner().toString());
         return appointmentRepository.save(appointment);
     }
 
@@ -47,25 +34,11 @@ public class AppointmentServiceImpl  implements  IAppointmentService{
         existingAppointment.setIdPet(appointment.getIdPet());
         existingAppointment.setIdVet(appointment.getIdVet());
         existingAppointment.setIdService(appointment.getIdService());
-        String message = "Appointment Updated";
-
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
-        System.out.println("Message sent to RabbitMQ: " + message);
         return appointmentRepository.save(existingAppointment);
     }
 
     @Override
     public void deleteAppointment(Long id) {
-        String message = "Appointment Deleted";
-        rabbitMQMessageProducer.publish(
-                message,
-                "appointment.exchange",
-                "appointment.routingkey"
-        );
         appointmentRepository.deleteById(id);
     }
 
