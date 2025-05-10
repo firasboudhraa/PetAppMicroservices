@@ -1,6 +1,6 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_SERVER_HOSTNAME:localhost}
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
@@ -13,7 +13,7 @@ spring:
     name: appointment
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/appointments?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/appointments?createDatabaseIfNotExist=true
     username: root
     password:
   jpa:
@@ -32,12 +32,6 @@ spring:
         starttls:
           enable: true
           required: true
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
 
 rabbitmq:
   exchanges:
@@ -51,9 +45,5 @@ rabbitmq:
 
 application:
   config:
-    notifications-url: http://localhost:8055
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
+    notifications-url: ${NOTIFICATIONS_URL:http://localhost}:8055
+    user-url: ${USER_URL:http://localhost}:8084
