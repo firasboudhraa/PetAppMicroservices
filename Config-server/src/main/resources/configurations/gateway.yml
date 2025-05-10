@@ -45,7 +45,7 @@ spring:
             allowCredentials: true
       routes:
         - id: services
-          uri: http://localhost:8090
+          uri: lb//services
           predicates:
             - Path=/api/services/**
         - id: appointments

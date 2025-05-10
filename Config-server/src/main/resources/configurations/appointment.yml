@@ -52,6 +52,7 @@ rabbitmq:
 application:
   config:
     notifications-url: http://localhost:8055
+    user-url: http://localhost:8084
 
 management:
   tracing:
