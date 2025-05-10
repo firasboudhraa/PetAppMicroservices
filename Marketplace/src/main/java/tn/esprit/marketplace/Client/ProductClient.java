@@ -8,7 +8,7 @@ import tn.esprit.marketplace.Dto.ProductDTO;
 
 import java.util.List;
 
-@FeignClient(name = "product-service", url = "http://localhost:8011/api/products")
+@FeignClient(name = "product-service", url = "${application.config.product.url}")
 public interface ProductClient {
 
     @GetMapping("/{marketplaceId}/products")

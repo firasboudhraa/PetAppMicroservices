@@ -7,7 +7,7 @@ import tn.esprit.basket.Dto.ProductDTO;
 
 import java.util.List;
 
-@FeignClient(name = "product-service", url = "http://localhost:8011")
+@FeignClient(name = "product-service", url = "${application.config.product.url}")
 public interface ProductClient {
     @GetMapping("/api/products/{id}")
     ProductDTO getProductById(@PathVariable("id") Long productId);
