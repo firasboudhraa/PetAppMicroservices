@@ -8,7 +8,6 @@ import tn.esprit.petservice.client.AppointmentClient;
 import tn.esprit.petservice.entity.Appointment;
 import tn.esprit.petservice.entity.FullPetServiceResponse;
 import tn.esprit.petservice.entity.PetService;
-import tn.esprit.petservice.rabbitmq.RabbitMQMessageProducer;
 import tn.esprit.petservice.repository.PetServiceRepository;
 
 import java.time.LocalDate;
@@ -26,8 +25,6 @@ public class PetServiceImpl implements IPetService {
     @Autowired
     private PetServiceRepository petServiceRepository;
 
-    @Autowired
-    private final RabbitMQMessageProducer rabbitMQMessageProducer;
 
 
     @Autowired
@@ -54,12 +51,6 @@ public class PetServiceImpl implements IPetService {
     @Override
     @Transactional
     public PetService createService(PetService petService) {
-        String message = "Service Created";
-        rabbitMQMessageProducer.publish(
-                message,
-                "petservice.exchange",
-                "petservice.routingkey"
-        );
         return petServiceRepository.save(petService);
     }
 
@@ -75,12 +66,6 @@ public class PetServiceImpl implements IPetService {
         existingService.setDurationInMinutes(petService.getDurationInMinutes());
         existingService.setProviderId(petService.getProviderId());
 
-        String message = "Service Updated";
-//        rabbitMQMessageProducer.publish(
-//                message,
-//                "petservice.exchange",
-//                "petservice.routingkey"
-//        );
         return petServiceRepository.save(petService);
     }
 
@@ -88,13 +73,6 @@ public class PetServiceImpl implements IPetService {
     public void deleteService(Long id) {
 
         petServiceRepository.deleteById(id);
-        // Send a message to the RabbitMQ queue
-        String message = "{ \"idService\": " + id + " }";
-//        rabbitMQMessageProducer.publish(
-//                message,
-//                "petservice.exchange",
-//                "petservice.routingkey"
-//        );
     }
 
     @Override
@@ -174,12 +152,6 @@ public class PetServiceImpl implements IPetService {
     @Override
     public void acceptAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
-        String message = "Appointment Accepted";
-//        rabbitMQMessageProducer.publish(
-//                message,
-//                "appointment.exchange",
-//                "appointment.routingkey"
-//        );
         appointmentClient.acceptAppointment(id, body);
     }
 
@@ -187,11 +159,6 @@ public class PetServiceImpl implements IPetService {
     public void rejectAppointment(Long id ,String reason) {
         Map<String, String> body = Map.of("reason", reason);
         String message = "Appointment Rejected";
-//        rabbitMQMessageProducer.publish(
-//                message,
-//                "appointment.exchange",
-//                "appointment.routingkey"
-//        );
         appointmentClient.rejectAppointment(id, body);
     }
 

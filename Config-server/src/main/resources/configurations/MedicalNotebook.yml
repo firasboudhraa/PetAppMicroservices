@@ -1,22 +1,23 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_SERVER_HOSTNAME:localhost}
   client:
     register-with-eureka: false
     fetch-registry: false
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${EUREKA_SERVER_HOSTNAME:localhost}:${SERVER_PORT:8070}/eureka/
+
 server:
-  port: 8070
+  port: ${SERVER_PORT:8070}
 
 spring:
   application:
-    name: MedicalNotebook
+    name: ${SPRING_APP_NAME:MedicalNotebook}
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/carnets?createDatabaseIfNotExist=true
-    username: root
-    password:
+    url: jdbc:mysql://${DB_HOST:localhost}:3306/${DB_NAME:carnets}?createDatabaseIfNotExist=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
   jpa:
     hibernate:
       ddl-auto: update
@@ -25,4 +26,4 @@ spring:
 
 application:
   config:
-    record-url: http://localhost:8071/api/medicalrecord
+    record-url: ${RECORD_URL:http://localhost}:8071/api/medicalrecord
