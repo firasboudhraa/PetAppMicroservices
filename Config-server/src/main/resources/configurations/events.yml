@@ -1,19 +1,19 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_HOSTNAME:localhost}
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:8761/eureka/
 
 server:
-  port: 8015
+  port: ${SERVER_PORT:8015}
 
 spring:
   application:
     name: events
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/eventdonations?createDatabaseIfNotExist=true
+    url: jdbc:mysql://${DATABASE_URL:localhost:3306}/eventdonations?createDatabaseIfNotExist=true
     username: root
     password:
   jpa:
@@ -24,4 +24,4 @@ spring:
 
 application:
   config:
-    donations-url: http://localhost:8010/donation
+    donations-url: ${DONATION_SERVER_URL:http://localhost:8010}/donation
