@@ -15,8 +15,8 @@ spring:
 
   security:
     jwt:
-      secret-key: ${JWT_SECRET:bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=}
-      expiration: ${JWT_EXPIRATION:86400000}
+      secret-key: bXlzdXBlcnNlY3JldGtleXdoaWNoaXMyNTZiaXRzbG9uZ2FuZHNhZmU=
+      expiration: 86400000
 
   mail:
     host: ${MAIL_HOST:smtp.gmail.com}
@@ -54,4 +54,4 @@ eureka:
 
 application:
   config:
-    pet-url: ${PET_SERVICE_URL:http://localhost}:8050
+    pet-url: ${PET_URL:http://localhost}:8050

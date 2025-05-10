@@ -5,8 +5,6 @@ C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\entity\FullPetServiceResponse.java
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\entity\PetService.java
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\PetServiceApplication.java
-C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\rabbitmq\RabbitMQConfig.java
-C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\rabbitmq\RabbitMQMessageProducer.java
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\repository\PetServiceRepository.java
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\service\IPetService.java
 C:\Users\firas\Desktop\PI\PetAppMicroservices\PetService\src\main\java\tn\esprit\petservice\service\PetServiceImpl.java
