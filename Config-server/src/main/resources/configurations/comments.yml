@@ -1,9 +1,9 @@
- eureka:
+eureka:
   instance:
-    hostname: ${EUREKA_SERVER_HOSTNAME:localhost}
+    hostname: ${EUREKA_HOSTNAME:localhost}
   client:
     service-url:
-      defaultZone: ${EUREKA_SERVER_HOSTNAME:http://localhost}:8761/eureka
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
 
 server:
   port: ${SERVER_PORT:8083}
@@ -23,13 +23,3 @@ spring:
       ddl-auto: ${JPA_DDL_AUTO:update}
     database: ${JPA_DATABASE:mysql}
     database-platform: ${JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQL8Dialect}
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
-
-
-
-
-

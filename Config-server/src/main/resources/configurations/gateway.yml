@@ -1,9 +1,9 @@
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_SERVER_HOSTNAME:localhost}
   client:
     service-url:
-      defaultZone: http://${eureka.instance.hostname}:8761/eureka/
+      defaultZone: ${EUREKA_SERVER_HOSTNAME:http://localhost}:8761/eureka
     register-with-eureka: false
 
 server:
@@ -21,7 +21,7 @@ spring:
         corsConfigurations:
           '[/**]':
             allowedOrigins:
-              - "http://localhost:4200"
+              - "${FRONTEND_URL:http://localhost}:4200"
             allowedMethods:
               - GET
               - POST
@@ -45,55 +45,47 @@ spring:
             allowCredentials: true
       routes:
         - id: services
-          uri: lb//services
+          uri: lb://SERVICES
           predicates:
             - Path=/api/services/**
         - id: appointments
-          uri: http://localhost:8091
+          uri: lb://APPOINTMENT
           predicates:
             - Path=/api/appointments/**
-        - id: notifications
-          uri: http://localhost:8092
-          predicates:
-            - Path=/api/notifications/**
         - id: carnets
-          uri: http://localhost:8070
+          uri: lb://MEDICALNOTEBOOK
           predicates:
             - Path=/api/carnet/**
         - id: records
-          uri: http://localhost:8071
+          uri: lb://MEDICALRECORD
           predicates:
             - Path=/api/medicalrecord/**
         - id: posts
-          uri: http://localhost:8082
+          uri: lb://POSTS
           predicates:
             - Path=/posts/**
         - id: comments
-          uri: http://localhost:8083
+          uri: lb://COMMENTS
           predicates:
             - Path=/comments/**
         - id: PetMs-pet
-          uri: http://localhost:8050
+          uri: lb://PETMS
           predicates:
             - Path=/api/v1/pet/**
         - id: PetMs-adoptionRequest
-          uri: http://localhost:8050
+          uri: lb://PETMS
           predicates:
             - Path=/api/v1/adoptionRequest/**
         - id: PetMs-petSittingOffer
-          uri: http://localhost:8050
+          uri: lb://PETMS
           predicates:
             - Path=/api/v1/petSittingOffer/**
-        - id: PetMs-chatbot
-          uri: http://localhost:8050
-          predicates:
-            - Path=/api/chat/**
         - id: user
           uri: http://localhost:8081
           predicates:
             - Path=/api/user/**
         - id: auth
-          uri: http://localhost:8084
+          uri: http://localhost:8081
           predicates:
             - Path=/api/auth/**
         - id: admin
@@ -101,32 +93,27 @@ spring:
           predicates:
             - Path=/api/admin/**
         - id: donations
-          uri: http://localhost:8010
+          uri: lb://DONATIONS
           predicates:
             - Path=/donation/**
         - id: events
-          uri: http://localhost:8015
+          uri: lb://EVENTS
           predicates:
             - Path=/event/**
         - id: marketplaces
-          uri: http://localhost:8010
+          uri: lb://MARKETPLACES
           predicates:
             - Path=/api/marketplaces/**
         - id: payments
-          uri: http://localhost:8014
+          uri: lb://PAYMENTS
           predicates:
             - Path=/api/payment/**
         - id: baskets
-          uri: http://localhost:8013
+          uri: lb://BASKETS
           predicates:
             - Path=/api/baskets/**
         - id: products
-          uri: http://localhost:8011
+          uri: lb://PRODUCTS
           predicates:
             - Path=/api/products/**
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0
 

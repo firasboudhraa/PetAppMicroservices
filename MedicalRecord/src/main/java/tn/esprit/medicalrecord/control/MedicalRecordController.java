@@ -21,7 +21,6 @@ import java.util.*;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/medicalrecord")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MedicalRecordController {
 
     @Autowired

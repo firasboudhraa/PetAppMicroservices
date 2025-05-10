@@ -2,11 +2,11 @@ spring:
   application:
     name: donations
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost}:8888
 
 paypal:
   client-id: AcRNmlTOelCjXZB_LhOBQdj4nuEprFipRanFAPL7oe4TQuxaQHau7Zgh_wAB76TpkqbuqNL1OSpqxIzp
   client-secret: ECMo35CKshqIpm1UceIpHlpaugQEPYzEbrHDmlJfE6PlxHnLPwFzDhX-EqyVavemIbfC2ZIEV14FYPp5
   mode: sandbox # or "live" for production
-  return-url: http://localhost:8010/payment/success
-  cancel-url: http://localhost:8010/payment/cancel
+  return-url: ${RETURN_URL:http://localhost}:8010/payment/success
+  cancel-url: ${CANCEL_URL:http://localhost}:8010/payment/cancel

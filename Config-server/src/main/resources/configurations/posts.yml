@@ -33,8 +33,3 @@ spring:
     resources:
       static-locations:
         file: ${USER_DIR}:${user.dir}/posts/uploads/  # Adjusted path for the posts/uploads folder
-
-management:
-  tracing:
-    sampling:
-      probability: 1.0

@@ -52,10 +52,10 @@
 		<!-- Spring Cloud Starter Config (for externalized configuration if using Spring Cloud Config Server) -->
 
 
-		<!-- <dependency>
+		 <dependency>
                <groupId>org.springframework.cloud</groupId>
                <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-           </dependency>-->
+           </dependency>
 
 		<!-- MySQL JDBC Driver for database connectivity -->
 		<dependency>

@@ -2,9 +2,5 @@ spring:
   application:
     name: comments
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:${CONFIG_SERVER_URL:http://localhost}:8888
 
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka
