@@ -1,37 +1,38 @@
+
 eureka:
   instance:
-    hostname: localhost
+    hostname: ${EUREKA_HOSTNAME:localhost}
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka}
 
 server:
-  port: 8082
+  port: ${SERVER_PORT:8082}
 
 spring:
   application:
-    name: posts
+    name: ${SPRING_APPLICATION_NAME:posts}
 
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/posts?createDatabaseIfNotExist=true&serverTimezone=UTC
-    username: root
-    password:
+    driver-class-name: ${DB_DRIVER_CLASS_NAME:com.mysql.cj.jdbc.Driver}
+    url: ${DB_URL:jdbc:mysql://${DB_HOST:localhost}:3306/posts?createDatabaseIfNotExist=true&serverTimezone=UTC}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
 
   jpa:
     hibernate:
-      ddl-auto: update
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+      ddl-auto: ${JPA_DDL_AUTO:update}
+    database: ${JPA_DATABASE:mysql}
+    database-platform: ${JPA_DATABASE_PLATFORM:org.hibernate.dialect.MySQL8Dialect}
 
   servlet:
     multipart:
-      location: ./posts/uploads/  # The folder where images will be uploaded
+      location: ${UPLOAD_LOCATION:./posts/uploads/}  # The folder where images will be uploaded
 
   web:
     resources:
       static-locations:
-        file: ${user.dir}/posts/uploads/  # Adjusted path for the posts/uploads folder
+        file: ${USER_DIR}:${user.dir}/posts/uploads/  # Adjusted path for the posts/uploads folder
 
 management:
   tracing:
